@@ -56,7 +56,8 @@ luac.out
 # playdate 
 *.pdz
 *.pds
-*/main.pdx
+*.pdx
+
 
 #Mac
 .DS_Store
