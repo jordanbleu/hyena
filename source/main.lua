@@ -17,7 +17,7 @@ local function setup()
 end
 setup()
 
-
+local txt = playdate.graphics.getLocalizedText("helloWorld1")
 function playdate.update()
     -- get localized text
     print(txt)
