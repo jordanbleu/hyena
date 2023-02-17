@@ -10,5 +10,37 @@
 
 ]]
 
+-- Core libraries for PLayDate
+import "CoreLibs/object"
+import "CoreLibs/graphics"
+import "CoreLibs/sprites"
+import "CoreLibs/timer"
+
+import "scripts/sceneManager"
+import "scripts/scenes/test1Scene" -- todo :remove 
+import "scripts/scenes/test2Scene"
+
+local gfx <const> = playdate.graphics
+
+-- Runs on first on game launch
+local function setup()
+    playdate.display.setRefreshRate(50)
+
+    local sceneMgr = SceneManager()
+    sceneMgr:add()
+    
+    -- long in the future, this will be set to the 'title screen scene'
+    local firstScene = Test1Scene()
+    sceneMgr:switchScene(firstScene)
+
+end
+
+setup()
+
+local txt = playdate.graphics.getLocalizedText("helloWorld1")
 function playdate.update()
+    -- get localized text
+    --print(txt)
+    gfx.sprite.update()
+    playdate.timer.updateTimers()
 end

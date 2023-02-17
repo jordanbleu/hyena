@@ -52,3 +52,12 @@ luac.out
 
 # Built Visual Studio Code Extensions
 *.vsix
+
+# playdate 
+*.pdz
+*.pds
+*.pdx
+
+
+#Mac
+.DS_Store
