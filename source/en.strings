@@ -1,3 +1,5 @@
 -- Test
 "helloWorld" = "Hello world!?"
 "helloWorld1" = "hello worl"
+fsf"testscene1" = "Test scene 1 is active"
+"testscene2" = "Test scene 2 is active"
