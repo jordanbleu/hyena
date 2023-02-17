@@ -10,5 +10,15 @@
 
 ]]
 
+
+-- Runs on first on game launch
+local function setup()
+    playdate.display.setRefreshRate(50) 
+end
+setup()
+
+
 function playdate.update()
+    -- get localized text
+    print(txt)
 end
