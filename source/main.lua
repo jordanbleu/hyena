@@ -31,10 +31,10 @@ local function setup()
 
     local sceneMgr = SceneManager()
     sceneMgr:add()
-    
+
     -- long in the future, this will be set to the 'title screen scene'
     local firstScene = Test1Scene()
-    sceneMgr:switchScene(firstScene, SCENE_TRANSITION.HARD_CUT)
+    sceneMgr:switchScene(firstScene, SCENE_TRANSITION.FADE_IO)
 
 end
 
