@@ -15,6 +15,9 @@ import "CoreLibs/object"
 import "CoreLibs/graphics"
 import "CoreLibs/sprites"
 import "CoreLibs/timer"
+import 'CoreLibs/animator'
+
+import "scripts/globals/enums"
 
 import "scripts/sceneManager"
 import "scripts/scenes/test1Scene" -- todo :remove 
@@ -31,16 +34,13 @@ local function setup()
     
     -- long in the future, this will be set to the 'title screen scene'
     local firstScene = Test1Scene()
-    sceneMgr:switchScene(firstScene)
+    sceneMgr:switchScene(firstScene, SCENE_TRANSITION.HARD_CUT)
 
 end
 
 setup()
 
-local txt = playdate.graphics.getLocalizedText("helloWorld1")
 function playdate.update()
-    -- get localized text
-    --print(txt)
     gfx.sprite.update()
     playdate.timer.updateTimers()
 end
