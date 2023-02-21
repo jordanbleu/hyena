@@ -17,11 +17,15 @@ import "CoreLibs/sprites"
 import "CoreLibs/timer"
 import 'CoreLibs/animator'
 
+-- Extensions
+import "scripts/Extensions/math"
+
 import "scripts/globals/enums"
 
 import "scripts/sceneManager"
 import "scripts/scenes/test1Scene" -- todo :remove 
 import "scripts/scenes/test2Scene"
+
 
 local gfx <const> = playdate.graphics
 
