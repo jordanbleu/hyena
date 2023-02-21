@@ -1,5 +1,6 @@
 import "scene"
 import "scripts/actors/player"
+import "scripts/camera/camera"
 
 local gfx <const> = playdate.graphics
 
@@ -25,6 +26,9 @@ function Test1Scene:initialize(sceneManager)
     local player = Player()
     player:moveTo(200, 200)
     player:add()
+
+    local camera = Camera()
+    camera:add()
 end
 
 function Test1Scene:update()
