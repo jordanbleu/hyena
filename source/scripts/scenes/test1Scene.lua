@@ -33,16 +33,4 @@ function Test1Scene:initialize(sceneManager)
 end
 
 function Test1Scene:update()
-    --print ("test scene 1 is running")
-
-    if (not self:getSceneManager():isReady()) then
-        return
-    end
-
-    if (playdate.buttonJustPressed(playdate.kButtonA)) then
-        local nextScene = Test2Scene()
-        self:getSceneManager():switchScene(nextScene, SCENE_TRANSITION.FADE_IO)
-    
-    end
-
 end

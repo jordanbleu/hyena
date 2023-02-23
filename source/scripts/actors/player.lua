@@ -1,5 +1,7 @@
 local gfx <const> = playdate.graphics
 
+import "scripts/projectiles/playerBullet"
+
 -- How much speed increases per frame when accelerating 
 local MOVE_SPEED <const> = 0.5
 -- Max speed overall of your ship
@@ -13,19 +15,25 @@ local DECELERATION_RATE = 0.1
 class("Player").extends(gfx.sprite)
 
 function Player:init()
-
     self.xVelocity = 0
     self.yVelocity = 0
-
-
     self:setImage(gfx.image.new("images/player"))
     self:setZIndex(25)
 end
 
 
 function Player:update()
+    self:_handlePlayerInput()
     self:_handleMovement()
     self:_decelerate()
+end
+
+function Player:_handlePlayerInput() 
+
+    if (playdate.buttonJustPressed(playdate.kButtonA)) then
+        -- instantiate a new player bullet
+        PlayerBullet(self.x, self.y)
+    end
 
 end
 

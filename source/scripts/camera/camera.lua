@@ -30,14 +30,6 @@ end
 
 function Camera:update()
     self:_sway()
-
-    -- todo: delete this 
-    if (playdate.buttonJustPressed(playdate.kButtonB)) then
-        self.swaySpeed = 5
-        self.swayAmount = 5   
-    
-    end
-
     gfx.setDrawOffset(-self.x + -self.currentSwayXOffset, -self.y + -self.currentSwayYOffset)
 end
 
