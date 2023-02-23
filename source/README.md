@@ -72,3 +72,19 @@ end
 
 5. public methods
 6. private methods
+
+### Z-Index Standards
+
+0-10 - background layers
+
+0 = farthest BG, usually a static image
+
+1-9 = parallax layers
+
+11-20 - Behind Actors
+
+21-30 - Actors
+
+25 - Player
+
+100+ - UI
