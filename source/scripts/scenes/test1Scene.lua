@@ -1,5 +1,7 @@
 import "scene"
 import "scripts/actors/player"
+import "scripts/camera/camera"
+import "scripts/environment/parallaxLayer"
 
 local gfx <const> = playdate.graphics
 
@@ -11,24 +13,27 @@ function Test1Scene:initialize(sceneManager)
     gfx.setImageDrawMode(gfx.kDrawModeNXOR)
 
     print ("test1 scene init")
-    local textImage = gfx.image.new("images/test-scene1")
+    local textImage = gfx.image.new("images/black")
     local textSprite = gfx.sprite.new(textImage)
-    textSprite:moveTo(120,200)
+    textSprite:moveTo(200,120)
     textSprite:add()
 
-    local bgImageTest = gfx.image.new("images/static-stars")
-    local bgImageSprite = gfx.sprite.new(bgImageTest)
-    bgImageSprite:moveTo(200,120)
-    bgImageSprite:add()
-    bgImageSprite:setZIndex(0)
+
+    local plax0 = ParallaxLayer(gfx.image.new("images/backgrounds/stars-farther"),1)
+    plax0:add()
+    local plax1 = ParallaxLayer(gfx.image.new("images/backgrounds/stars-far"),3)
+    plax1:add()
 
     local player = Player()
     player:moveTo(200, 200)
     player:add()
+
+    local camera = Camera()
+    camera:add()
 end
 
 function Test1Scene:update()
-    print ("test scene 1 is running")
+    --print ("test scene 1 is running")
 
     if (not self:getSceneManager():isReady()) then
         return
@@ -37,10 +42,6 @@ function Test1Scene:update()
     if (playdate.buttonJustPressed(playdate.kButtonA)) then
         local nextScene = Test2Scene()
         self:getSceneManager():switchScene(nextScene, SCENE_TRANSITION.FADE_IO)
-    
-    elseif (playdate.buttonJustPressed(playdate.kButtonB)) then
-        local nextScene = Test2Scene()
-        self:getSceneManager():switchScene(nextScene)
     
     end
 

@@ -19,7 +19,7 @@ function Player:init()
 
 
     self:setImage(gfx.image.new("images/player"))
-    self:setZIndex(10)
+    self:setZIndex(25)
 end
 
 

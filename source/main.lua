@@ -31,6 +31,9 @@ local gfx <const> = playdate.graphics
 
 -- Runs on first on game launch
 local function setup()
+
+    math.randomseed(playdate.getSecondsSinceEpoch())
+
     playdate.display.setRefreshRate(50)
 
     local sceneMgr = SceneManager()
