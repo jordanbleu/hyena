@@ -27,3 +27,29 @@ function math.isWithin(value, threshold, ofValue)
     local max = ofValue + threshold 
     return (value >= min and value <= max )
 end
+
+--[[ Returns a random float between from and to ]]
+function math.randomFloat(from, to)
+    local fromR = math.random() * from
+    local toR = math.random() * to
+    return (fromR + toR)
+end
+
+--[[ Returns a value that will be one [speed] towards [destination].  
+    The value will also snap to the destination if it is close enough.
+]]
+function math.moveTowards(position, destination, speed) 
+
+    local value = math.snap(position, speed, destination)
+
+    if (value == destination) then
+        return value
+    end
+
+    if (value > destination) then
+        return value - speed
+    end
+
+    return value + speed
+
+end
