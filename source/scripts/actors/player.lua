@@ -1,6 +1,7 @@
 local gfx <const> = playdate.graphics
 
 import "scripts/projectiles/playerBullet"
+import "scripts/actors/actor"
 
 -- How much speed increases per frame when accelerating 
 local MOVE_SPEED <const> = 0.5
@@ -12,27 +13,46 @@ local DECELERATION_RATE = 0.1
 --[[
     This is the player object, for normal gameplay
 ]]
-class("Player").extends(gfx.sprite)
+class("Player").extends(Actor)
 
 function Player:init()
+    Player.super.init(self)
     self.xVelocity = 0
     self.yVelocity = 0
     self:setImage(gfx.image.new("images/player"))
     self:setZIndex(25)
+    self:add()
 end
 
 
 function Player:update()
+    Player.super.update(self)
     self:_handlePlayerInput()
+end
+
+function Player:delayedUpdate()
+    Player.super.delayedUpdate(self)
     self:_handleMovement()
     self:_decelerate()
 end
 
 function Player:_handlePlayerInput() 
 
+    
     if (playdate.buttonJustPressed(playdate.kButtonA)) then
         -- instantiate a new player bullet
         PlayerBullet(self.x, self.y)
+    end
+
+    -- temp 
+    if (playdate.buttonJustPressed(playdate.kButtonB)) then
+
+        if (GLOBAL_TIME_DELAY == 0) then
+            GLOBAL_TIME_DELAY = 150
+        else 
+            GLOBAL_TIME_DELAY = 0
+        end
+        
     end
 
 end
@@ -41,9 +61,6 @@ end
 function Player:_handleMovement()
 
     -- Get inputs values, will be between -1 and 1.
-    --- Writing it this way cancels out movement if you press both sides of the d-pad simultaneously 
-    --- (not sure if that is physically possible because i don't have a playdate yet.)
-    -- this is using lua's very weird ternary syntax
     local leftInput = playdate.buttonIsPressed(playdate.kButtonLeft) and -1 or 0
     local rightInput = playdate.buttonIsPressed(playdate.kButtonRight) and 1 or 0
     local upInput = playdate.buttonIsPressed(playdate.kButtonUp) and -1 or 0

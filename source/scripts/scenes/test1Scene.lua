@@ -1,7 +1,7 @@
 import "scene"
 import "scripts/actors/player"
 import "scripts/camera/camera"
-import "scripts/environment/parallaxLayer"
+import "scripts/sprites/parallaxLayer"
 
 local gfx <const> = playdate.graphics
 
@@ -18,18 +18,14 @@ function Test1Scene:initialize(sceneManager)
     textSprite:moveTo(200,120)
     textSprite:add()
 
-
     local plax0 = ParallaxLayer(gfx.image.new("images/backgrounds/stars-farther"),1)
-    plax0:add()
     local plax1 = ParallaxLayer(gfx.image.new("images/backgrounds/stars-far"),3)
-    plax1:add()
 
     local player = Player()
     player:moveTo(200, 200)
-    player:add()
 
     local camera = Camera()
-    camera:add()
+
 end
 
 function Test1Scene:update()

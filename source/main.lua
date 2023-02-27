@@ -21,11 +21,12 @@ import 'CoreLibs/animator'
 import "scripts/Extensions/math"
 
 import "scripts/globals/enums"
+import "scripts/globals/globals"
+
 
 import "scripts/sceneManager"
 import "scripts/scenes/test1Scene" -- todo :remove 
 import "scripts/scenes/test2Scene"
-
 
 local gfx <const> = playdate.graphics
 

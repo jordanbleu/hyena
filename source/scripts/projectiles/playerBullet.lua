@@ -1,12 +1,15 @@
 local gfx <const> = playdate.graphics
 
+import 'scripts/actors/actor'
+
 local BULLET_SPEED <const> = -10
 
 --[[ Bullet that damages any enemies. ]]
-class("PlayerBullet").extends(gfx.sprite)
+class("PlayerBullet").extends(Actor)
 
 function PlayerBullet:init(x,y)
-
+    PlayerBullet.super.init(self)
+    
     self.isActive = true
     self:setImage(gfx.image.new("images/projectiles/playerBullet"))
     self:moveTo(x,y)
@@ -14,7 +17,8 @@ function PlayerBullet:init(x,y)
 
 end
 
-function PlayerBullet:update()
+function PlayerBullet:delayedUpdate()
+    PlayerBullet.super.delayedUpdate(this)
 
     if (self.isActive) then 
         local nextY = self.y + BULLET_SPEED
