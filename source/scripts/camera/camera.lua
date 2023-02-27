@@ -5,11 +5,11 @@ local SWAY_DECELERATION <const> = 0.5
 --[[
     The camera basically just set the global draw offset to it's x / y position.
 ]]
-class("Camera").extends(gfx.sprite)
+class("Camera").extends(Actor)
 
 
 function Camera:init()
-
+    Camera.super.init(self)
     self.shakeTimer = playdate.timer.new(0)
 
     self.currentSwayXDirection = 1
@@ -25,19 +25,13 @@ function Camera:init()
 
     self:setIgnoresDrawOffset(true)
     self:moveTo(0,0)
+
+    self:add()
 end
 
 
-function Camera:update()
+function Camera:delayedUpdate()
     self:_sway()
-
-    -- todo: delete this 
-    if (playdate.buttonJustPressed(playdate.kButtonB)) then
-        self.swaySpeed = 5
-        self.swayAmount = 5   
-    
-    end
-
     gfx.setDrawOffset(-self.x + -self.currentSwayXOffset, -self.y + -self.currentSwayYOffset)
 end
 
@@ -86,9 +80,6 @@ function Camera:_sway()
     self.swaySpeed = math.moveTowards(self.swaySpeed, self.normalSwaySpeed, 0.1)
 end
 
+-- function Camera:_resetSway()
 
-
-
-function Camera:_resetSway()
-
-end
+-- end

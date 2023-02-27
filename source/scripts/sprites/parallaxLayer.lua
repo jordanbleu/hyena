@@ -2,9 +2,11 @@ local gfx <const> = playdate.graphics
 
 
 --[[ Single scrolling background layer. ]]
-class("ParallaxLayer").extends(gfx.sprite)
+class("ParallaxLayer").extends(Actor)
 
 function ParallaxLayer:init(image, scrollY)
+
+    ParallaxLayer.super.init(self)
 
     self:setImage(image)
     
@@ -18,13 +20,14 @@ function ParallaxLayer:init(image, scrollY)
 
     self.scrollY = scrollY
 
+    self:add()
 
 end
 
-function ParallaxLayer:update()
-
+function ParallaxLayer:delayedUpdate()
+    
     local halfHeight = self:getImage():getSize() / 2
-    self:moveTo(self.x, self.y + self.scrollY)   
+    self:moveTo(self.x, self.y + self.scrollY)
 
     if (self.y > halfHeight or self.y < -halfHeight) then
         self.y = 0
