@@ -21,6 +21,7 @@ function Player:init()
     self.yVelocity = 0
     self:setImage(gfx.image.new("images/player"))
     self:setZIndex(25)
+    self:setGroups({COLLISION_LAYER.PLAYER})
     self:add()
 end
 

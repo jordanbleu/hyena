@@ -13,3 +13,14 @@ SCENE_TRANSITION =
     -- linear fade in / out
     FADE_IO  = 1
 }
+
+--[[ Layers used for sprite collision.  These are just consts for numbers 1-32.  
+    See https://sdk.play.date/1.13.1/Inside%20Playdate.html#M-sprite-collisions for more info.  
+]]
+COLLISION_LAYER = 
+{
+    PLAYER = 1,
+    ENEMY = 2,
+    PLAYER_PROJECTILE = 3,
+    ENEMY_PROJECTILE = 4
+}

@@ -2,6 +2,7 @@ import "scene"
 import "scripts/actors/player"
 import "scripts/camera/camera"
 import "scripts/sprites/parallaxLayer"
+import "scripts/actors/grunt"
 
 local gfx <const> = playdate.graphics
 
@@ -23,6 +24,9 @@ function Test1Scene:initialize(sceneManager)
 
     local player = Player()
     player:moveTo(200, 200)
+
+    local enemy = Grunt()
+    enemy:moveTo(200,70)
 
     local camera = Camera()
 

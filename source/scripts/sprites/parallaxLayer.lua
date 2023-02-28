@@ -30,7 +30,7 @@ function ParallaxLayer:delayedUpdate()
     self:moveTo(self.x, self.y + self.scrollY)
 
     if (self.y > halfHeight or self.y < -halfHeight) then
-        self.y = 0
+        self:moveTo(self.x, 0)
     end
 
     self:_setUpperAndLowerImagePositions()

@@ -48,6 +48,7 @@ end
 
 setup()
 
+---@diagnostic disable-next-line: duplicate-set-field
 function playdate.update()
     gfx.sprite.update()
     playdate.timer.updateTimers()
