@@ -1,7 +1,7 @@
 local gfx <const> = playdate.graphics
 
 import "scripts/actors/enemy"
-
+import "scripts/effects/playerBulletExplosion"
 --[[
     The grunt enemy moves vaguely downwards and towards the player in bursts
 ]]
@@ -34,8 +34,13 @@ function Grunt:_checkCollisions()
     for i, col in ipairs(collisions) do
         if (col:isa(PlayerBullet)) then
             print "ouch"
+
+            -- create a new explosion object at the bullets position
+            local explosion = PlayerBulletExplosion(col.x, col.y)
+
             col:destroy()
             self:damage(1)
+            
         end
     end
 

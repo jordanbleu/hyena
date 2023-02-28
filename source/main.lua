@@ -26,13 +26,14 @@ import "scripts/globals/globals"
 
 import "scripts/sceneManager"
 import "scripts/scenes/test1Scene" -- todo :remove 
-import "scripts/scenes/test2Scene"
+
 
 local gfx <const> = playdate.graphics
 
+local timer
+
 -- Runs on first on game launch
 local function setup()
-
     math.randomseed(playdate.getSecondsSinceEpoch())
 
     playdate.display.setRefreshRate(50)
@@ -44,6 +45,9 @@ local function setup()
     local firstScene = Test1Scene()
     sceneMgr:switchScene(firstScene, SCENE_TRANSITION.FADE_IO)
 
+    -- hilariously this is a timer to update the other timers
+    --timer = gfx.timer.performAfterDelay(GLOBAL_TIME_DELAY,function() updateAllTimers() end)
+    --timer.repeats = true
 end
 
 setup()
@@ -52,4 +56,12 @@ setup()
 function playdate.update()
     gfx.sprite.update()
     playdate.timer.updateTimers()
+    --timer.update()
+end
+
+function updateAllTimers()
+
+    --if (timer.)
+
+
 end
