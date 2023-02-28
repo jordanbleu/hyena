@@ -31,8 +31,8 @@ function Player:update()
     self:_handlePlayerInput()
 end
 
-function Player:delayedUpdate()
-    Player.super.delayedUpdate(self)
+function Player:physicsUpdate()
+    Player.super.physicsUpdate(self)
     self:_handleMovement()
     self:_decelerate()
 end

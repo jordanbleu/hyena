@@ -24,7 +24,9 @@ function ParallaxLayer:init(image, scrollY)
 
 end
 
-function ParallaxLayer:delayedUpdate()
+function ParallaxLayer:physicsUpdate()
+
+    ParallaxLayer.super.physicsUpdate(self)
     
     local halfHeight = self:getImage():getSize() / 2
     self:moveTo(self.x, self.y + self.scrollY)

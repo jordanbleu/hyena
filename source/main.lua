@@ -45,9 +45,6 @@ local function setup()
     local firstScene = Test1Scene()
     sceneMgr:switchScene(firstScene, SCENE_TRANSITION.FADE_IO)
 
-    -- hilariously this is a timer to update the other timers
-    --timer = gfx.timer.performAfterDelay(GLOBAL_TIME_DELAY,function() updateAllTimers() end)
-    --timer.repeats = true
 end
 
 setup()
@@ -56,12 +53,4 @@ setup()
 function playdate.update()
     gfx.sprite.update()
     playdate.timer.updateTimers()
-    --timer.update()
-end
-
-function updateAllTimers()
-
-    --if (timer.)
-
-
 end

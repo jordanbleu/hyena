@@ -19,11 +19,11 @@ function PlayerBulletExplosion:init(x, y)
     self:add()
 end
 
--- todo: so, animators aren't going to be affected by the time scaler...i need to decide if that'll be an issue or not.  
+-- TODO: so, animators aren't going to be affected by the time scaler...i need to decide if that'll be an issue or not.  
 -- We could potentially fix this by delaying the timer updates in main.lua
 
 function PlayerBulletExplosion:update() 
-    PlayerBulletExplosion.super.delayedUpdate(self)
+    PlayerBulletExplosion.super.physicsUpdate(self)
 
     local animatorValue = math.floor(self.animator:currentValue())
     local img = self.imageTable:getImage(animatorValue)

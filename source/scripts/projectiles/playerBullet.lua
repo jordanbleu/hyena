@@ -29,8 +29,8 @@ function PlayerBullet:update()
 end
 
 
-function PlayerBullet:delayedUpdate()
-    PlayerBullet.super.delayedUpdate(this)
+function PlayerBullet:physicsUpdate()
+    PlayerBullet.super.physicsUpdate(this)
 
     if (self.isActive) then 
         local nextY = self.y + BULLET_SPEED

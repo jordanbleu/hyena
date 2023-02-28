@@ -30,7 +30,7 @@ function Camera:init()
 end
 
 
-function Camera:delayedUpdate()
+function Camera:physicsUpdate()
     self:_sway()
     gfx.setDrawOffset(-self.x + -self.currentSwayXOffset, -self.y + -self.currentSwayYOffset)
 end
