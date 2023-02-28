@@ -11,8 +11,11 @@ function Grunt:init()
 
     Grunt.super.init(self, 3)
 
-    local image = gfx.image.new("images/enemies/grimidean-grunt")
-    self:setImage(image)
+    self.imageTable = gfx.imagetable.new("images/enemies/grimideanGruntAnim/grimidean-grunt")
+
+    self:setImage(self.imageTable:getImage(1))
+    self.animator = PhysicsAnimator(650, 1, self.imageTable:getLength())
+    self.animator:setRepeatCount(-1)
 
     self:setCollideRect(0,0,self:getSize())
     self:setGroups({COLLISION_LAYER.ENEMY})
@@ -24,6 +27,12 @@ end
 
 function Grunt:update()
     Grunt.super.update(self)
+
+    -- update sprite frame 
+    local animatorValue = math.floor(self.animator:currentValue())
+    local img = self.imageTable:getImage(animatorValue)
+    self:setImage(img)
+
     self:_checkCollisions()
 end
 
