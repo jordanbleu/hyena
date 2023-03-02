@@ -25,9 +25,10 @@ function Test1Scene:initialize(sceneManager)
     local player = Player()
     player:moveTo(200, 200)
 
-    local enemy = Grunt()
-    enemy:moveTo(200,70)
-
+    Grunt(200,70)
+    Grunt(150,100)
+    Grunt(250,100)
+    
     local camera = Camera()
 
 end

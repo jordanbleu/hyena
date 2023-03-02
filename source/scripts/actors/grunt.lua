@@ -1,8 +1,8 @@
 local gfx <const> = playdate.graphics
 
 import "scripts/actors/enemy"
-import "scripts/effects/playerBulletExplosion"
-import "scripts/physics/physicsAnimator"
+import "scripts/sprites/singleSpriteAnimation"
+import "scripts/sprites/spriteAnimation"
 --[[
     The grunt enemy moves vaguely downwards and towards the player
 ]]
@@ -18,19 +18,19 @@ local STATES <const> =
     DYING = 2
 }
 
-function Grunt:init() 
+function Grunt:init(x,y) 
 
     Grunt.super.init(self, 3)
+
+    self:moveTo(x,y)
 
     self.state = STATES.IDLE
 
     -- idle image animation
-    self.imageTable = gfx.imagetable.new("images/enemies/grimideanGruntAnim/idle")
-    self:setImage(self.imageTable:getImage(1))
-    self.animator = PhysicsAnimator(650, 1, self.imageTable:getLength())
-    self.animator:setRepeatCount(-1)
+    self.animator = SpriteAnimation("images/enemies/grimideanGruntAnim/idle", 1500, self.x, self.y)
+    self.animator:setRepeats(-1)
 
-    self:setCollideRect(0,0,self:getSize())
+    self:setCollideRect(-8,-8,16,16)
     self:setGroups({COLLISION_LAYER.ENEMY})
     self:setCollidesWithGroups({COLLISION_LAYER.PLAYER, COLLISION_LAYER.PLAYER_PROJECTILE})
     
@@ -42,13 +42,7 @@ function Grunt:update()
     Grunt.super.update(self)
 
     if (self.state == STATES.IDLE) then
-        -- update sprite frame for the idle state
-        local animatorValue = math.floor(self.animator:currentValue())
-        local img = self.imageTable:getImage(animatorValue)
-        self:setImage(img)
         self:_checkCollisions()
-    
-    
     end
 
 end
@@ -56,13 +50,11 @@ end
 function Grunt:_checkCollisions()
     local collisions = self:overlappingSprites()
     
-    for i, col in ipairs(collisions) do
+    for i,col in ipairs(collisions) do
         if (col:isa(PlayerBullet)) then
             print "ouch"
-            
             -- create a new explosion object at the bullets position
-            local explosion = PlayerBulletExplosion(col.x, col.y)
-            
+            local explosion = SingleSpriteAnimation("images/effects/playerBulletExplosionAnim/player-bullet-explosion", 1000,col.x, col.y)
             col:destroy()
             self:damage(1)
         end
@@ -71,6 +63,11 @@ end
 
 function Grunt:_onDead()
     --self.animator:remove()
-   print "rip"
-    --self.state = STATES.DYING
+    SingleSpriteAnimation("images/enemies/grimideanGruntAnim/death", 1000, self.x, self.y)
+    self:remove()
+end
+
+function Grunt:remove()
+    self.animator:remove()
+    Grunt.super.remove(self)
 end

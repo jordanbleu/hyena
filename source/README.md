@@ -95,7 +95,9 @@ end
   * Check if you're doing one of the following:
     * Calling a super class method without passing in `self`
     * Using `gfx.image.load('path')` instead of `gfx.image.new('path')`
+    * Calling a super class method like `self.xxx` instead of `self:xxx`
     * Infinite recursion or something   
+
 
 * VS Code Debug button stops working with the playdate debug extension 
   * (These steps are specific to Jordan's computer tbh)

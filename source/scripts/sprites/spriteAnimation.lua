@@ -23,11 +23,11 @@ function SpriteAnimation:init(imageTablePath, animationTime, x, y)
     local animationTimeInUpdates = animationTime / GLOBAL_TARGET_FPS
 
     -- 'updates' here is how many times the update method gets hit.  
-    self.updatesPerFrame = math.floor(animationTimeInUpdates / self.imageTable:getLength())
+    self.updatesPerFrame = math.ceil(animationTimeInUpdates / self.imageTable:getLength())
     self.updateCounter = 0
     
     -- 'frames' here refers to the sprite sheet image
-    self.frame = 0
+    self.frame = 1
 
     self.repeatCount = 0
     self.repeats = 0
@@ -35,6 +35,8 @@ function SpriteAnimation:init(imageTablePath, animationTime, x, y)
     self.active = true
     self.onCompletedCallback = nil
     self.isCompleted = false
+
+    self:setImage(self.imageTable:getImage(1))
 
     self:moveTo(x,y)
     self:add()
@@ -56,10 +58,14 @@ function SpriteAnimation:physicsUpdate()
                 if (self.repeats == 0) then
                     self:_complete()
                 elseif (self.repeats ~= -1) then
+                    self.frame = 1
                     self.repeatCount = self.repeatCount + 1
                     if (self.repeatCount > self.repeats) then
                         self:_complete()
                     end
+                else 
+                    self.frame = 1
+
                 end
                 
             end
@@ -72,6 +78,18 @@ end
 
 function SpriteAnimation:pause()
     self.active = false
+end
+
+---Sets how often the animation will repeat before being considered complete.
+---@param num integer how many times the animation should loop, or -1 for 'forever'
+function SpriteAnimation:setRepeats(num)
+    self.repeats = num
+end
+
+---Sets a function that executes on animation completion.  
+---@param callbackFn function Function to call upon animation complete
+function SpriteAnimation:setAnimationCompletedCallback(callbackFn) 
+    self.onCompletedCallback = callbackFn 
 end
 
 function SpriteAnimation:play()

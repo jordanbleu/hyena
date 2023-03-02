@@ -41,8 +41,8 @@ end
 
 function PlayerBullet:destroy()
 
-    self:remove()
     self.isActive = false
+    self:remove()
 
 
 end
