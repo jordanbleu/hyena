@@ -36,7 +36,7 @@ local timer
 local function setup()
     math.randomseed(playdate.getSecondsSinceEpoch())
 
-    playdate.display.setRefreshRate(50)
+    playdate.display.setRefreshRate(GLOBAL_TARGET_FPS)
 
     local sceneMgr = SceneManager()
     sceneMgr:add()
@@ -53,4 +53,5 @@ setup()
 function playdate.update()
     gfx.sprite.update()
     playdate.timer.updateTimers()
+    playdate.drawFPS(200,0)
 end
