@@ -9,6 +9,7 @@ import 'scripts/actors/actor'
 class("Enemy").extends(Actor)
 
 function Enemy:init(health)
+    Enemy.super.init(self)
     self.maxHealth = health
     self.health = health
 end

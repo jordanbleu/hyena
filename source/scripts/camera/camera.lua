@@ -13,13 +13,18 @@ function Camera:init()
     self.shakeTimer = playdate.timer.new(0)
 
     self.currentSwayXDirection = 1
-    self.currentSwayYDirection = 1
+    self.currentSwayYDirection = math.random(-1,1)
+    
+    if (self.currentSwayXDirection == 0 and self.currentSwayYDirection == 0) then 
+        self.currentSwayXDirection = -1
+    end
 
     self.currentSwayXOffset = 0
     self.currentSwayYOffset = 0
 
-    self.normalSwayAmount = 3 -- change this to determine how far the camera sways
+    self.normalSwayAmount = 3 -- change this to determine how far the camera sways normally.  Determines the bounds of the camera.
     self.normalSwaySpeed = 0.10 -- change this to determine how fast the camera sways
+
     self.swayAmount = self.normalSwayAmount -- change this for camera shake (it will slowly return to the normal sway amount)
     self.swaySpeed = self.normalSwaySpeed -- change this to determine how fast to shake / sway
 
@@ -38,48 +43,48 @@ end
 --[[ Applies a basic camera sway effect ]]
 function Camera:_sway()
 
-    local xDestination = self.x
-    if (self.currentSwayXDirection ~= 0) then 
-        xDestination = self.x + (self.swayAmount * self.currentSwayXDirection)
-    end
-    
-    local yDestination = self.y
-    if (self.currentSwayYDirection ~= 0) then 
-        yDestination = self.y + (self.swayAmount * self.currentSwayYDirection)
-    end
-
-    if (self.currentSwayXOffset == xDestination and self.currentSwayYOffset == yDestination) then
-
-        -- if we've reached the sway destination, set the directions to either -1 or 1
-        local dir = math.random(0,2)
-    
-        if (dir == 0) then 
-            self.currentSwayXDirection = -1
-        elseif (dir == 1) then
-            self.currentSwayXDirection = 0 
-        elseif (dir == 2) then 
-            self.currentSwayXDirection = 1
-        end
-      
-        dir = math.random(0,2)
-
-        if (dir == 0) then 
-            self.currentSwayYDirection = -1
-        elseif (dir == 1) then
-            self.currentSwayYDirection = 0 
-        elseif (dir == 2) then 
-            self.currentSwayYDirection = 1
-        end
-
-    end
+    local xDestination = self:_xSwayDestination()
+    local yDestination = self:_ySwayDestination()
 
     self.currentSwayXOffset = math.moveTowards(self.currentSwayXOffset, xDestination, self.swaySpeed)
     self.currentSwayYOffset = math.moveTowards(self.currentSwayYOffset, yDestination, self.swaySpeed)
 
-    self.swayAmount = math.moveTowards(self.swayAmount, self.normalSwayAmount, 0.1)
-    self.swaySpeed = math.moveTowards(self.swaySpeed, self.normalSwaySpeed, 0.1)
+    -- x position bounces back and forth (so it is always moving horizontally)
+    if (self.currentSwayXOffset == xDestination) then
+        self.currentSwayXDirection = -self.currentSwayXDirection
+    end
+
+    -- y position randomizes smoothly 
+    if (self.currentSwayYOffset == yDestination) then
+        self.currentSwayYDirection = math.random(-1,1)
+    end
+
+    self.swayAmount = math.moveTowards(self.swayAmount, self.normalSwayAmount, 0.15)
+    self.swaySpeed = math.moveTowards(self.swaySpeed, self.normalSwaySpeed, 0.15)
 end
 
--- function Camera:_resetSway()
+function Camera:_xSwayDestination()
+    return self.x + (self.swayAmount * self.currentSwayXDirection)
+end
 
--- end
+function Camera:_ySwayDestination()
+    return self.y + (self.swayAmount * self.currentSwayYDirection)
+end
+
+function Camera:smallShake()
+    self.swayAmount = 3
+    self.swaySpeed = 3
+end
+
+function Camera:mediumShake()
+    self.swayAmount = 5
+    self.swaySpeed = 5
+end
+
+function Camera:bigShake()
+    self.swayAmount = 10
+    self.swaySpeed = 10
+end
+
+
+

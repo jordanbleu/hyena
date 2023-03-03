@@ -18,11 +18,17 @@ local STATES <const> =
     DYING = 2
 }
 
-function Grunt:init(x,y) 
+---comment
+---@param x integer x coordinate to start in 
+---@param y integer y coordinate to start in
+---@param cameraInst object the camera instance
+function Grunt:init(x,y, cameraInst) 
 
     Grunt.super.init(self, 3)
 
     self:moveTo(x,y)
+
+    self.camera = cameraInst
 
     self.state = STATES.IDLE
 
@@ -52,16 +58,23 @@ function Grunt:_checkCollisions()
     
     for i,col in ipairs(collisions) do
         if (col:isa(PlayerBullet)) then
+            
             print "ouch"
             -- create a new explosion object at the bullets position
             local explosion = SingleSpriteAnimation("images/effects/playerBulletExplosionAnim/player-bullet-explosion", 1000,col.x, col.y)
             col:destroy()
             self:damage(1)
+
+            if (self.camera) then
+                self.camera:smallShake()
+            end
+
         end
     end
 end
 
 function Grunt:_onDead()
+
     --self.animator:remove()
     SingleSpriteAnimation("images/enemies/grimideanGruntAnim/death", 1000, self.x, self.y)
     self:remove()

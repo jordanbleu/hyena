@@ -23,3 +23,8 @@ end
 --[[ Called each frame but is affected by the current timeScaler ]]
 function Actor:physicsUpdate()
 end
+
+function Actor:remove()
+    self.updateTimer:remove()
+    Actor.super.remove(self)
+end
