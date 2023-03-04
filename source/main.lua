@@ -26,16 +26,17 @@ import "scripts/globals/globals"
 
 import "scripts/sceneManager"
 import "scripts/scenes/test1Scene" -- todo :remove 
-import "scripts/scenes/test2Scene"
+
 
 local gfx <const> = playdate.graphics
 
+local timer
+
 -- Runs on first on game launch
 local function setup()
-
     math.randomseed(playdate.getSecondsSinceEpoch())
 
-    playdate.display.setRefreshRate(50)
+    playdate.display.setRefreshRate(GLOBAL_TARGET_FPS)
 
     local sceneMgr = SceneManager()
     sceneMgr:add()
@@ -48,7 +49,9 @@ end
 
 setup()
 
+---@diagnostic disable-next-line: duplicate-set-field
 function playdate.update()
     gfx.sprite.update()
     playdate.timer.updateTimers()
+    playdate.drawFPS(200,0)
 end

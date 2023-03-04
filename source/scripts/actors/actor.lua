@@ -8,9 +8,8 @@ local gfx <const> = playdate.graphics
 class("Actor").extends(gfx.sprite)
 
 function Actor:init()
-    self.updateTimer = playdate.timer.performAfterDelay(GLOBAL_TIME_DELAY,function() self:delayedUpdate() end)
+    self.updateTimer = playdate.timer.performAfterDelay(GLOBAL_TIME_DELAY,function() self:physicsUpdate() end)
     self.updateTimer.repeats = true
-
 end
 
 function Actor:update()
@@ -21,5 +20,10 @@ function Actor:update()
 end
 
 --[[ Called each frame but is affected by the current timeScaler ]]
-function Actor:delayedUpdate()
+function Actor:physicsUpdate()
+end
+
+function Actor:remove()
+    self.updateTimer:remove()
+    Actor.super.remove(self)
 end

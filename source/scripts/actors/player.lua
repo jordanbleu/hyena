@@ -1,6 +1,7 @@
 local gfx <const> = playdate.graphics
 
 import "scripts/projectiles/playerBullet"
+import "scripts/projectiles/playerLaser"
 import "scripts/actors/actor"
 
 -- How much speed increases per frame when accelerating 
@@ -15,12 +16,16 @@ local DECELERATION_RATE = 0.1
 ]]
 class("Player").extends(Actor)
 
-function Player:init()
+function Player:init(cameraInst)
     Player.super.init(self)
+
+    self.camera = cameraInst
+
     self.xVelocity = 0
     self.yVelocity = 0
     self:setImage(gfx.image.new("images/player"))
     self:setZIndex(25)
+    self:setGroups({COLLISION_LAYER.PLAYER})
     self:add()
 end
 
@@ -30,8 +35,8 @@ function Player:update()
     self:_handlePlayerInput()
 end
 
-function Player:delayedUpdate()
-    Player.super.delayedUpdate(self)
+function Player:physicsUpdate()
+    Player.super.physicsUpdate(self)
     self:_handleMovement()
     self:_decelerate()
 end
@@ -40,18 +45,18 @@ function Player:_handlePlayerInput()
 
     
     if (playdate.buttonJustPressed(playdate.kButtonA)) then
-        -- instantiate a new player bullet
         PlayerBullet(self.x, self.y)
     end
-
-    -- temp 
+ 
     if (playdate.buttonJustPressed(playdate.kButtonB)) then
+        PlayerLaser(self.x, self.y - 130, self.camera)      
 
-        if (GLOBAL_TIME_DELAY == 0) then
-            GLOBAL_TIME_DELAY = 150
-        else 
-            GLOBAL_TIME_DELAY = 0
-        end
+
+        -- if (GLOBAL_TIME_DELAY == 0) then
+        --     GLOBAL_TIME_DELAY = 150
+        -- else 
+        --     GLOBAL_TIME_DELAY = 0
+        -- end
         
     end
 

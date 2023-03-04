@@ -12,3 +12,23 @@ PlayDate Game that I'm making
     * **sounds**: sounds only (wav or mp3 or whatever we use)
     * **xx.strings**: Localized strings.  
     * **pdxinfo**: File that playdate uses for metadata
+
+## animations 
+
+The playdate sdk doesn't support spritesheets so we have to deal with individual frames. 
+So to deal with clutter, we bury animations in folders.  The structure should look something like this:
+
+```
+images
+  |_ category
+      |_ whateverAnim 
+         |_ blah-table-1.png
+         |_ blah-table-2.png
+         |_ blah-table-3.png
+         |_ whatever-table-1.png 
+         |_ whatever-table-2.png 
+```
+
+Note that:
+* the folder holding animations is suffixed with 'anim'
+* multiple animations can go inside the same folder

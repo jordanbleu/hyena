@@ -24,13 +24,15 @@ function ParallaxLayer:init(image, scrollY)
 
 end
 
-function ParallaxLayer:delayedUpdate()
+function ParallaxLayer:physicsUpdate()
+
+    ParallaxLayer.super.physicsUpdate(self)
     
     local halfHeight = self:getImage():getSize() / 2
     self:moveTo(self.x, self.y + self.scrollY)
 
     if (self.y > halfHeight or self.y < -halfHeight) then
-        self.y = 0
+        self:moveTo(self.x, 0)
     end
 
     self:_setUpperAndLowerImagePositions()
