@@ -18,8 +18,9 @@ function SingleSpriteAnimation:init(imageTablePath, duration,x, y)
     SingleSpriteAnimation.super.init(self)
     self.animation = SpriteAnimation(imageTablePath, duration, x,y)
     self.animation:setAnimationCompletedCallback(function() self:remove() end)
-    
 end
 
-
+function SingleSpriteAnimation:getFrame()
+    return self.animation:getFrame()
+end
 

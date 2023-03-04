@@ -19,18 +19,19 @@ function Test1Scene:initialize(sceneManager)
     textSprite:moveTo(200,120)
     textSprite:add()
 
-    local plax0 = ParallaxLayer(gfx.image.new("images/backgrounds/stars-farther"),1)
-    local plax1 = ParallaxLayer(gfx.image.new("images/backgrounds/stars-far"),3)
-
-    local player = Player()
-    player:moveTo(200, 200)
+    ParallaxLayer(gfx.image.new("images/backgrounds/stars-farther"),1)
+    ParallaxLayer(gfx.image.new("images/backgrounds/stars-far"),3)
 
     local camera = Camera()
-    Grunt(200,70,camera)
-    Grunt(150,100,camera)
-    Grunt(250,100,camera)
-    
 
+    local player = Player(camera)
+
+    player:moveTo(200, 200)
+
+    Grunt(150,100,camera)
+    Grunt(200,70,camera)
+    Grunt(200,100,camera)
+    Grunt(250,100,camera)
 end
 
 function Test1Scene:update()

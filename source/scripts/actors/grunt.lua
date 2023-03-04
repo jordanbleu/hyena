@@ -3,6 +3,7 @@ local gfx <const> = playdate.graphics
 import "scripts/actors/enemy"
 import "scripts/sprites/singleSpriteAnimation"
 import "scripts/sprites/spriteAnimation"
+import "scripts/projectiles/playerLaser"
 --[[
     The grunt enemy moves vaguely downwards and towards the player
 ]]
@@ -21,7 +22,6 @@ local STATES <const> =
 ---comment
 ---@param x integer x coordinate to start in 
 ---@param y integer y coordinate to start in
----@param cameraInst object the camera instance
 function Grunt:init(x,y, cameraInst) 
 
     Grunt.super.init(self, 3)
@@ -61,12 +61,18 @@ function Grunt:_checkCollisions()
             
             print "ouch"
             -- create a new explosion object at the bullets position
-            local explosion = SingleSpriteAnimation("images/effects/playerBulletExplosionAnim/player-bullet-explosion", 1000,col.x, col.y)
+            SingleSpriteAnimation("images/effects/playerBulletExplosionAnim/player-bullet-explosion", 1000,col.x, col.y)
             col:destroy()
             self:damage(1)
 
             if (self.camera) then
                 self.camera:smallShake()
+            end
+
+        elseif (col:isa(PlayerLaser)) then
+            if (col.isDamageEnabled) then
+                print "oof"
+                self:damage(5)
             end
 
         end

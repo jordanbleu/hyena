@@ -106,6 +106,9 @@ function SpriteAnimation:_complete()
     self:remove()
 end
 
+function SpriteAnimation:getFrame()
+    return self.frame
+end
 
 -- function SpriteAnimation:reset()
 -- end

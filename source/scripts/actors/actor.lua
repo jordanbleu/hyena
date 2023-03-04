@@ -10,7 +10,6 @@ class("Actor").extends(gfx.sprite)
 function Actor:init()
     self.updateTimer = playdate.timer.performAfterDelay(GLOBAL_TIME_DELAY,function() self:physicsUpdate() end)
     self.updateTimer.repeats = true
-
 end
 
 function Actor:update()

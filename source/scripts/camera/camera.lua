@@ -72,8 +72,8 @@ function Camera:_ySwayDestination()
 end
 
 function Camera:smallShake()
-    self.swayAmount = 3
-    self.swaySpeed = 3
+    self.swayAmount = 2
+    self.swaySpeed = 2
 end
 
 function Camera:mediumShake()
