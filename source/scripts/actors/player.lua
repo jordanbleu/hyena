@@ -3,6 +3,7 @@ local gfx <const> = playdate.graphics
 import "scripts/projectiles/playerBullet"
 import "scripts/projectiles/playerLaser"
 import "scripts/actors/actor"
+import "scripts/physics/physicsTimer"
 
 -- How much speed increases per frame when accelerating 
 local MOVE_SPEED <const> = 0.5
@@ -27,6 +28,8 @@ function Player:init(cameraInst)
     self.camera = cameraInst
 
     self.selectedWeapon = WEAPON.LASER
+
+    self.energyRefillTimer = PhysicsTimer(50, function() self:_refillEnergy() end)
 
     self.xVelocity = 0
     self.yVelocity = 0
@@ -60,18 +63,14 @@ function Player:_handlePlayerInput()
                 self.energy -= 33
                 PlayerLaser(self.x, self.y - 130, self.camera)  
             end
-            
         end
-
-
-        -- if (GLOBAL_TIME_DELAY == 0) then
-        --     GLOBAL_TIME_DELAY = 150
-        -- else 
-        --     GLOBAL_TIME_DELAY = 0
-        -- end
-        
     end
+end
 
+function Player:_refillEnergy()
+    if (self.energy < self.maxEnergy) then
+        self.energy += 1
+    end
 end
 
 --[[ handles movement from controls ]]

@@ -1,5 +1,4 @@
 --[[
-
     Project Hyena
     by Jordan Bleu
 
@@ -7,7 +6,6 @@
     ======================
     PlayDate sdk docs: https://sdk.play.date/1.13.0/Inside%20Playdate.html
     SquidGod video that explains his file structure: https://www.youtube.com/watch?v=PZD1Ba15nnM    
-
 ]]
 
 -- Core libraries for PLayDate
@@ -54,4 +52,19 @@ function playdate.update()
     gfx.sprite.update()
     playdate.timer.updateTimers()
     --playdate.drawFPS(0,0)
+end
+
+-- ** this should be disabled for the final build **
+function playdate.keyReleased(key)
+    local k = string.lower(key)
+
+    -- press T to toggle time scale 
+    if (k == "t") then
+        if (GLOBAL_TIME_DELAY == 0) then
+            GLOBAL_TIME_DELAY = 250
+        else 
+            GLOBAL_TIME_DELAY = 0
+        end
+    end
+
 end
