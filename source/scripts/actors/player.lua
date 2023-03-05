@@ -18,9 +18,7 @@ class("Player").extends(Actor)
 
 function Player:init(cameraInst)
     Player.super.init(self)
-
-    -- todo: set these to 100
-    
+   
     self.maxHealth = 100
     self.health = self.maxHealth
     self.maxEnergy = 100
@@ -28,7 +26,7 @@ function Player:init(cameraInst)
 
     self.camera = cameraInst
 
-    self.selectedWeapon = WEAPON.DASH
+    self.selectedWeapon = WEAPON.LASER
 
     self.xVelocity = 0
     self.yVelocity = 0
@@ -57,7 +55,13 @@ function Player:_handlePlayerInput()
     end
  
     if (playdate.buttonJustPressed(playdate.kButtonB)) then
-        PlayerLaser(self.x, self.y - 130, self.camera)      
+        if (self.selectedWeapon == WEAPON.LASER) then
+            if (self.energy > 33) then
+                self.energy -= 33
+                PlayerLaser(self.x, self.y - 130, self.camera)  
+            end
+            
+        end
 
 
         -- if (GLOBAL_TIME_DELAY == 0) then

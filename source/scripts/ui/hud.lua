@@ -6,7 +6,7 @@ class("Hud").extends(gfx.sprite)
 
 function Hud:init(playerInst)
 
-    local hudHeight = 10
+    local hudHeight = 12
     local healthBarGap = 50
     local badgeGap = 80
     self.player = playerInst
@@ -14,7 +14,7 @@ function Hud:init(playerInst)
     -- load images for each weapon type into memory for big speed.
     self.weaponImages = {}
     self.weaponImages[WEAPON.MINE] = gfx.image.new("images/ui/hud/dash-selected")
-    self.weaponImages[WEAPON.LASER] = gfx.image.new("images/ui/hud/dash-selected")
+    self.weaponImages[WEAPON.LASER] = gfx.image.new("images/ui/hud/LASER-selected")
     self.weaponImages[WEAPON.MISSILE] = gfx.image.new("images/hud/ui/dash-selected")
     self.weaponImages[WEAPON.EMP] = gfx.image.new("images/ui/hud/dash-selected")
     self.weaponImages[WEAPON.DASH] = gfx.image.new("images/ui/hud/dash-selected")
@@ -45,7 +45,7 @@ function Hud:init(playerInst)
     -- draw the rect for the health bar
     self.healthBarRect = gfx.image.new(46, 2)
     self.healthBarSprite = gfx.sprite.new(self.healthBarRect)
-    self.healthBarSprite:moveTo(200-healthBarGap, 9)
+    self.healthBarSprite:moveTo(200-healthBarGap, hudHeight-1)
     self.healthBarSprite:setZIndex(100)
     self.healthBarSprite:setIgnoresDrawOffset(true)
     self.healthBarSprite:add()
@@ -68,7 +68,7 @@ function Hud:init(playerInst)
     self.energyBarRect = gfx.image.new(46, 2)
     self.energyBarRect = gfx.image.new(46, 2)
     self.energyBarSprite = gfx.sprite.new(self.energyBarRect)
-    self.energyBarSprite:moveTo(200+healthBarGap, 9)
+    self.energyBarSprite:moveTo(200+healthBarGap, hudHeight-1)
     self.energyBarSprite:setZIndex(100)
     self.energyBarSprite:setIgnoresDrawOffset(true)
     self.energyBarSprite:add()
@@ -98,7 +98,7 @@ end
 function Hud:_updateHealthBar()
     local percent = self.player:getHealth()/ 100
     gfx.pushContext(self.healthBarRect)
-        --gfx.fillRect(150, 10, percent * 46, 2)
+        gfx.clear(gfx.kColorClear)
         gfx.setColor(gfx.kColorWhite)
         gfx.fillRect(0, 0, percent * 46, 2)
     gfx.popContext()
@@ -108,7 +108,8 @@ function Hud:_updateEnergyBar()
     -- annoyingly for this to look cool we have to reverse it.
     local percent = self.player:getEnergy() / 100
     gfx.pushContext(self.energyBarRect)
+        gfx.clear(gfx.kColorClear)
         gfx.setColor(gfx.kColorWhite)
-        gfx.fillRect(46, 0, -(percent * 46), 2)
+        gfx.fillRect(46-(46*percent), 0, 46, 2)
     gfx.popContext()
 end
