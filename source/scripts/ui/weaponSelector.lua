@@ -30,7 +30,6 @@ function WeaponSelector:init(playerInst)
     self.blurSprite:setIgnoresDrawOffset(true)
 
     -- Load all the center sprite images into memory
-    -- todo: update these 
     self.centerSpriteImages = {}
     self.centerSpriteImages[WEAPON.MINE] = gfx.image.new("images/ui/hud/center-sprite-mine")
     self.centerSpriteImages[WEAPON.SHIELD] = gfx.image.new("images/ui/hud/center-sprite-deflector")
@@ -103,11 +102,15 @@ function WeaponSelector:update()
         self:_waitForHoldButton()
     elseif (self.state == STATE.ANIMATING_IN) then
         self:_waitForAnimateIn()
-    elseif (self.state == STATE.SHOWN) then
-        self:_updateUI()
     elseif (self.state == STATE.ANIMATING_OUT) then
         self:_waitForAnimateOut()
     end
+
+    -- You can start selecting a weapon even while the screen is animating in
+    if (self.state ~= STATE.HIDDEN and self.state ~= STATE.ANIMATING_OUT) then
+        self:_updateUI()
+    end
+
 
     -- if the user releases the B button at any time, reset everything.
     if (playdate.buttonJustReleased(playdate.kButtonB)) then
@@ -115,7 +118,7 @@ function WeaponSelector:update()
         if (self.state ~= STATE.HIDDEN and self.state ~= STATE.ANIMATING_OUT) then
             print "ENTER: ANIMATING OUT"
             self.arrowSprite:remove()
-            self.animator = gfx.animator.new(ANIMATION_DURATION, 1, 0, playdate.easingFunctions.inCubic)
+            self.animator = gfx.animator.new(ANIMATION_DURATION, 1, 0, playdate.easingFunctions.outCubic)
             self.state = STATE.ANIMATING_OUT
         end   
     end
@@ -170,12 +173,60 @@ function WeaponSelector:_waitForAnimateIn()
 end
 
 function WeaponSelector:_updateUI()
-    -- todo: listen for key presses, highlight the proper selected weapons etc
+
+    -- Set the center sprite
+    local weaponId = self.player:getSelectedWeaponId()
+    self.centerSprite:setImage(self.centerSpriteImages[weaponId])
+
+    -- just set all the images to the normal ones because i am lazy
+    self.dashSelectorSprite:setImage(self.dashSelectorImage)
+    self.empSelectorSprite:setImage(self.empSelectorImage)
+    self.laserSelectorSprite:setImage(self.laserSelectorImage)
+    self.missileSelectorSprite:setImage(self.missileSelectorImage)
+    self.mineSelectorSprite:setImage(self.mineSelectorImage)
+    self.shieldSelectorSprite:setImage(self.shieldSelectorImage)
+
+    -- and now update the actually selected one 
+    if (weaponId == WEAPON.DASH) then
+        self.dashSelectorSprite:setImage(self.dashSelectorSelectedImage)
+    elseif (weaponId == WEAPON.EMP) then
+        self.empSelectorSprite:setImage(self.empSelectorSelectedImage)
+    elseif (weaponId == WEAPON.LASER) then
+        self.laserSelectorSprite:setImage(self.laserSelectorSelectedImage)
+    elseif (weaponId == WEAPON.MINE) then
+        self.mineSelectorSprite:setImage(self.mineSelectorSelectedImage)
+    elseif (weaponId == WEAPON.MISSILE) then
+        self.missileSelectorSprite:setImage(self.missileSelectorSelectedImage)
+    elseif (weaponId == WEAPON.SHIELD) then
+        self.shieldSelectorSprite:setImage(self.shieldSelectorSelectedImage)
+    end
+
+    -- now we check for arrows
+    -- todo: click noises should be played here 
+    -- todo: Prevent selecting weapons you don't have access to yet 
+    if (playdate.buttonJustPressed(playdate.kButtonLeft)) then
+        self.player:setSelectedWeaponId(WEAPON.MISSILE)
+    elseif (playdate.buttonJustPressed(playdate.kButtonRight)) then
+        self.player:setSelectedWeaponId(WEAPON.EMP)
+    elseif (playdate.buttonJustPressed(playdate.kButtonUp)) then
+        if (weaponId == WEAPON.LASER) then
+            self.player:setSelectedWeaponId(WEAPON.MINE)
+        else
+            self.player:setSelectedWeaponId(WEAPON.LASER)
+        end
+    elseif (playdate.buttonJustPressed(playdate.kButtonDown)) then
+        if (weaponId == WEAPON.DASH) then
+            self.player:setSelectedWeaponId(WEAPON.SHIELD)
+        else 
+            self.player:setSelectedWeaponId(WEAPON.DASH)
+        end
+    end
+
+    -- todo: blink arrows maybe ?
 
     -- Make sure nobody else modifies the time delay but us 
     GLOBAL_TIME_DELAY = 300
 
-    print ("this is where it'd show the weapon selection screen")
 end
 
 function WeaponSelector:_waitForAnimateOut()

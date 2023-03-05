@@ -141,6 +141,10 @@ function Player:getSelectedWeaponId()
     return self.selectedWeapon
 end
 
+function Player:setSelectedWeaponId(weaponId)
+    self.selectedWeapon = weaponId
+end
+
 function Player:getHealth()
     return self.health
 end
