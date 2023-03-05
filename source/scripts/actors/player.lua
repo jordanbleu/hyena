@@ -20,6 +20,9 @@ class("Player").extends(Actor)
 function Player:init(cameraInst)
     Player.super.init(self)
    
+    -- blocks attacking for the weapon selector or cinematic moments
+    self.allowAttacks = true
+
     self.maxHealth = 100
     self.health = self.maxHealth
     self.maxEnergy = 100
@@ -54,14 +57,18 @@ end
 function Player:_handlePlayerInput() 
 
     if (playdate.buttonJustPressed(playdate.kButtonA)) then
-        PlayerBullet(self.x, self.y)
+        if (self.allowAttacks) then
+            PlayerBullet(self.x, self.y)
+        end
     end
  
-    if (playdate.buttonJustPressed(playdate.kButtonB)) then
-        if (self.selectedWeapon == WEAPON.LASER) then
-            if (self.energy > 33) then
-                self.energy -= 33
-                PlayerLaser(self.x, self.y - 130, self.camera)  
+    if (playdate.buttonJustReleased(playdate.kButtonB)) then
+        if(self.allowAttacks) then
+            if (self.selectedWeapon == WEAPON.LASER) then
+                if (self.energy > 33) then
+                    self.energy -= 33
+                    PlayerLaser(self.x, self.y - 130, self.camera)  
+                end
             end
         end
     end
@@ -140,4 +147,8 @@ end
 
 function Player:getEnergy()
     return self.energy
+end
+
+function Player:setAllowAttacks(enable)
+    self.allowAttacks = enable
 end

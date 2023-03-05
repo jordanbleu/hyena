@@ -4,6 +4,8 @@ import "scripts/camera/camera"
 import "scripts/sprites/parallaxLayer"
 import "scripts/actors/grunt"
 import "scripts/ui/hud"
+import "scripts/ui/weaponSelector"
+
 
 local gfx <const> = playdate.graphics
 
@@ -29,6 +31,7 @@ function Test1Scene:initialize(sceneManager)
     player:moveTo(200, 200)
 
     Hud(player)
+    WeaponSelector(player)
 
     Grunt(150,100,camera)
     Grunt(200,70,camera)
