@@ -53,5 +53,5 @@ setup()
 function playdate.update()
     gfx.sprite.update()
     playdate.timer.updateTimers()
-    playdate.drawFPS(200,0)
+    --playdate.drawFPS(0,0)
 end

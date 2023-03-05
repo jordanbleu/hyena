@@ -24,3 +24,13 @@ COLLISION_LAYER =
     PLAYER_PROJECTILE = 3,
     ENEMY_PROJECTILE = 4
 }
+
+WEAPON = 
+{
+    MINE = 1,
+    LASER = 2,
+    MISSILE = 3,
+    EMP = 4,
+    DASH = 5,
+    SHIELD = 6
+}

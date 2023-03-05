@@ -19,7 +19,16 @@ class("Player").extends(Actor)
 function Player:init(cameraInst)
     Player.super.init(self)
 
+    -- todo: set these to 100
+    
+    self.maxHealth = 100
+    self.health = self.maxHealth
+    self.maxEnergy = 100
+    self.energy = self.maxEnergy
+
     self.camera = cameraInst
+
+    self.selectedWeapon = WEAPON.DASH
 
     self.xVelocity = 0
     self.yVelocity = 0
@@ -43,7 +52,6 @@ end
 
 function Player:_handlePlayerInput() 
 
-    
     if (playdate.buttonJustPressed(playdate.kButtonA)) then
         PlayerBullet(self.x, self.y)
     end
@@ -117,4 +125,16 @@ function Player:_decelerate()
 
     self.xVelocity = math.snap(self.xVelocity, DECELERATION_RATE, 0)
     self.yVelocity = math.snap(self.yVelocity, DECELERATION_RATE, 0)
+end
+
+function Player:getSelectedWeaponId()
+    return self.selectedWeapon
+end
+
+function Player:getHealth()
+    return self.health
+end
+
+function Player:getEnergy()
+    return self.energy
 end

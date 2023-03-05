@@ -3,6 +3,7 @@ import "scripts/actors/player"
 import "scripts/camera/camera"
 import "scripts/sprites/parallaxLayer"
 import "scripts/actors/grunt"
+import "scripts/ui/hud"
 
 local gfx <const> = playdate.graphics
 
@@ -25,8 +26,9 @@ function Test1Scene:initialize(sceneManager)
     local camera = Camera()
 
     local player = Player(camera)
-
     player:moveTo(200, 200)
+
+    Hud(player)
 
     Grunt(150,100,camera)
     Grunt(200,70,camera)
