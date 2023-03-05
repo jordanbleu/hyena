@@ -14,6 +14,7 @@ import "CoreLibs/graphics"
 import "CoreLibs/sprites"
 import "CoreLibs/timer"
 import 'CoreLibs/animator'
+import 'CoreLibs/animation'
 
 -- Extensions
 import "scripts/Extensions/math"
@@ -51,6 +52,7 @@ setup()
 function playdate.update()
     gfx.sprite.update()
     playdate.timer.updateTimers()
+    gfx.animation.blinker.updateAll()
     --playdate.drawFPS(0,0)
 end
 

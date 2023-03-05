@@ -91,6 +91,9 @@ function WeaponSelector:init(playerInst)
     self.shieldSelectorSprite:setZIndex(103)
     self.shieldSelectorSprite:setIgnoresDrawOffset(true)
 
+    self.arrowBlinker = gfx.animation.blinker.new(500,500, true)
+    self.arrowBlinker:start()
+
     self.animator = nil
     self:add()
 end
@@ -129,8 +132,6 @@ function WeaponSelector:_waitForHoldButton()
     if (playdate.buttonIsPressed(playdate.kButtonB)) then
         self.holdBCycleCount = self.holdBCycleCount + 1
 
-        print ("held b for cycles->" .. self.holdBCycleCount)
-
         if (self.holdBCycleCount > HOLD_B_CYCLES_TO_WAIT) then
             print "ENTER: ANIMATING IN"
 
@@ -160,8 +161,6 @@ end
 function WeaponSelector:_waitForAnimateIn()
 
     local animValue = self.animator:currentValue()
-
-    print ("Animating in, Current anim value => " .. animValue)
     self:_updateSelectorPositions(animValue)
 
     if (self.animator:ended()) then
@@ -222,7 +221,12 @@ function WeaponSelector:_updateUI()
         end
     end
 
-    -- todo: blink arrows maybe ?
+    -- make the arrows blink
+    if (self.arrowBlinker.on) then
+        self.arrowSprite:setVisible(true)
+    else 
+        self.arrowSprite:setVisible(false)
+    end
 
     -- Make sure nobody else modifies the time delay but us 
     GLOBAL_TIME_DELAY = 300
@@ -231,7 +235,6 @@ end
 
 function WeaponSelector:_waitForAnimateOut()
     local animValue = self.animator:currentValue()
-    print ("Animating out, Current anim value => " .. animValue)
     self:_updateSelectorPositions(animValue)
 
     if (self.animator:ended()) then
