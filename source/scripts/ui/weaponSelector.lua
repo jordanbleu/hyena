@@ -4,7 +4,6 @@ local gfx <const> = playdate.graphics
 --[[ The HUD displays health, energy, and the selected weapon ]]
 class("WeaponSelector").extends(gfx.sprite)
 
-
 local STATE <const> = 
 {
     HIDDEN = 1,

@@ -2,8 +2,10 @@ local gfx <const> = playdate.graphics
 
 import "scripts/projectiles/playerBullet"
 import "scripts/projectiles/playerLaser"
+import "scripts/projectiles/playerMissile"
 import "scripts/actors/actor"
 import "scripts/physics/physicsTimer"
+
 
 -- How much speed increases per frame when accelerating 
 local MOVE_SPEED <const> = 0.5
@@ -81,6 +83,13 @@ function Player:_handlePlayerInput()
                     SingleSpriteAnimation("images/effects/playerDashShadowAnim/dash-shadow", 1000, self.x, self.y)
                     self.dashVelocity = self.lastHorizontalDirection * DASH_SPEED
                     self.camera:wideSway()
+                end
+
+            elseif (self.selectedWeapon == WEAPON.MISSILE) then
+                if (self.energy > 25) then 
+                    self.energy -= 25
+                    PlayerMissile(self.camera, self.x, self.y)
+                                    
                 end
 
             end
