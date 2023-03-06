@@ -11,6 +11,8 @@ local MOVE_SPEED <const> = 0.5
 local MAX_VELOCITY <const> = 2
 -- Deceleration rate.  Higher numbers make ship stop faster, lower makes the ship more floaty
 local DECELERATION_RATE = 0.1
+-- speed of the dash
+local DASH_SPEED <const> = 20
 
 --[[
     This is the player object, for normal gameplay
@@ -27,6 +29,9 @@ function Player:init(cameraInst)
     self.health = self.maxHealth
     self.maxEnergy = 100
     self.energy = self.maxEnergy
+
+    self.dashVelocity = 0
+    self.lastHorizontalDirection = 1
 
     self.camera = cameraInst
 
@@ -69,6 +74,14 @@ function Player:_handlePlayerInput()
                     self.energy -= 33
                     PlayerLaser(self.x, self.y - 130, self.camera)  
                 end
+
+            elseif (self.selectedWeapon == WEAPON.DASH) then
+                if (self.energy > 50) then
+                    self.energy -= 50
+                    SingleSpriteAnimation("images/effects/playerDashShadowAnim/dash-shadow", 1000, self.x, self.y)
+                    self.dashVelocity = self.lastHorizontalDirection * DASH_SPEED
+                end
+
             end
         end
     end
@@ -92,13 +105,19 @@ function Player:_handleMovement()
     local hInput = (leftInput + rightInput)
     local vInput = (upInput + downInput)
 
+    if (hInput > 0) then 
+        self.lastHorizontalDirection =1 
+    elseif (hInput < 0) then
+        self.lastHorizontalDirection = -1
+    end
+
     self.xVelocity += (MOVE_SPEED * hInput)
     self.yVelocity += (MOVE_SPEED * vInput)
 
     self.xVelocity = math.clamp(self.xVelocity, -MAX_VELOCITY, MAX_VELOCITY)
     self.yVelocity = math.clamp(self.yVelocity, -MAX_VELOCITY, MAX_VELOCITY)
 
-    local nextXPosition = self.x + self.xVelocity
+    local nextXPosition = self.x + self.xVelocity + self.dashVelocity
     local nextYPosition = self.y + self.yVelocity
 
     -- apply boundary areas
@@ -121,6 +140,7 @@ end
 --[[ Handles deceleration of ship's velocities back to zero ]]
 function Player:_decelerate()
 
+    -- stabilize normal velocity
     if (self.xVelocity < 0) then
         self.xVelocity += DECELERATION_RATE
     elseif (self.xVelocity > 0) then
@@ -133,8 +153,12 @@ function Player:_decelerate()
         self.yVelocity -= DECELERATION_RATE
     end
 
+    -- snap velocity to zero if we're close enough 
     self.xVelocity = math.snap(self.xVelocity, DECELERATION_RATE, 0)
     self.yVelocity = math.snap(self.yVelocity, DECELERATION_RATE, 0)
+
+    -- do the same thing with dash velocity but it slows down faster
+    self.dashVelocity = math.moveTowards(self.dashVelocity, 0, DECELERATION_RATE*12)
 end
 
 function Player:getSelectedWeaponId()
