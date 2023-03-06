@@ -80,6 +80,7 @@ function Player:_handlePlayerInput()
                     self.energy -= 50
                     SingleSpriteAnimation("images/effects/playerDashShadowAnim/dash-shadow", 1000, self.x, self.y)
                     self.dashVelocity = self.lastHorizontalDirection * DASH_SPEED
+                    self.camera:wideSway()
                 end
 
             end
