@@ -92,6 +92,12 @@ function Player:_handlePlayerInput()
                                     
                 end
 
+            elseif (self.selectedWeapon == WEAPON.MINE) then 
+                if (self.energy > 50) then
+                    self.energy -= 50
+                    PlayerMine(self.camera, self.x, self.y)
+                end
+
             end
         end
     end

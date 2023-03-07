@@ -138,7 +138,7 @@ function WeaponSelector:_waitForHoldButton()
             self.player:setAllowAttacks(false)
 
             -- Set's the game time to slow motion.
-            GLOBAL_TIME_DELAY = 300
+            GLOBAL_TIME_DELAY = 50
 
             self.animator = gfx.animator.new(ANIMATION_DURATION, 0, 1,  playdate.easingFunctions.outCubic)
             self.state = STATE.ANIMATING_IN

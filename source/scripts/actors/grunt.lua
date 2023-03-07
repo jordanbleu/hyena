@@ -6,6 +6,8 @@ import "scripts/sprites/spriteAnimation"
 import "scripts/projectiles/playerLaser"
 import "scripts/projectiles/playerMissile"
 import "scripts/projectiles/playerMissileExplosion"
+import "scripts/projectiles/playerMine"
+import "scripts/projectiles/playerMineExplosion"
 --[[
     The grunt enemy moves vaguely downwards and towards the player
 ]]
@@ -84,6 +86,15 @@ function Grunt:_checkCollisions()
             if (col.isDamageEnabled) then
                 print "owie!"
                 self:damage(15)
+            end
+        
+        elseif (col:isa(PlayerMine)) then
+            col:explode()
+
+        elseif (col:isa(PlayerMineExplosion)) then
+            if (col.isDamageEnabled) then
+                print "ouchie :("
+                self:damage(10)
             end
 
 
