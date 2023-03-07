@@ -12,7 +12,7 @@ function PlayerMineExplosion:init(x,y)
     self.isDamageEnabled = false
 
     self:moveTo(x,y)
-    self:setCollideRect(-64,-32,128,64)
+    self:setCollideRect(-80,-32,160,64)
     self:setGroups({COLLISION_LAYER.PLAYER_PROJECTILE})
     self:add()
 
