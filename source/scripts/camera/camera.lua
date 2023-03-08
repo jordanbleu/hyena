@@ -71,20 +71,28 @@ function Camera:_ySwayDestination()
     return self.y + (self.swayAmount * self.currentSwayYDirection)
 end
 
+-- suitable for tiny impacts, bullets, etc
 function Camera:smallShake()
     self.swayAmount = 2
     self.swaySpeed = 2
 end
 
+-- suitable for medium to heavy impacts
 function Camera:mediumShake()
     self.swayAmount = 5
     self.swaySpeed = 5
 end
 
+-- suitable for explosions
 function Camera:bigShake()
     self.swayAmount = 10
     self.swaySpeed = 10
 end
 
+-- suitable for sudden movements / jolts
+function Camera:wideSway()
+    self.swayAmount = 25
+    self.swaySpeed = 4
+end
 
 
