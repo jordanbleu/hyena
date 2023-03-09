@@ -3,6 +3,7 @@ import "scripts/actors/player"
 import "scripts/camera/camera"
 import "scripts/sprites/parallaxLayer"
 import "scripts/actors/grunt"
+import "scripts/actors/diveBomb"
 import "scripts/ui/hud"
 import "scripts/ui/weaponSelector"
 
@@ -33,10 +34,17 @@ function Test1Scene:initialize(sceneManager)
     Hud(player)
     WeaponSelector(player)
 
-    Grunt(150,-40,camera, player)
-    Grunt(200,-30,camera, player)
-    Grunt(200,-10,camera, player)
-    Grunt(250,-30,camera, player)
+    DiveBomb(100, -20, camera, player)
+    DiveBomb(220, -30, camera, player)
+    DiveBomb(240, -40, camera, player)
+    DiveBomb(300, -50, camera, player)
+    DiveBomb(350, -60, camera, player)
+
+
+    -- Grunt(150,-40,camera, player)
+    -- Grunt(200,-30,camera, player)
+    -- Grunt(200,-10,camera, player)
+    -- Grunt(250,-30,camera, player)
 end
 
 function Test1Scene:update()
