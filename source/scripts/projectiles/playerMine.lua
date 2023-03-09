@@ -17,6 +17,7 @@ function PlayerMine:init(cameraInst, x, y)
     -- mine has a large collision area because that's it's triggerable area
     self:setCollideRect(-16,-16,64,64)
     self:setGroups({COLLISION_LAYER.PLAYER_PROJECTILE})
+    self:setCollidesWithGroups({COLLISION_LAYER.PLAYER_PROJECTILE})
 
     -- eventually the mine will just explode itself
     self.cyclesTillBoom = GLOBAL_TARGET_FPS * 12 -- ~12 seconds
@@ -28,6 +29,38 @@ function PlayerMine:init(cameraInst, x, y)
     self.decelerationRate = 0.2
 
     self:add()
+
+end
+
+function PlayerMine:update()
+
+    PlayerMine.super.update(self)
+
+    -- if we collide with any player projectile at all, explode.
+    local collisions = self:overlappingSprites()
+
+    
+    if (#collisions > 0) then
+
+        -- by default we explode for anything except these exceptions
+        -- we do some extra logic 
+        local shouldExplode = true
+
+        for i,col in ipairs(collisions) do
+            if (col:isa(PlayerBullet)) then
+                shouldExplode = false
+    
+            elseif (col:isa(PlayerMissile)) then
+                col:explode()
+            end
+
+        end
+
+        if (shouldExplode) then
+            self:explode()
+        end
+    end
+
 
 end
 
