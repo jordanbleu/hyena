@@ -15,6 +15,7 @@ function Enemy:init(health)
 end
 
 function Enemy:update()
+    Enemy.super.update(self)
 end
 
 --[[ Called when the enemy takes damage.  Make sure you call the parent function. ]]

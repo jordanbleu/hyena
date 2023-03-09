@@ -33,10 +33,10 @@ function Test1Scene:initialize(sceneManager)
     Hud(player)
     WeaponSelector(player)
 
-    Grunt(150,100,camera)
-    Grunt(200,70,camera)
-    Grunt(200,100,camera)
-    Grunt(250,100,camera)
+    Grunt(150,-40,camera, player)
+    Grunt(200,-30,camera, player)
+    Grunt(200,-10,camera, player)
+    Grunt(250,-30,camera, player)
 end
 
 function Test1Scene:update()
