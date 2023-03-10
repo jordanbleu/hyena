@@ -35,16 +35,22 @@ function Test1Scene:initialize(sceneManager)
     WeaponSelector(player)
 
     DiveBomb(100, -20, camera, player)
-    DiveBomb(220, -30, camera, player)
-    DiveBomb(240, -40, camera, player)
-    DiveBomb(300, -50, camera, player)
-    DiveBomb(350, -60, camera, player)
 
 
-    -- Grunt(150,-40,camera, player)
+
+     Grunt(150,-40,camera, player)
     -- Grunt(200,-30,camera, player)
     -- Grunt(200,-10,camera, player)
     -- Grunt(250,-30,camera, player)
+
+    -- Grunt(150,-70,camera, player)
+    -- Grunt(200,-80,camera, player)
+    -- Grunt(200,-100,camera, player)
+    -- Grunt(250,-120,camera, player)
+    -- Grunt(150,-140,camera, player)
+    -- Grunt(200,-170,camera, player)
+    -- Grunt(200,-200,camera, player)
+    -- Grunt(250,-300,camera, player)
 end
 
 function Test1Scene:update()

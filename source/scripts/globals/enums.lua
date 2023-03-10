@@ -31,6 +31,5 @@ WEAPON =
     LASER = 2,
     MISSILE = 3,
     EMP = 4,
-    DASH = 5,
-    SHIELD = 6
+    SHIELD = 5
 }

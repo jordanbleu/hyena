@@ -16,6 +16,10 @@ local DECELERATION_RATE = 0.1
 -- speed of the dash
 local DASH_SPEED <const> = 20
 
+-- how long to hold the A button before using weapon.
+local HOLD_A_CYCLES_TO_WAIT <const> = 20
+local HOLD_B_CYCLES_TO_WAIT<const> = 10
+
 --[[
     This is the player object, for normal gameplay
 ]]
@@ -26,6 +30,11 @@ function Player:init(cameraInst)
    
     -- blocks attacking for the weapon selector or cinematic moments
     self.allowAttacks = true
+
+    -- how long the user has held A without releasing it.
+    self.holdACycles = 0
+    -- how long the user has held B without releaseing it.
+    self.holdBCycles = 0
 
     self.maxHealth = 100
     self.health = self.maxHealth
@@ -61,28 +70,55 @@ function Player:physicsUpdate()
     self:_decelerate()
 end
 
-function Player:_handlePlayerInput() 
+function Player:_handlePlayerInput()
 
-    if (playdate.buttonJustPressed(playdate.kButtonA)) then
-        if (self.allowAttacks) then
-            PlayerBullet(self.x, self.y)
+    -- This is a terrible way to determine if the weapon selector is open.
+    -- This could be refactored to tell the weapon selector when to open instead of both
+    -- checking for input but for now it will stay awful.
+    if (playdate.buttonIsPressed(playdate.kButtonB)) then
+        self.holdBCycles += 1
+    end
+
+    -- if player releases B before the wait cycles, do a dash
+    if (playdate.buttonJustReleased(playdate.kButtonB)) then
+        if (self.holdBCycles < HOLD_B_CYCLES_TO_WAIT) then
+            if (self.energy > 25) then
+                self.energy -= 25
+                SingleSpriteAnimation("images/effects/playerDashShadowAnim/dash-shadow", 1000, self.x, self.y)
+                self.dashVelocity = self.lastHorizontalDirection * DASH_SPEED
+                self.camera:wideSway()
+            end
+        end
+        self.holdBCycles = 0
+    end
+
+    -- if player holds A, wait for 10 cycles
+    if (playdate.buttonIsPressed(playdate.kButtonA)) then
+        if (self.holdACycles < HOLD_A_CYCLES_TO_WAIT) then
+            self.holdACycles += 1
         end
     end
- 
-    if (playdate.buttonJustReleased(playdate.kButtonB)) then
+
+    -- if player releases A, reset the counter or shoot normal bullet
+    if (playdate.buttonJustReleased(playdate.kButtonA)) then
+        if (self.holdACycles < HOLD_A_CYCLES_TO_WAIT) then
+            if (self.allowAttacks) then
+                PlayerBullet(self.x, self.y)
+            end
+        end
+        self.holdACycles =0 
+    end
+
+    if (self.holdACycles == HOLD_A_CYCLES_TO_WAIT) then
+        
+        -- settin this makes this action only happen on one frame.
+        self.holdACycles = HOLD_A_CYCLES_TO_WAIT + 1
+        
         if(self.allowAttacks) then
             if (self.selectedWeapon == WEAPON.LASER) then
                 if (self.energy > 33) then
                     self.energy -= 33
                     PlayerLaser(self.x, self.y - 130, self.camera)  
-                end
-
-            elseif (self.selectedWeapon == WEAPON.DASH) then
-                if (self.energy > 50) then
-                    self.energy -= 50
-                    SingleSpriteAnimation("images/effects/playerDashShadowAnim/dash-shadow", 1000, self.x, self.y)
-                    self.dashVelocity = self.lastHorizontalDirection * DASH_SPEED
-                    self.camera:wideSway()
                 end
 
             elseif (self.selectedWeapon == WEAPON.MISSILE) then
@@ -195,4 +231,8 @@ end
 
 function Player:setAllowAttacks(enable)
     self.allowAttacks = enable
+end
+
+function Player:getHoldBCycles()
+    return HOLD_B_CYCLES_TO_WAIT
 end
