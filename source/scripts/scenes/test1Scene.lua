@@ -39,7 +39,7 @@ function Test1Scene:initialize(sceneManager)
     --DiveBomb(100, -20, camera, player)
 
 
-    DeathStar(200,-10)
+    DeathStar(200,-10, player)
 
     --Grunt(150,-40,camera, player)
     --Grunt(200,-30,camera, player)

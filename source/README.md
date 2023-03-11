@@ -87,6 +87,8 @@ end
 
 25 - Player
 
+50 - effects
+
 100+ - UI
 
 ### Troubleshooting

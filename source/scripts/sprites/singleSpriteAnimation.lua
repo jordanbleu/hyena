@@ -35,6 +35,11 @@ function SingleSpriteAnimation:moveTo(x, y)
     SingleSpriteAnimation.super.moveTo(self, x,y)
 end
 
+function SingleSpriteAnimation:setZIndex(z) 
+    self.animation:setZIndex(z)
+    SingleSpriteAnimation.super.setZIndex(self, z)
+end
+
 function SingleSpriteAnimation:_onCompleted()
     if (self.completedCallback) then
         self.completedCallback()

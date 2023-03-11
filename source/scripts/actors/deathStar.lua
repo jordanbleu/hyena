@@ -24,9 +24,10 @@ local STATE <const> =
 ]]
 class("DeathStar").extends(Enemy)
 
-function DeathStar:init(x,y)
+function DeathStar:init(x,y, playerInst)
     DeathStar.super.init(self, 30)
 
+    self.player = playerInst
     self.ySpeed = math.random() * 1.5
 
     -- idle image animation
@@ -63,7 +64,9 @@ function DeathStar:update()
     self.animator:moveTo(self.x, self.y)
 
     if (self.y > 432) then
-        self.y = math.random(-64, -32)
+        local newX = self.player.x + math.random(-24,24)
+        local newY = math.random(-64, -32)
+        self:moveTo(newX, newY)
     end
 
 end
@@ -73,6 +76,7 @@ function DeathStar:_checkCollisions()
     local collisions = self:overlappingSprites()
 
     local tookDamage = false
+    local showImpactAnimation = false
 
     for i,col in ipairs(collisions) do
         if (col:isa(PlayerBullet)) then
@@ -85,20 +89,20 @@ function DeathStar:_checkCollisions()
             if (col.isDamageEnabled) then
                 tookDamage = true
                 print ("laser => death star healh - " .. self.health)
-                SingleSpriteAnimation("images/effects/hardImpactAnim/hard-impact", 1000,col.x, col.y)
+                showImpactAnimation = true
                 self:damage(5)
             end
 
         elseif (col:isa(PlayerMissile)) then
             print ("missile -> death star healh - " .. self.health)
-            SingleSpriteAnimation("images/effects/hardImpactAnim/hard-impact", 1000,col.x, col.y)
+            showImpactAnimation = true
             col:explode()
 
         elseif (col:isa(PlayerMissileExplosion)) then
             if (col.isDamageEnabled) then
                 tookDamage = true
                 print ("missile explosion -> death star healh - " .. self.health)
-                SingleSpriteAnimation("images/effects/hardImpactAnim/hard-impact", 1000,col.x, col.y)
+                showImpactAnimation = true
                 self:damage(15)
             end
         
@@ -110,11 +114,18 @@ function DeathStar:_checkCollisions()
             if (col.isDamageEnabled) then
                 tookDamage = true
                 print ("mine explosion -> death star healh - " .. self.health)
-                SingleSpriteAnimation("images/effects/hardImpactAnim/hard-impact", 1000,col.x, col.y)
+                showImpactAnimation = true
                 self:damage(10)
             end
         end
 
+    end
+
+    if (showImpactAnimation) then
+        local ix = math.random(math.floor(self.x-24),math.floor(self.x+24))
+        local iy = math.random(math.floor(self.y-24), math.floor(self.y+24))
+        local spr = SingleSpriteAnimation("images/effects/hardImpactAnim/hard-impact", 1000,ix, iy)
+        spr:setZIndex(50)
     end
 
     if (tookDamage) then
