@@ -2,26 +2,26 @@ local gfx <const> = playdate.graphics
 
 import 'scripts/actors/actor'
 
---[[ Bullet that damages any enemies. ]]
-class("PlayerBullet").extends(Actor)
+--[[ Bullet that damages player. ]]
+class("EnemyBullet").extends(Actor)
 
-function PlayerBullet:init(x,y)
-    PlayerBullet.super.init(self)
+function EnemyBullet:init(x,y)
+    EnemyBullet.super.init(self)
     
-    self.yVelocity = -10
+    self.yVelocity = 4
     self.xVelocity = 0
 
     self.isActive = true
-    self:setImage(gfx.image.new("images/projectiles/player-bullet"))
+    self:setImage(gfx.image.new("images/projectiles/enemy-bullet"))
     self:moveTo(x,y)
     self:setCollideRect(0,0,self:getSize())
-    self:setGroups({COLLISION_LAYER.PLAYER_PROJECTILE})
+    self:setGroups({COLLISION_LAYER.ENEMY_PROJECTILE})
     self:add()
 
 end
 
-function PlayerBullet:update()
-    PlayerBullet.super.update(self)
+function EnemyBullet:update()
+    EnemyBullet.super.update(self)
 
     if (self.y < -40) then
         self:destroy()
@@ -34,8 +34,8 @@ function PlayerBullet:update()
 end
 
 
-function PlayerBullet:physicsUpdate()
-    PlayerBullet.super.physicsUpdate(self)
+function EnemyBullet:physicsUpdate()
+    EnemyBullet.super.physicsUpdate(self)
 
     if (self.isActive) then 
         local newX = self.x + self.xVelocity
@@ -45,12 +45,12 @@ function PlayerBullet:physicsUpdate()
 
 end
 
-function PlayerBullet:destroy()
+function EnemyBullet:destroy()
     self.isActive = false
     self:remove()
 end
 
-function PlayerBullet:ricochet()
+function EnemyBullet:ricochet()
     self.yVelocity = -self.yVelocity
     self.xVelocity = math.random(-3, 3)
     local newX = self.x + self.xVelocity

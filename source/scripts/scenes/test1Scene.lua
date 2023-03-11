@@ -4,6 +4,8 @@ import "scripts/camera/camera"
 import "scripts/sprites/parallaxLayer"
 
 import "scripts/actors/grunt"
+import "scripts/actors/rangedGrunt"
+
 import "scripts/actors/deathStar"
 import "scripts/actors/diveBomb"
 
@@ -38,8 +40,9 @@ function Test1Scene:initialize(sceneManager)
 
     --DiveBomb(100, -20, camera, player)
 
+    RangedGrunt(200,50, player)
 
-    DeathStar(200,-10, player)
+    --DeathStar(200,-10, player)
 
     --Grunt(150,-40,camera, player)
     --Grunt(200,-30,camera, player)
