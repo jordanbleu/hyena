@@ -113,3 +113,14 @@ function RangedGrunt:_moveToDestination()
     self:moveTo(newX, newY)
 
 end
+
+function RangedGrunt:_onDead()
+    --self.animator:remove()
+    SingleSpriteAnimation("images/enemies/rangedGruntAnim/death", 1000, self.x, self.y)
+    self:remove()
+end
+
+function RangedGrunt:remove()
+    self.animator:remove()
+    Grunt.super.remove(self)
+end
