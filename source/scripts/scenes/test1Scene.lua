@@ -2,11 +2,13 @@ import "scene"
 import "scripts/actors/player"
 import "scripts/camera/camera"
 import "scripts/sprites/parallaxLayer"
+
 import "scripts/actors/grunt"
+import "scripts/actors/deathStar"
 import "scripts/actors/diveBomb"
+
 import "scripts/ui/hud"
 import "scripts/ui/weaponSelector"
-
 
 local gfx <const> = playdate.graphics
 
@@ -34,13 +36,14 @@ function Test1Scene:initialize(sceneManager)
     Hud(player)
     WeaponSelector(player)
 
-    DiveBomb(100, -20, camera, player)
+    --DiveBomb(100, -20, camera, player)
 
 
+    DeathStar(200,-10)
 
-     Grunt(150,-40,camera, player)
-    -- Grunt(200,-30,camera, player)
-    -- Grunt(200,-10,camera, player)
+    --Grunt(150,-40,camera, player)
+    --Grunt(200,-30,camera, player)
+    --Grunt(200,-10,camera, player)
     -- Grunt(250,-30,camera, player)
 
     -- Grunt(150,-70,camera, player)

@@ -110,5 +110,13 @@ function SpriteAnimation:getFrame()
     return self.frame
 end
 
+function SpriteAnimation:hide()
+    self:setVisible(false)
+end
+
+function SpriteAnimation:show()
+    self:setVisible(true)
+end
+
 -- function SpriteAnimation:reset()
 -- end
