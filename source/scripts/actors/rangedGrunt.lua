@@ -76,6 +76,10 @@ function RangedGrunt:update()
         
     end
 
+    if (self.player:didUseEmp()) then
+        self:damage(3)
+    end
+
     self:_checkCollisions()
 end
 

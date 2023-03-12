@@ -67,6 +67,10 @@ function DeathStar:update()
         self:moveTo(newX, newY)
     end
 
+    if (self.player:didUseEmp()) then
+        self:damage(3)
+    end
+
 end
 
 

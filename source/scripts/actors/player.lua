@@ -6,7 +6,7 @@ import "scripts/projectiles/playerMissile"
 import "scripts/projectiles/deflector"
 import "scripts/actors/actor"
 import "scripts/physics/physicsTimer"
-
+import "scripts/effects/whiteScreenFlash"
 
 -- How much speed increases per frame when accelerating 
 local MOVE_SPEED <const> = 0.5
@@ -57,11 +57,17 @@ function Player:init(cameraInst)
     self:setZIndex(25)
     self:setGroups({COLLISION_LAYER.PLAYER})
     self:add()
-end
 
+    self.usedEmp = false
+end
 
 function Player:update()
     Player.super.update(self)
+
+    if (self.usedEmp) then
+        self.usedEmp = false
+    end
+
     self:_handlePlayerInput()
 end
 
@@ -140,7 +146,14 @@ function Player:_handlePlayerInput()
                     self.energy -= 33
                     Deflector(self)
                 end
-
+            
+            elseif (self.selectedWeapon == WEAPON.EMP) then
+                if (self.energy >= 100) then
+                    self.energy -= 100
+                    self.camera:massiveSway()
+                    WhiteScreenFlash(500)
+                    self.usedEmp = true
+                end
             end
         end
     end
@@ -242,4 +255,8 @@ end
 
 function Player:getHoldBCycles()
     return HOLD_B_CYCLES_TO_WAIT
+end
+
+function Player:didUseEmp() 
+    return self.usedEmp
 end

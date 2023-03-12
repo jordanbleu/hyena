@@ -41,6 +41,10 @@ function DiveBomb:update()
         self:moveTo(newX, newY)
     end
 
+    if (self.player:didUseEmp()) then
+        self:damage(3)
+    end
+
     self:_checkCollisions()
 
 end

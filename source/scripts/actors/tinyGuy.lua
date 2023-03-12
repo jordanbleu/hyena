@@ -18,8 +18,10 @@ class("TinyGuy").extends(Enemy)
 
 local DISTANCE_FROM_LEADER <const> = 16
 
-function TinyGuy:init(x,y,leader, cameraInst)
+function TinyGuy:init(x,y,leader, cameraInst, playerInst)
     TinyGuy.super.init(self, 1)
+    
+    self.player = playerInst
     self.camera = cameraInst
     self.leader = leader
     self:moveTo(x,y)
@@ -57,6 +59,10 @@ function TinyGuy:update()
 
     if (self.y > 250) then
         self:moveTo(self.x, -60)
+    end
+
+    if (self.player:didUseEmp()) then
+        self:damage(3)
     end
 
     self:_checkCollisions()

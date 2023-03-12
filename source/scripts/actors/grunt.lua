@@ -80,6 +80,10 @@ function Grunt:update()
         self:moveTo(self.x, -20)
     end
 
+    if (self.player:didUseEmp()) then
+        self:damage(3)
+    end
+    
     self.animator:moveTo(self.x, self.y)
     self:_checkCollisions()
 

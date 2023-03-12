@@ -20,7 +20,7 @@ local TRANSITION_STATE =
 -- How long the fade duration should be 
 local TRANSITION_DURATION = 1500
 -- tweak this for more frames / worse performance (max is 100)
-local TRANSITION_QUALITY = 50
+local TRANSITION_QUALITY = 25
 
 function SceneManager:init()
     self.transitionState = TRANSITION_STATE.COMPLETE
