@@ -5,6 +5,7 @@ import "scripts/sprites/parallaxLayer"
 
 import "scripts/actors/grunt"
 import "scripts/actors/rangedGrunt"
+import "scripts/actors/tinyGuy"
 
 import "scripts/actors/deathStar"
 import "scripts/actors/diveBomb"
@@ -38,9 +39,24 @@ function Test1Scene:initialize(sceneManager)
     Hud(player)
     WeaponSelector(player)
 
+    local guy1 = TinyGuy(200,-10,nil)
+    local guy2 = TinyGuy(200,-10,guy1)
+    local guy3 = TinyGuy(200,-10,guy2)
+    local guy4 = TinyGuy(200,-40,guy3)
+    local guy5 = TinyGuy(200,-50,guy4)
+    local guy6 = TinyGuy(200,-60,guy5)
+    local guy7 = TinyGuy(200,-70,guy6)
+    local guy8 = TinyGuy(200,-80,guy7)
+    local guy9 = TinyGuy(200,-40,guy8)
+    local guy10 = TinyGuy(200,-50,guy9)
+    local guy11 = TinyGuy(200,-60,guy10)
+    local guy12 = TinyGuy(200,-70,guy11)
+    local guy13 = TinyGuy(200,-80,guy12)
+
+
     --DiveBomb(100, -20, camera, player)
 
-    RangedGrunt(200,50, camera, player)
+    --RangedGrunt(200,50, camera, player)
 
     --DeathStar(200,-10, player)
 
