@@ -24,9 +24,7 @@ function WhiteScreenFlash:init(durationMs)
         fadedImage = gfx.image.new(400,240)
 
         if (playdate.getReduceFlashing()) then
-            alpha = math.clamp(alpha, 0, 0.5)
-        else 
-            alpha = math.clamp(alpha, 0, 0.9)
+            alpha = math.clamp(alpha, 0, 0.15)
         end
 
         -- we are now drawing onto the faded image directly
