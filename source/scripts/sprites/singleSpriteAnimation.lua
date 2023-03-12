@@ -21,10 +21,9 @@ function SingleSpriteAnimation:init(imageTablePath, duration,x, y, onComplete)
     if (onComplete) then
         self.completedCallback = onComplete
     end
-    
+
     self.animation:setAnimationCompletedCallback(function() self:_onCompleted() end)
 end
-
 
 function SingleSpriteAnimation:getFrame()
     return self.animation:getFrame()
@@ -45,5 +44,9 @@ function SingleSpriteAnimation:_onCompleted()
         self.completedCallback()
     end
     self:remove()
+end
+
+function SingleSpriteAnimation:attachTo(otherSprite)
+    self.animation:attachTo(otherSprite)
 end
 

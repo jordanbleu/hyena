@@ -40,7 +40,7 @@ function Test1Scene:initialize(sceneManager)
 
     --DiveBomb(100, -20, camera, player)
 
-    RangedGrunt(200,50, player)
+    RangedGrunt(200,50, camera, player)
 
     --DeathStar(200,-10, player)
 

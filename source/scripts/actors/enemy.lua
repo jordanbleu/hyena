@@ -21,7 +21,7 @@ end
 --[[ Called when the enemy takes damage.  Make sure you call the parent function. ]]
 function Enemy:damage(amount)
     self.health = self.health - amount
-    if (self.health < 0) then
+    if (self.health <= 0) then
         self:_onDead()
     end
 end

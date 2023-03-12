@@ -34,8 +34,6 @@ function DeathStar:init(x,y, playerInst)
     self.animator = SpriteAnimation("images/enemies/deathStarAnim/idle", 8000, self.x, self.y)
     self.animator:setRepeats(-1)
 
-    self.damageAnimator = nil
-
     self:setCollideRect(-32,-32,64,64)
     self:setGroups({COLLISION_LAYER.ENEMY})
     self:setCollidesWithGroups({COLLISION_LAYER.PLAYER, COLLISION_LAYER.PLAYER_PROJECTILE})
@@ -131,7 +129,8 @@ function DeathStar:_checkCollisions()
     if (tookDamage) then
         self.state = STATE.DAMAGE
         
-        self.damageAnimator = SingleSpriteAnimation("images/enemies/deathStarAnim/damage", 1000, self.x, self.y, function() self:swapToIdleState() end)
+        local dmgSprite = SingleSpriteAnimation("images/enemies/deathStarAnim/damage", 1000, self.x, self.y, function() self:swapToIdleState() end)
+        dmgSprite:attachTo(self)
     end
 
 end
@@ -148,6 +147,4 @@ end
 
 function DeathStar:swapToIdleState()
     self.state = STATE.IDLE
-    
-    self.damageAnimator = nil
 end
