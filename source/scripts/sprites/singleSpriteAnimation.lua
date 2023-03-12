@@ -50,3 +50,12 @@ function SingleSpriteAnimation:attachTo(otherSprite)
     self.animation:attachTo(otherSprite)
 end
 
+function SingleSpriteAnimation:pause()
+    self.animation:pause()
+end
+
+function SingleSpriteAnimation:play()
+    self.animation:play()
+end
+
+

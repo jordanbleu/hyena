@@ -16,6 +16,9 @@ function EnemyBullet:init(x,y)
     self:moveTo(x,y)
     self:setCollideRect(0,0,self:getSize())
     self:setGroups({COLLISION_LAYER.ENEMY_PROJECTILE})
+    self:setCollidesWithGroups({COLLISION_LAYER.PROJECTILE_DEFLECTOR})
+
+    self.didRicochet = false
     self:add()
 
 end
@@ -31,8 +34,22 @@ function EnemyBullet:update()
         self:destroy()
     end
 
+    self:_updateCollisions()
 end
 
+function EnemyBullet:_updateCollisions()
+    local collisions = self:overlappingSprites()
+    for i,col in ipairs(collisions) do
+        if (col:isa(Deflector)) then
+            if (col.isDamageEnabled) then
+                local absorb = SingleSpriteAnimation("images/effects/shieldAbsorbAnim/absorb", 500, self.x, self.y)
+                absorb:setZIndex(50)
+                self:destroy()
+            end
+        end
+    end 
+
+end
 
 function EnemyBullet:physicsUpdate()
     EnemyBullet.super.physicsUpdate(self)
@@ -51,7 +68,8 @@ function EnemyBullet:destroy()
 end
 
 function EnemyBullet:ricochet()
-    self.yVelocity = -self.yVelocity
+    self.didRicochet = true
+    self.yVelocity = -self.yVelocity * 3
     self.xVelocity = math.random(-3, 3)
     local newX = self.x + self.xVelocity
     local newY = self.y + self.yVelocity

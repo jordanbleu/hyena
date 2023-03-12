@@ -3,6 +3,7 @@ local gfx <const> = playdate.graphics
 import "scripts/projectiles/playerBullet"
 import "scripts/projectiles/playerLaser"
 import "scripts/projectiles/playerMissile"
+import "scripts/projectiles/deflector"
 import "scripts/actors/actor"
 import "scripts/physics/physicsTimer"
 
@@ -132,6 +133,12 @@ function Player:_handlePlayerInput()
                 if (self.energy > 50) then
                     self.energy -= 50
                     PlayerMine(self.camera, self.x, self.y)
+                end
+
+            elseif (self.selectedWeapon == WEAPON.SHIELD) then
+                if (self.energy > 33) then
+                    self.energy -= 33
+                    Deflector(self)
                 end
 
             end
