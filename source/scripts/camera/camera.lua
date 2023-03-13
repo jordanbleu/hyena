@@ -95,4 +95,8 @@ function Camera:wideSway()
     self.swaySpeed = 4
 end
 
-
+-- avoid this one except for a few key places lol
+function Camera:massiveSway()
+    self.swayAmount = 25
+    self.swaySpeed = 8
+end

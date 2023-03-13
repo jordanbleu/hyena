@@ -17,7 +17,6 @@ function Hud:init(playerInst)
     self.weaponImages[WEAPON.LASER] = gfx.image.new("images/ui/hud/laser-main")
     self.weaponImages[WEAPON.MISSILE] = gfx.image.new("images/ui/hud/missile-main")
     self.weaponImages[WEAPON.EMP] = gfx.image.new("images/ui/hud/emp-main")
-    self.weaponImages[WEAPON.DASH] = gfx.image.new("images/ui/hud/dash-main")
     self.weaponImages[WEAPON.SHIELD] = gfx.image.new("images/ui/hud/shield-main")
 
     -- draw the selected weapon sprite

@@ -38,6 +38,8 @@ function SpriteAnimation:init(imageTablePath, animationTime, x, y)
 
     self:setImage(self.imageTable:getImage(1))
 
+    self.attachedSprite = nil
+
     self:moveTo(x,y)
     self:add()
 end
@@ -96,6 +98,15 @@ function SpriteAnimation:play()
     self.active = true
 end
 
+function SpriteAnimation:update()
+    SpriteAnimation.super.update(self)
+
+    if (self.attachedSprite) then
+        self:moveTo(self.attachedSprite.x, self.attachedSprite.y)
+    end
+
+end
+
 function SpriteAnimation:_complete()
     self.isCompleted = false;
 
@@ -108,6 +119,20 @@ end
 
 function SpriteAnimation:getFrame()
     return self.frame
+end
+
+function SpriteAnimation:hide()
+    self:setVisible(false)
+end
+
+function SpriteAnimation:show()
+    self:setVisible(true)
+end
+
+
+
+function SpriteAnimation:attachTo(obj)
+    self.attachedSprite = obj
 end
 
 -- function SpriteAnimation:reset()

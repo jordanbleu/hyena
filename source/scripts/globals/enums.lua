@@ -22,7 +22,8 @@ COLLISION_LAYER =
     PLAYER = 1,
     ENEMY = 2,
     PLAYER_PROJECTILE = 3,
-    ENEMY_PROJECTILE = 4
+    ENEMY_PROJECTILE = 4,
+    PROJECTILE_DEFLECTOR = 5
 }
 
 WEAPON = 
@@ -31,6 +32,5 @@ WEAPON =
     LASER = 2,
     MISSILE = 3,
     EMP = 4,
-    DASH = 5,
-    SHIELD = 6
+    SHIELD = 5
 }

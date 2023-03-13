@@ -12,12 +12,13 @@ local STATE <const> =
     ANIMATING_OUT =4
 }
 
--- how many update cycles the user has to be holding B for the selector to show
-local HOLD_B_CYCLES_TO_WAIT<const> = 10
-local ANIMATION_DURATION<const> = 500
+-- this is the duration of the opening / closing animation.
+local ANIMATION_DURATION<const> = 350
 
 function WeaponSelector:init(playerInst)
     self.player = playerInst
+
+    self.holdBCyclesToWait = self.player:getHoldBCycles()
 
     self.state = STATE.HIDDEN
     self.holdBCycleCount = 0
@@ -34,7 +35,6 @@ function WeaponSelector:init(playerInst)
     self.centerSpriteImages[WEAPON.SHIELD] = gfx.image.new("images/ui/hud/center-sprite-deflector")
     self.centerSpriteImages[WEAPON.EMP] = gfx.image.new("images/ui/hud/center-sprite-emp")
     self.centerSpriteImages[WEAPON.LASER] = gfx.image.new("images/ui/hud/center-sprite-laser")
-    self.centerSpriteImages[WEAPON.DASH] = gfx.image.new("images/ui/hud/center-sprite-dash")
     self.centerSpriteImages[WEAPON.MISSILE] = gfx.image.new("images/ui/hud/center-sprite-missile")
 
     self.centerSprite = gfx.sprite.new(self.centerSpriteImages[self.player:getSelectedWeaponId()])
@@ -46,14 +46,6 @@ function WeaponSelector:init(playerInst)
     self.arrowSprite:moveTo(200,120)
     self.arrowSprite:setZIndex(105)
     self.arrowSprite:setIgnoresDrawOffset(true)
-
-    -- Now, we just load a shit ton of images :)
-    self.dashSelectorSelectedImage = gfx.image.new("images/ui/hud/dash-selector-selected")
-    self.dashSelectorImage = gfx.image.new("images/ui/hud/dash-selector")
-    self.dashSelectorSprite = gfx.sprite.new(self.dashSelectorImage)
-    self.dashSelectorSprite:moveTo(200,120)
-    self.dashSelectorSprite:setZIndex(103)
-    self.dashSelectorSprite:setIgnoresDrawOffset(true)
 
     self.empSelectorSelectedImage = gfx.image.new("images/ui/hud/emp-selector-selected")
     self.empSelectorImage = gfx.image.new("images/ui/hud/emp-selector")
@@ -113,7 +105,6 @@ function WeaponSelector:update()
         self:_updateUI()
     end
 
-
     -- if the user releases the B button at any time, reset everything.
     if (playdate.buttonJustReleased(playdate.kButtonB)) then
         self.holdBCycleCount = 0
@@ -131,7 +122,7 @@ function WeaponSelector:_waitForHoldButton()
     if (playdate.buttonIsPressed(playdate.kButtonB)) then
         self.holdBCycleCount = self.holdBCycleCount + 1
 
-        if (self.holdBCycleCount > HOLD_B_CYCLES_TO_WAIT) then
+        if (self.holdBCycleCount > self.holdBCyclesToWait) then
             print "ENTER: ANIMATING IN"
 
             -- disallow attacks while the menu is open.
@@ -146,7 +137,6 @@ function WeaponSelector:_waitForHoldButton()
             -- add all the sprites to the batch
             self.blurSprite:add()
             self.centerSprite:add()
-            self.dashSelectorSprite:add()
             self.empSelectorSprite:add()
             self.laserSelectorSprite:add()
             self.missileSelectorSprite:add()
@@ -177,7 +167,6 @@ function WeaponSelector:_updateUI()
     self.centerSprite:setImage(self.centerSpriteImages[weaponId])
 
     -- just set all the images to the normal ones because i am lazy
-    self.dashSelectorSprite:setImage(self.dashSelectorImage)
     self.empSelectorSprite:setImage(self.empSelectorImage)
     self.laserSelectorSprite:setImage(self.laserSelectorImage)
     self.missileSelectorSprite:setImage(self.missileSelectorImage)
@@ -185,9 +174,8 @@ function WeaponSelector:_updateUI()
     self.shieldSelectorSprite:setImage(self.shieldSelectorImage)
 
     -- and now update the actually selected one 
-    if (weaponId == WEAPON.DASH) then
-        self.dashSelectorSprite:setImage(self.dashSelectorSelectedImage)
-    elseif (weaponId == WEAPON.EMP) then
+
+    if (weaponId == WEAPON.EMP) then
         self.empSelectorSprite:setImage(self.empSelectorSelectedImage)
     elseif (weaponId == WEAPON.LASER) then
         self.laserSelectorSprite:setImage(self.laserSelectorSelectedImage)
@@ -213,11 +201,7 @@ function WeaponSelector:_updateUI()
             self.player:setSelectedWeaponId(WEAPON.LASER)
         end
     elseif (playdate.buttonJustPressed(playdate.kButtonDown)) then
-        if (weaponId == WEAPON.DASH) then
-            self.player:setSelectedWeaponId(WEAPON.SHIELD)
-        else 
-            self.player:setSelectedWeaponId(WEAPON.DASH)
-        end
+        self.player:setSelectedWeaponId(WEAPON.SHIELD)
     end
 
     -- make the arrows blink
@@ -248,7 +232,6 @@ function WeaponSelector:_waitForAnimateOut()
         -- arrows sprite is removed prior to this 
         self.blurSprite:remove()
         self.centerSprite:remove()
-        self.dashSelectorSprite:remove()
         self.empSelectorSprite:remove()
         self.laserSelectorSprite:remove()
         self.missileSelectorSprite:remove()
@@ -276,12 +259,8 @@ function WeaponSelector:_updateSelectorPositions(percent)
     local empSelectorX = startX + (40 * percent)
     self.empSelectorSprite:moveTo(empSelectorX, self.empSelectorSprite.y)
 
-    -- dash
-    local dashSelectorY = startY + (40 * percent)
-    self.dashSelectorSprite:moveTo(self.dashSelectorSprite.x, dashSelectorY)
-
     -- deflector AKA shield
-    local shieldSelectorY = startY + (70 * percent)
+    local shieldSelectorY = startY + (40 * percent)
     self.shieldSelectorSprite:moveTo(self.shieldSelectorSprite.x, shieldSelectorY)
 
     -- laser
@@ -293,3 +272,4 @@ function WeaponSelector:_updateSelectorPositions(percent)
     self.mineSelectorSprite:moveTo(self.mineSelectorSprite.x, mineSelectorY)
 
 end
+

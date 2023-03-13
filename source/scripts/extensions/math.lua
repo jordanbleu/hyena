@@ -53,3 +53,12 @@ function math.moveTowards(position, destination, speed)
     return value + speed
 
 end
+
+---Chooses an element in the passed in array and returns it.  Also don't pass `nil` in here or it'll break stuff.
+---@param array table An array containing the elements to choose from
+---@return any item
+function math.choose(array)
+    local len = #array
+    local val = math.random(1,len)
+    return array[val]
+end

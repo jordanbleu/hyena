@@ -2,16 +2,17 @@ local gfx <const> = playdate.graphics
 
 import 'scripts/actors/actor'
 
-local BULLET_SPEED <const> = -10
-
 --[[ Bullet that damages any enemies. ]]
 class("PlayerBullet").extends(Actor)
 
 function PlayerBullet:init(x,y)
     PlayerBullet.super.init(self)
     
+    self.yVelocity = -10
+    self.xVelocity = 0
+
     self.isActive = true
-    self:setImage(gfx.image.new("images/projectiles/playerBullet"))
+    self:setImage(gfx.image.new("images/projectiles/player-bullet"))
     self:moveTo(x,y)
     self:setCollideRect(0,0,self:getSize())
     self:setGroups({COLLISION_LAYER.PLAYER_PROJECTILE})
@@ -26,23 +27,33 @@ function PlayerBullet:update()
         self:destroy()
     end
 
+    if (self.y > 250) then
+        self:destroy()
+    end
+
 end
 
 
 function PlayerBullet:physicsUpdate()
-    PlayerBullet.super.physicsUpdate(this)
+    PlayerBullet.super.physicsUpdate(self)
 
     if (self.isActive) then 
-        local nextY = self.y + BULLET_SPEED
-        self:moveTo(self.x, nextY)
+        local newX = self.x + self.xVelocity
+        local newY = self.y + self.yVelocity
+        self:moveTo(newX, newY)
     end
 
 end
 
 function PlayerBullet:destroy()
-
     self.isActive = false
     self:remove()
+end
 
-
+function PlayerBullet:ricochet()
+    self.yVelocity = -self.yVelocity
+    self.xVelocity = math.random(-3, 3)
+    local newX = self.x + self.xVelocity
+    local newY = self.y + self.yVelocity
+    self:moveTo(newX, newY)
 end
