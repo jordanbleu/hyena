@@ -10,21 +10,23 @@ import "scripts/actors/deathStar"
 import "scripts/actors/diveBomb"
 import "scripts/actors/shieldRangedGrunt"
 
-import "scripts/scenes/scene"
+import "scripts/scenes/segmentedScene"
 
 import "scripts/ui/hud"
 import "scripts/ui/weaponSelector"
 
 local gfx <const> = playdate.graphics
 
-class("DemoScene").extends(Scene)
+class("DemoScene").extends(SegmentedScene)
 
 function DemoScene:initialize(sceneManager)
-    DemoScene.super.initialize(self, sceneManager)
+    local segments = {}
+
+    DemoScene.super.initialize(self, segments, sceneManager)
     
     gfx.setImageDrawMode(gfx.kDrawModeNXOR)
 
-    print ("test1 scene init")
+    print ("demo scene init")
     local textImage = gfx.image.new("images/black")
     local textSprite = gfx.sprite.new(textImage)
     textSprite:moveTo(200,120)
