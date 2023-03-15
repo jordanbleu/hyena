@@ -1,4 +1,3 @@
-import "scene"
 import "scripts/actors/player"
 import "scripts/camera/camera"
 import "scripts/sprites/parallaxLayer"
@@ -10,6 +9,8 @@ import "scripts/actors/tinyGuy"
 import "scripts/actors/deathStar"
 import "scripts/actors/diveBomb"
 import "scripts/actors/shieldRangedGrunt"
+
+import "scripts/scenes/scene"
 
 import "scripts/ui/hud"
 import "scripts/ui/weaponSelector"
