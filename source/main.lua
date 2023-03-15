@@ -26,10 +26,7 @@ import "scripts/globals/globals"
 import "scripts/sceneManager"
 import "scripts/scenes/demoScene" -- todo :remove 
 
-
 local gfx <const> = playdate.graphics
-
-local timer
 
 -- Runs on first on game launch
 local function setup()
@@ -43,7 +40,6 @@ local function setup()
     -- long in the future, this will be set to the 'title screen scene'
     local firstScene = DemoScene()
     sceneMgr:switchScene(firstScene, SCENE_TRANSITION.FADE_IO)
-
 end
 
 setup()

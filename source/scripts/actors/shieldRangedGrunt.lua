@@ -124,7 +124,7 @@ function ShieldRangedGrunt:_moveToDestination()
 
     if (self.y > self.yDestination) then
         newY -= self.moveSpeed
-    elseif (self.x < self.yDestination) then
+    elseif (self.y < self.yDestination) then
         newY += self.moveSpeed
     end
 

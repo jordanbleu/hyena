@@ -15,7 +15,7 @@ function Test2Scene:initialize(sceneManager)
 end
 
 function Test2Scene:update()
-    print("test scene 2 running!")
+    --print("test scene 2 running!")
 
     if (not self:getSceneManager():isReady()) then
         return

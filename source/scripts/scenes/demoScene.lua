@@ -10,7 +10,9 @@ import "scripts/actors/deathStar"
 import "scripts/actors/diveBomb"
 import "scripts/actors/shieldRangedGrunt"
 
+import "scripts/segments/hordeSegment"
 import "scripts/scenes/base/segmentedScene"
+import "scripts/scenes/test2Scene"
 
 import "scripts/ui/hud"
 import "scripts/ui/weaponSelector"
@@ -19,30 +21,56 @@ local gfx <const> = playdate.graphics
 
 class("DemoScene").extends(SegmentedScene)
 
+function DemoScene:init()
+    DemoScene.super.init(self)
+    self.sceneManager = nil
+end
+
 function DemoScene:initialize(sceneManager)
-    local segments = {}
-
-    DemoScene.super.initialize(self, segments, sceneManager)
-    
+    self.sceneManager = sceneManager
     gfx.setImageDrawMode(gfx.kDrawModeNXOR)
-
+    
     print ("demo scene init")
     local textImage = gfx.image.new("images/black")
     local textSprite = gfx.sprite.new(textImage)
     textSprite:moveTo(200,120)
     textSprite:add()
-
+    
     ParallaxLayer(gfx.image.new("images/backgrounds/stars-farther"),1)
     ParallaxLayer(gfx.image.new("images/backgrounds/stars-far"),3)
-
+    
     local camera = Camera()
-
+    
     local player = Player(camera)
     player:moveTo(200, 200)
-
+    
     Hud(player)
     WeaponSelector(player)
+    
+    --< segments >-- 
 
+    local segments = {}
+
+    segments[1] = function()
+        local enemies = {}
+        enemies[1] = RangedGrunt(200,-30, camera, player)
+        return HordeSegment(enemies)
+    end
+
+    segments[2] = function()
+        local enemies = {}
+        enemies[1] = ShieldRangedGrunt(200,-30, camera, player)
+        enemies[2] = DiveBomb(60, -50, camera, player)
+        return HordeSegment(enemies)
+    end
+
+    segments[3] = function()
+        local enemies = {}
+        enemies[1] = DeathStar(200,-30, player)
+        return HordeSegment(enemies)
+    end
+
+    DemoScene.super.initialize(self, segments, sceneManager)
 
     -- local guy1 = TinyGuy(200,-10,nil, camera, player)
     -- local guy2 = TinyGuy(200,-10,guy1, camera, player)
@@ -64,7 +92,7 @@ function DemoScene:initialize(sceneManager)
     -- DiveBomb(40, -40, camera, player)
     -- DiveBomb(60, -50, camera, player)
 
-    ShieldRangedGrunt(200,50, camera, player)
+    -- ShieldRangedGrunt(200,50, camera, player)
     -- RangedGrunt(200,50, camera, player)
 
     -- DeathStar(200,-10, player)
@@ -84,5 +112,7 @@ function DemoScene:initialize(sceneManager)
     -- Grunt(250,-300,camera, player)
 end
 
-function DemoScene:update()
+function DemoScene:completeScene()
+    print ("scene completed")
+    self.sceneManager:switchScene(Test2Scene(), SCENE_TRANSITION.FADE_IO)
 end
