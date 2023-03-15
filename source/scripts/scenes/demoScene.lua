@@ -11,6 +11,7 @@ import "scripts/actors/diveBomb"
 import "scripts/actors/shieldRangedGrunt"
 
 import "scripts/segments/hordeSegment"
+import "scripts/segments/waitSegment"
 import "scripts/scenes/base/segmentedScene"
 import "scripts/scenes/test2Scene"
 
@@ -51,24 +52,28 @@ function DemoScene:initialize(sceneManager)
 
     local segments = {}
 
-    segments[1] = function()
+    table.insert(segments, function()
+        return WaitSegment(3000)
+    end)
+
+    table.insert(segments, function()
         local enemies = {}
         enemies[1] = RangedGrunt(200,-30, camera, player)
         return HordeSegment(enemies)
-    end
+    end)
 
-    segments[2] = function()
+    table.insert(segments, function()
         local enemies = {}
         enemies[1] = ShieldRangedGrunt(200,-30, camera, player)
         enemies[2] = DiveBomb(60, -50, camera, player)
         return HordeSegment(enemies)
-    end
+    end)
 
-    segments[3] = function()
+    table.insert(segments, function()
         local enemies = {}
         enemies[1] = DeathStar(200,-50, player)
         return HordeSegment(enemies)
-    end
+    end)
 
     DemoScene.super.initialize(self, segments, sceneManager)
 

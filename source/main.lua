@@ -18,6 +18,7 @@ import 'CoreLibs/animation'
 
 -- Extensions
 import "scripts/Extensions/math"
+import "scripts/Extensions/playdate"
 
 import "scripts/globals/enums"
 import "scripts/globals/globals"
