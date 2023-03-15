@@ -12,10 +12,10 @@ import "scripts/projectiles/enemyBullet"
 
 --[[
     The shieldRangedGrunt is the same as the ranged enemy but he has a shield
-]]
+    ]]
 class("ShieldRangedGrunt").extends(Enemy)
-
-
+    
+    
 -- this is the general y position for ranged enemies
 local STANDARD_Y_POSITION <const> = 60
 -- how far above or below the standard Y the enemy can move 

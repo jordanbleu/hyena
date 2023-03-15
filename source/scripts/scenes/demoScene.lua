@@ -66,7 +66,7 @@ function DemoScene:initialize(sceneManager)
 
     segments[3] = function()
         local enemies = {}
-        enemies[1] = DeathStar(200,-30, player)
+        enemies[1] = DeathStar(200,-50, player)
         return HordeSegment(enemies)
     end
 

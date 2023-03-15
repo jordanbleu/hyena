@@ -42,6 +42,51 @@ local function setup()
     sceneMgr:switchScene(firstScene, SCENE_TRANSITION.FADE_IO)
 end
 
+
+local function drawDebugText()
+    local fon = gfx.font.new("fonts/Nano Sans")
+    gfx.setFont(fon)
+    gfx.drawText("Deboooog text:", 10, 10)
+
+    local enemies = 0
+    local actors = 0
+    local spriteanimations = 0
+    local scenes = 0
+    local timers = 0
+
+    -- sprite info
+    for i,spr in ipairs(gfx.sprite.getAllSprites()) do
+        if (spr:isa(Enemy)) then
+            enemies+=1
+        end 
+
+        if (spr:isa(Actor)) then
+            actors+=1
+        end
+
+        if (spr:isa(SpriteAnimation)) then
+            spriteanimations+=1
+        end
+
+        if (spr:isa(Scene)) then
+            scenes += 1
+        end
+        
+    end
+
+    local allTimers = playdate.timer.allTimers()
+    timers = #allTimers
+    
+
+    gfx.drawText("Enemies: " .. tostring(enemies), 10,20)
+    gfx.drawText("Actors: " .. tostring(actors), 10, 30)
+    gfx.drawText("SpriteAnimations: " .. tostring(spriteanimations), 10, 40)
+    gfx.drawText("Scenes: " .. tostring(scenes), 10, 50)
+    gfx.drawText("Timers: " .. tostring(timers), 10, 60)
+
+
+end
+
 setup()
 
 ---@diagnostic disable-next-line: duplicate-set-field
@@ -50,6 +95,7 @@ function playdate.update()
     playdate.timer.updateTimers()
     gfx.animation.blinker.updateAll()
     --playdate.drawFPS(0,0)
+    drawDebugText()
 end
 
 -- ** this should be disabled for the final build **
@@ -64,5 +110,7 @@ function playdate.keyReleased(key)
             GLOBAL_TIME_DELAY = 0
         end
     end
-
 end
+
+
+
