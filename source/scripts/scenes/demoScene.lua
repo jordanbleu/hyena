@@ -10,7 +10,7 @@ import "scripts/actors/deathStar"
 import "scripts/actors/diveBomb"
 import "scripts/actors/shieldRangedGrunt"
 
-import "scripts/scenes/segmentedScene"
+import "scripts/scenes/base/segmentedScene"
 
 import "scripts/ui/hud"
 import "scripts/ui/weaponSelector"

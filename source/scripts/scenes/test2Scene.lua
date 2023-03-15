@@ -1,4 +1,4 @@
-import "scene"
+import "scripts/scenes/base/scene"
 
 local gfx <const> = playdate.graphics
 

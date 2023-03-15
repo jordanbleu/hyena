@@ -1,4 +1,4 @@
-import "scene"
+import "scripts/scenes/base/scene"
 import "scripts/actors/player"
 import "scripts/camera/camera"
 import "scripts/sprites/parallaxLayer"

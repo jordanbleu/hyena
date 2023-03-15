@@ -1,6 +1,6 @@
 local gfx <const> = playdate.graphics
 
-import "scripts/scenes/scene"
+import "scripts/scenes/base/scene"
 
 class("SegmentedScene").extends(Scene)
 
