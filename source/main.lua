@@ -26,6 +26,7 @@ import "scripts/globals/globals"
 
 import "scripts/sceneManager"
 import "scripts/scenes/demoScene" -- todo :remove 
+import "scripts/scenes/test1Scene"
 
 local gfx <const> = playdate.graphics
 
@@ -40,6 +41,7 @@ local function setup()
 
     -- long in the future, this will be set to the 'title screen scene'
     local firstScene = DemoScene()
+    -- local firstScene = Test1Scene() <- sandbox scene for testing stuff
     sceneMgr:switchScene(firstScene, SCENE_TRANSITION.FADE_IO)
 end
 

@@ -6,7 +6,7 @@ local gfx <const> = playdate.graphics
 class("PlayerMineExplosion").extends(SingleSpriteAnimation)
 
 function PlayerMineExplosion:init(x,y)
-    PlayerMineExplosion.super.init(self, 'images/effects/playerMineExplosionAnim/player-mine-explosion', 1500, x, y)
+    PlayerMineExplosion.super.init(self, 'images/effects/playerMineExplosionAnim/player-mine-explosion', 750, x, y)
 
     self.didDamage = false
     self.isDamageEnabled = false

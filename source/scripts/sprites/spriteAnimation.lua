@@ -56,7 +56,7 @@ function SpriteAnimation:physicsUpdate()
         if (self.updateCounter >= self.updatesPerFrame) then
             self.frame = self.frame + 1
             self.updateCounter = 0
-
+            
             if (self.frame >= self.imageTable:getLength()) then
                 if (self.repeats == 0) then
                     self:_complete()

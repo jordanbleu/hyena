@@ -31,7 +31,7 @@ function DeathStar:init(x,y, playerInst)
     self.ySpeed = math.random() * 1.5
 
     -- idle image animation
-    self.animator = SpriteAnimation("images/enemies/deathStarAnim/idle", 8000, self.x, self.y)
+    self.animator = SpriteAnimation("images/enemies/deathStarAnim/idle", math.random(1500,2000), self.x, self.y)
     self.animator:setRepeats(-1)
 
     self:setCollideRect(-32,-32,64,64)
@@ -84,7 +84,7 @@ function DeathStar:_checkCollisions()
         if (col:isa(PlayerBullet)) then
             print ("player bullet => death star healh - " .. self.health)
             -- player bullet doesn't affect death star
-            SingleSpriteAnimation("images/effects/hardImpactAnim/hard-impact", 1000,col.x, col.y)
+            SingleSpriteAnimation("images/effects/hardImpactAnim/hard-impact", 250,col.x, col.y)
             col:ricochet()
 
         elseif (col:isa(PlayerLaser)) then
@@ -126,14 +126,15 @@ function DeathStar:_checkCollisions()
     if (showImpactAnimation) then
         local ix = math.random(math.floor(self.x-24),math.floor(self.x+24))
         local iy = math.random(math.floor(self.y-24), math.floor(self.y+24))
-        local spr = SingleSpriteAnimation("images/effects/hardImpactAnim/hard-impact", 1000,ix, iy)
+        local spr = SingleSpriteAnimation("images/effects/hardImpactAnim/hard-impact", 500,ix, iy)
+
         spr:setZIndex(50)
     end
 
     if (tookDamage) then
         self.state = STATE.DAMAGE
         
-        local dmgSprite = SingleSpriteAnimation("images/enemies/deathStarAnim/damage", 1000, self.x, self.y, function() self:swapToIdleState() end)
+        local dmgSprite = SingleSpriteAnimation("images/enemies/deathStarAnim/damage", 500, self.x, self.y, function() self:swapToIdleState() end)
         dmgSprite:attachTo(self)
     end
 

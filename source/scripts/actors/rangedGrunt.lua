@@ -122,7 +122,7 @@ function RangedGrunt:_moveToDestination()
 end
 
 function RangedGrunt:_onDead()
-    SingleSpriteAnimation("images/enemies/rangedGruntAnim/death", 1000, self.x, self.y)
+    SingleSpriteAnimation("images/enemies/rangedGruntAnim/death", 750, self.x, self.y)
     self:remove()
 end
 
@@ -134,7 +134,8 @@ function RangedGrunt:_checkCollisions()
     for i,col in ipairs(collisions) do
         if (col:isa(PlayerBullet)) then
             tookDamage= true
-            SingleSpriteAnimation("images/effects/playerBulletExplosionAnim/player-bullet-explosion", 1000,col.x, col.y)
+            local spr = SingleSpriteAnimation("images/effects/playerBulletExplosionAnim/player-bullet-explosion", 500,col.x, col.y)
+            spr:setZIndex(50)
             col:destroy()
             self:damage(1)
 
@@ -170,7 +171,7 @@ function RangedGrunt:_checkCollisions()
         end
 
         if (tookDamage and self.health > 0) then
-            local dmgSprite = SingleSpriteAnimation("images/enemies/rangedGruntAnim/damage", 1000, self.x, self.y)
+            local dmgSprite = SingleSpriteAnimation("images/enemies/rangedGruntAnim/damage", 250, self.x, self.y)
             dmgSprite:attachTo(self)
         end
     end

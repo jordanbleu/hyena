@@ -94,7 +94,7 @@ function ShieldRangedGrunt:update()
 end
 
 function ShieldRangedGrunt:_destroyShield()
-    SingleSpriteAnimation("images/effects/shieldAbsorbAnim/absorb", 500,self.x, self.y) 
+    SingleSpriteAnimation("images/effects/shieldAbsorbAnim/absorb", 250,self.x, self.y) 
     self.shieldHealth -= 1
     self.shieldSprite:play()
 end 
@@ -136,7 +136,7 @@ function ShieldRangedGrunt:_moveToDestination()
 end
 
 function ShieldRangedGrunt:_onDead()
-    SingleSpriteAnimation("images/enemies/shieldGruntAnim/death", 1000, self.x, self.y)
+    SingleSpriteAnimation("images/enemies/shieldGruntAnim/death", 500, self.x, self.y)
     self:remove()
 end
 
@@ -149,7 +149,7 @@ function ShieldRangedGrunt:_checkCollisions()
         if (col:isa(PlayerBullet)) then
             if (self.shieldHealth <= 0) then
                 tookDamage= true
-                SingleSpriteAnimation("images/effects/playerBulletExplosionAnim/player-bullet-explosion", 1000,col.x, col.y)
+                SingleSpriteAnimation("images/effects/playerBulletExplosionAnim/player-bullet-explosion", 250,col.x, col.y)
                 col:destroy()
                 self:damage(1)
 
@@ -158,7 +158,7 @@ function ShieldRangedGrunt:_checkCollisions()
                 end
             else 
                 col:ricochet()
-                SingleSpriteAnimation("images/effects/shieldAbsorbAnim/absorb", 500,col.x, col.y)
+                SingleSpriteAnimation("images/effects/shieldAbsorbAnim/absorb", 250,col.x, col.y)
             end
 
         elseif (col:isa(PlayerLaser)) then
@@ -197,7 +197,7 @@ function ShieldRangedGrunt:_checkCollisions()
         end
 
         if (tookDamage and self.health > 0) then
-            local dmgSprite = SingleSpriteAnimation("images/enemies/shieldGruntAnim/damage", 1000, self.x, self.y)
+            local dmgSprite = SingleSpriteAnimation("images/enemies/shieldGruntAnim/damage", 500, self.x, self.y)
             dmgSprite:attachTo(self)
         end
     end

@@ -41,8 +41,8 @@ function Test1Scene:initialize(sceneManager)
     WeaponSelector(player)
 
 
-    -- local guy1 = TinyGuy(200,-10,nil, camera, player)
-    -- local guy2 = TinyGuy(200,-10,guy1, camera, player)
+    --local guy1 = TinyGuy(200,-10,nil, camera, player)
+    --local guy2 = TinyGuy(200,-10,guy1, camera, player)
     -- local guy3 = TinyGuy(200,-10,guy2, camera, player)
     -- local guy4 = TinyGuy(200,-40,guy3, camera, player)
     -- local guy5 = TinyGuy(200,-50,guy4, camera, player)
@@ -53,7 +53,7 @@ function Test1Scene:initialize(sceneManager)
     -- local guy10 = TinyGuy(200,-50,guy9, camera, player)
     -- local guy11 = TinyGuy(200,-60,guy10, camera, player)
     -- local guy12 = TinyGuy(200,-70,guy11, camera, player)
-    -- local guy13 = TinyGuy(200,-80,guy12, camera, player)
+    --local guy13 = TinyGuy(200,-80,guy12, camera, player)
 
 
     -- DiveBomb(100, -20, camera, player)
@@ -61,14 +61,14 @@ function Test1Scene:initialize(sceneManager)
     -- DiveBomb(40, -40, camera, player)
     -- DiveBomb(60, -50, camera, player)
 
-    ShieldRangedGrunt(200,50, camera, player)
+    --ShieldRangedGrunt(200,50, camera, player)
     -- RangedGrunt(200,50, camera, player)
 
-    -- DeathStar(200,-10, player)
+    --DeathStar(200,40, player)
 
-    -- Grunt(150,-40,camera, player)
+    --Grunt(150,-40,camera, player)
     -- Grunt(200,-30,camera, player)
-    -- Grunt(200,-10,camera, player)
+    Grunt(100,80,camera, player)
     -- Grunt(250,-30,camera, player)
 
     -- Grunt(150,-70,camera, player)
