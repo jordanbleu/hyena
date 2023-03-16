@@ -15,18 +15,19 @@ import "scripts/projectiles/enemyBullet"
 ]]
 class("RangedGrunt").extends(Enemy)
 
--- this is the general y position for ranged enemies
-local STANDARD_Y_POSITION <const> = 60
--- how far above or below the standard Y the enemy can move 
-local Y_POSITION_VARIANCE <const> = 20
-
-local Y_MOVE_WAIT_TIME_MIN <const> = 20
-local Y_MOVE_WAIT_TIME_MAX <const> = 50
-
-
 function RangedGrunt:init(x,y, cameraInst, playerInst) 
-
+    
     RangedGrunt.super.init(self, 3)
+    
+    -- this is the general y position for ranged enemies
+    self.standardYPosition = 60
+    
+    -- how far above or below the standard Y the enemy can move 
+    self.yPositionVariance = 20
+
+    self.yMoveWaitTimeMin = 20
+    self.yMoveWaitTimeMax = 50
+
     self:moveTo(x,y)
 
     self.player = playerInst
@@ -40,11 +41,11 @@ function RangedGrunt:init(x,y, cameraInst, playerInst)
 
     -- behavior stuff
     self.moveSpeed = 1
-    self.yDestination = STANDARD_Y_POSITION + math.random(-Y_POSITION_VARIANCE, Y_POSITION_VARIANCE)
+    self.yDestination = self.standardYPosition + math.random(-self.yPositionVariance, self.yPositionVariance)
 
     -- enemy chooses a new y position after a wait time 
     self.yMoveWaitCycleCounter = 0
-    self.yMoveWaitCycles = math.random(Y_MOVE_WAIT_TIME_MIN,Y_MOVE_WAIT_TIME_MAX)
+    self.yMoveWaitCycles = math.random(self.yMoveWaitTimeMin,self.yMoveWaitTimeMax)
 
     -- how long before enemy can shoot 
     self.coolDownCycleCounter = 0
@@ -58,9 +59,9 @@ function RangedGrunt:update()
     RangedGrunt.super.update(self)
 
     if (self.yMoveWaitCycleCounter > self.yMoveWaitCycles) then
-        self.yDestination = STANDARD_Y_POSITION + math.random(-Y_POSITION_VARIANCE, Y_POSITION_VARIANCE)
+        self.yDestination = self.standardYPosition + math.random(-self.yPositionVariance, self.yPositionVariance)
 
-        self.yMoveWaitCycles = math.random(Y_MOVE_WAIT_TIME_MIN,Y_MOVE_WAIT_TIME_MAX)
+        self.yMoveWaitCycles = math.random(self.yMoveWaitTimeMin,self.yMoveWaitTimeMax)
         self.yMoveWaitCycleCounter = 0
     end
 
@@ -109,7 +110,7 @@ function RangedGrunt:_moveToDestination()
 
     if (self.y > self.yDestination) then
         newY -= self.moveSpeed
-    elseif (self.x < self.yDestination) then
+    elseif (self.y < self.yDestination) then
         newY += self.moveSpeed
     end
 
@@ -121,7 +122,7 @@ function RangedGrunt:_moveToDestination()
 end
 
 function RangedGrunt:_onDead()
-    SingleSpriteAnimation("images/enemies/rangedGruntAnim/death", 1000, self.x, self.y)
+    SingleSpriteAnimation("images/enemies/rangedGruntAnim/death", 750, self.x, self.y)
     self:remove()
 end
 
@@ -133,7 +134,8 @@ function RangedGrunt:_checkCollisions()
     for i,col in ipairs(collisions) do
         if (col:isa(PlayerBullet)) then
             tookDamage= true
-            SingleSpriteAnimation("images/effects/playerBulletExplosionAnim/player-bullet-explosion", 1000,col.x, col.y)
+            local spr = SingleSpriteAnimation("images/effects/playerBulletExplosionAnim/player-bullet-explosion", 500,col.x, col.y)
+            spr:setZIndex(50)
             col:destroy()
             self:damage(1)
 
@@ -169,7 +171,7 @@ function RangedGrunt:_checkCollisions()
         end
 
         if (tookDamage and self.health > 0) then
-            local dmgSprite = SingleSpriteAnimation("images/enemies/rangedGruntAnim/damage", 1000, self.x, self.y)
+            local dmgSprite = SingleSpriteAnimation("images/enemies/rangedGruntAnim/damage", 250, self.x, self.y)
             dmgSprite:attachTo(self)
         end
     end

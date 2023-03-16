@@ -12,7 +12,7 @@ local HORIZONTAL_MOVE_RATE = 0.025
 local MAX_X_VELOCITY = 3
 
 function PlayerMissile:init(cameraInst, x,y)
-    PlayerMissile.super.init(self,"images/projectiles/playerMissileAnim/player-missile",1000, x, y)
+    PlayerMissile.super.init(self,"images/projectiles/playerMissileAnim/player-missile",500, x, y)
     self.camera = cameraInst
     self:setRepeats(-1)
 

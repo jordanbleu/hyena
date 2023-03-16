@@ -18,18 +18,17 @@ import 'CoreLibs/animation'
 
 -- Extensions
 import "scripts/Extensions/math"
+import "scripts/Extensions/playdate"
 
 import "scripts/globals/enums"
 import "scripts/globals/globals"
 
 
 import "scripts/sceneManager"
-import "scripts/scenes/test1Scene" -- todo :remove 
-
+import "scripts/scenes/demoScene" -- todo :remove 
+import "scripts/scenes/test1Scene"
 
 local gfx <const> = playdate.graphics
-
-local timer
 
 -- Runs on first on game launch
 local function setup()
@@ -41,8 +40,53 @@ local function setup()
     sceneMgr:add()
 
     -- long in the future, this will be set to the 'title screen scene'
-    local firstScene = Test1Scene()
+    local firstScene = DemoScene()
+    -- local firstScene = Test1Scene() <- sandbox scene for testing stuff
     sceneMgr:switchScene(firstScene, SCENE_TRANSITION.FADE_IO)
+end
+
+
+local function drawDebugText()
+    local fon = gfx.font.new("fonts/Nano Sans")
+    gfx.setFont(fon)
+    gfx.drawText("Deboooog text:", 10, 10)
+
+    local enemies = 0
+    local actors = 0
+    local spriteanimations = 0
+    local scenes = 0
+    local timers = 0
+
+    -- sprite info
+    for i,spr in ipairs(gfx.sprite.getAllSprites()) do
+        if (spr:isa(Enemy)) then
+            enemies+=1
+        end 
+
+        if (spr:isa(Actor)) then
+            actors+=1
+        end
+
+        if (spr:isa(SpriteAnimation)) then
+            spriteanimations+=1
+        end
+
+        if (spr:isa(Scene)) then
+            scenes += 1
+        end
+        
+    end
+
+    local allTimers = playdate.timer.allTimers()
+    timers = #allTimers
+    
+
+    gfx.drawText("Enemies: " .. tostring(enemies), 10,20)
+    gfx.drawText("Actors: " .. tostring(actors), 10, 30)
+    gfx.drawText("SpriteAnimations: " .. tostring(spriteanimations), 10, 40)
+    gfx.drawText("Scenes: " .. tostring(scenes), 10, 50)
+    gfx.drawText("Timers: " .. tostring(timers), 10, 60)
+
 
 end
 
@@ -54,6 +98,7 @@ function playdate.update()
     playdate.timer.updateTimers()
     gfx.animation.blinker.updateAll()
     --playdate.drawFPS(0,0)
+    --drawDebugText()
 end
 
 -- ** this should be disabled for the final build **
@@ -68,5 +113,7 @@ function playdate.keyReleased(key)
             GLOBAL_TIME_DELAY = 0
         end
     end
-
 end
+
+
+

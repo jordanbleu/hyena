@@ -6,7 +6,7 @@ import 'scripts/actors/actor'
 class("Deflector").extends(SingleSpriteAnimation)
 
 function Deflector:init(playerInst)
-    Deflector.super.init(self, "images/projectiles/deflectorAnim/deflector", 1000, playerInst.x, playerInst.y)
+    Deflector.super.init(self, "images/projectiles/deflectorAnim/deflector", 750, playerInst.x, playerInst.y)
     self.didDamage = false
 
     -- really this is 'isDeflectionEnabled' 

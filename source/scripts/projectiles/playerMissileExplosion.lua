@@ -6,7 +6,7 @@ local gfx <const> = playdate.graphics
 class("PlayerMissileExplosion").extends(SingleSpriteAnimation)
 
 function PlayerMissileExplosion:init(x,y)
-    PlayerMissileExplosion.super.init(self, 'images/effects/explosionAnim/explosion', 1000, x, y)
+    PlayerMissileExplosion.super.init(self, 'images/effects/explosionAnim/explosion', 500, x, y)
 
     self.didDamage = false
     self.isDamageEnabled = false

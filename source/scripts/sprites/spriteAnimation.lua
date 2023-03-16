@@ -20,7 +20,8 @@ function SpriteAnimation:init(imageTablePath, animationTime, x, y)
     self.imageTable = gfx.imagetable.new(imageTablePath)
 
     -- Divide by the target framerate to go from time -> updates
-    local animationTimeInUpdates = animationTime / GLOBAL_TARGET_FPS
+    -- local animationTimeInUpdates = animationTime / GLOBAL_TARGET_FPS
+    local animationTimeInUpdates = playdate.convertMsToFrames(animationTime)
 
     -- 'updates' here is how many times the update method gets hit.  
     self.updatesPerFrame = math.ceil(animationTimeInUpdates / self.imageTable:getLength())
@@ -55,7 +56,7 @@ function SpriteAnimation:physicsUpdate()
         if (self.updateCounter >= self.updatesPerFrame) then
             self.frame = self.frame + 1
             self.updateCounter = 0
-
+            
             if (self.frame >= self.imageTable:getLength()) then
                 if (self.repeats == 0) then
                     self:_complete()

@@ -39,7 +39,7 @@ function Grunt:init(x,y, cameraInst, playerInst)
     self.state = STATES.IDLE
 
     -- idle image animation
-    self.animator = SpriteAnimation("images/enemies/grimideanGruntAnim/idle", 1500, self.x, self.y)
+    self.animator = SpriteAnimation("images/enemies/grimideanGruntAnim/idle", 1000, self.x, self.y)
     self.animator:setRepeats(-1)
 
     self:setCollideRect(-8,-8,16,16)
@@ -60,7 +60,7 @@ function Grunt:init(x,y, cameraInst, playerInst)
     -- how long he wait between bursts
     self.waitCycleCounter = 0
     self.waitCycles = math.random(20,50)
-
+    
     -- how fast he slow down
     self.drag = 0.1
 
@@ -121,7 +121,7 @@ function Grunt:_checkCollisions()
             tookDamage= true
             print "ouch"
             -- create a new explosion object at the bullets position
-            SingleSpriteAnimation("images/effects/playerBulletExplosionAnim/player-bullet-explosion", 1000,col.x, col.y)
+            SingleSpriteAnimation("images/effects/playerBulletExplosionAnim/player-bullet-explosion", 500,col.x, col.y)
             col:destroy()
             self:damage(1)
 
@@ -193,7 +193,7 @@ end
 
 function Grunt:_onDead()
     --self.animator:remove()
-    SingleSpriteAnimation("images/enemies/grimideanGruntAnim/death", 1000, self.x, self.y)
+    SingleSpriteAnimation("images/enemies/grimideanGruntAnim/death", 500, self.x, self.y)
     self:remove()
 end
 

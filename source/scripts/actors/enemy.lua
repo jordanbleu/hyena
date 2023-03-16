@@ -30,3 +30,6 @@ end
 function Enemy:_onDead()
 end
 
+function Enemy:getHealth()
+    return self.health
+end

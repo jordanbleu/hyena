@@ -13,7 +13,7 @@ function PlayerLaser:init(x,y,cameraInst)
     
     self:setCollideRect(x-2,y-120,4,240)
     self:setGroups({COLLISION_LAYER.PLAYER_PROJECTILE})
-    PlayerLaser.super.init(self, 'images/projectiles/playerLaserAnim/playerLaser', 2000, x, y)
+    PlayerLaser.super.init(self, 'images/projectiles/playerLaserAnim/playerLaser', 1000, x, y)
     self:add()
 end
 

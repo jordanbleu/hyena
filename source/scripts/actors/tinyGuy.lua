@@ -27,7 +27,7 @@ function TinyGuy:init(x,y,leader, cameraInst, playerInst)
     self:moveTo(x,y)
 
     -- idle image animation
-    self.animator = SpriteAnimation("images/enemies/tinyGuyAnim/idle", 1500, self.x, self.y)
+    self.animator = SpriteAnimation("images/enemies/tinyGuyAnim/idle", 1000, self.x, self.y)
     self.animator:setRepeats(-1)
     self.animator:attachTo(self)
 
@@ -74,7 +74,7 @@ function TinyGuy:_checkCollisions()
     
     for i,col in ipairs(collisions) do
         if (col:isa(PlayerBullet)) then
-            SingleSpriteAnimation("images/effects/playerBulletExplosionAnim/player-bullet-explosion", 1000,col.x, col.y)
+            SingleSpriteAnimation("images/effects/playerBulletExplosionAnim/player-bullet-explosion", 500,col.x, col.y)
             col:destroy()
             self:damage(1)
 
@@ -179,7 +179,7 @@ end
 
 function TinyGuy:_onDead()
     self.dead = true
-    SingleSpriteAnimation("images/enemies/tinyGuyAnim/death", 1000, self.x, self.y)
+    SingleSpriteAnimation("images/enemies/tinyGuyAnim/death", 500, self.x, self.y)
     self:remove()
 end
 

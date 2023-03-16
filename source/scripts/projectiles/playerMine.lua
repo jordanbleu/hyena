@@ -8,7 +8,7 @@ class("PlayerMine").extends(SpriteAnimation)
 
 function PlayerMine:init(cameraInst, x, y)
 
-    PlayerMine.super.init(self,'images/projectiles/playerMineAnim/player-mine', 2000, x,y)
+    PlayerMine.super.init(self,'images/projectiles/playerMineAnim/player-mine', 1000, x,y)
 
     self:setRepeats(-1)
 

@@ -9,7 +9,7 @@ function DiveBomb:init(x,y,cameraInst, playerInst)
     self.camera = cameraInst
 
     -- idle image animation
-    self.animator = SpriteAnimation("images/enemies/celluloidAnim/idle", 1500, self.x, self.y)
+    self.animator = SpriteAnimation("images/enemies/celluloidAnim/idle", 750, self.x, self.y)
     self.animator:setRepeats(-1)
 
     self:setCollideRect(-8,-8,16,16)
@@ -88,7 +88,7 @@ function DiveBomb:_checkCollisions()
 end
 
 function DiveBomb:_onDead()
-    SingleSpriteAnimation("images/enemies/celluloidAnim/death", 1000, self.x, self.y)
+    SingleSpriteAnimation("images/enemies/celluloidAnim/death", 500, self.x, self.y)
     self:remove()
 end
 
