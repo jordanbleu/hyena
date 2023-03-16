@@ -14,6 +14,8 @@ import "scripts/actors/shieldRangedGrunt"
 import "scripts/ui/hud"
 import "scripts/ui/weaponSelector"
 
+import "scripts/ui/typer"
+
 local gfx <const> = playdate.graphics
 
 class("Test1Scene").extends(Scene)
@@ -39,6 +41,8 @@ function Test1Scene:initialize(sceneManager)
 
     Hud(player)
     WeaponSelector(player)
+
+    self.typer = Typer(200,120, "Hello fellow kids this is my text typing test.")
 
 
     --local guy1 = TinyGuy(200,-10,nil, camera, player)
@@ -68,7 +72,7 @@ function Test1Scene:initialize(sceneManager)
 
     --Grunt(150,-40,camera, player)
     -- Grunt(200,-30,camera, player)
-    Grunt(100,80,camera, player)
+    --Grunt(100,80,camera, player)
     -- Grunt(250,-30,camera, player)
 
     -- Grunt(150,-70,camera, player)
@@ -82,4 +86,7 @@ function Test1Scene:initialize(sceneManager)
 end
 
 function Test1Scene:update()
+    if (self.typer.isDismissed) then
+        print ("dismissed!")
+    end
 end

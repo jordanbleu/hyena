@@ -40,8 +40,8 @@ local function setup()
     sceneMgr:add()
 
     -- long in the future, this will be set to the 'title screen scene'
-    local firstScene = DemoScene()
-    -- local firstScene = Test1Scene() <- sandbox scene for testing stuff
+    --local firstScene = DemoScene()
+    local firstScene = Test1Scene() 
     sceneMgr:switchScene(firstScene, SCENE_TRANSITION.FADE_IO)
 end
 
