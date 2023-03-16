@@ -98,7 +98,7 @@ function playdate.update()
     playdate.timer.updateTimers()
     gfx.animation.blinker.updateAll()
     --playdate.drawFPS(0,0)
-    drawDebugText()
+    --drawDebugText()
 end
 
 -- ** this should be disabled for the final build **
