@@ -32,3 +32,10 @@ images
 Note that:
 * the folder holding animations is suffixed with 'anim'
 * multiple animations can go inside the same folder
+
+## localization
+
+Normal localization for things like menus / etc are done via normal playdate localization framework, i.e. use the en.strings file.  
+
+### dialogue localization
+

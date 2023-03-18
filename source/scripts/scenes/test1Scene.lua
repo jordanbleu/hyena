@@ -13,6 +13,8 @@ import "scripts/actors/shieldRangedGrunt"
 
 import "scripts/ui/hud"
 import "scripts/ui/weaponSelector"
+import "scripts/ui/gameplayDialogue"
+
 
 import "scripts/ui/typer"
 
@@ -42,8 +44,8 @@ function Test1Scene:initialize(sceneManager)
     Hud(player)
     WeaponSelector(player)
 
-    self.typer = Typer(200,120, "Hello fellow kids this is my text typing test.")
 
+    GameplayDialogue("testDialogue.txt")
 
     --local guy1 = TinyGuy(200,-10,nil, camera, player)
     --local guy2 = TinyGuy(200,-10,guy1, camera, player)
@@ -86,7 +88,5 @@ function Test1Scene:initialize(sceneManager)
 end
 
 function Test1Scene:update()
-    if (self.typer.isDismissed) then
-        print ("dismissed!")
-    end
+
 end
