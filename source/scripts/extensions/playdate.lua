@@ -1,4 +1,5 @@
 
+
 ---Takes time in milliseconds and returns how many frames / update cycles should roughly occur in that time.
 ---@param millisecs integer time in ms
 function playdate.convertMsToFrames(millisecs) 
@@ -10,7 +11,7 @@ end
 function playdate.loadDialogueFromCsv(csv) 
 
     local chunks = {}
-    local path = "strings/" .. GLOBAL_LANGUAGE_CODE .. "/" .. csv
+    local path = "strings/dialogue-" .. GLOBAL_LANGUAGE_CODE .. "/" .. csv
     local pdFile = playdate.file.open(path)
 
     if (pdFile == nil) then

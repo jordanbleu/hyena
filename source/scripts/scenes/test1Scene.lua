@@ -44,8 +44,8 @@ function Test1Scene:initialize(sceneManager)
     Hud(player)
     WeaponSelector(player)
 
+    self.frameCounter = 0
 
-    GameplayDialogue("testDialogue.txt")
 
     --local guy1 = TinyGuy(200,-10,nil, camera, player)
     --local guy2 = TinyGuy(200,-10,guy1, camera, player)
@@ -89,4 +89,14 @@ end
 
 function Test1Scene:update()
 
+    local time2Wait = 120
+    if (self.frameCounter < time2Wait) then
+        self.frameCounter += 1
+
+        if (self.frameCounter == time2Wait-1) then
+            GameplayDialogue("testDialogue.txt")
+            self.frameCounter = time2Wait
+            
+        end
+    end
 end
