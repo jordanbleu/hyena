@@ -1,9 +1,12 @@
 avatar_id|title|text
-# This is a comment btw
-# this line is approximately the max length of a string in gameplay.
-# test|Test man|AAA BBB CCC DDD EEE FFF AAAA BB CCCCC DDD EEEE AAAA BB CCCCC DDD EEEE
 
-test|Test 2|The quick brown fox jumps over the lazy dog.
-test|Test 3|THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG
-test|Test 3|WORD.
-test|Test 3|... THIS IS  ME    ADDING   LOTS OF EXTRA SPACES. 
+
+# Max title seems to be 12 characters.
+# Max text length is about 65
+
+test|Test 1|The quick brown fox jumps over the lazy dog.
+test|Po|THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG
+test|Bingo Man|WORD.
+test|ABCDEFGHIJKL|... THIS IS  ME    ADDING   LOTS OF EXTRA SPACES. 
+test|DSFdfs|Hey guys, this is a longer line to make sure the third line works.
+test|yea|This is another longer line of text to scope out max lengths!?!?!?

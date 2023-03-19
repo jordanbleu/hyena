@@ -29,7 +29,7 @@ end
 
 function DemoScene:initialize(sceneManager)
     self.sceneManager = sceneManager
-    gfx.setImageDrawMode(gfx.kDrawModeNXOR)
+    --gfx.setImageDrawMode(gfx.kDrawModeNXOR)
     
     print ("demo scene init")
     local textImage = gfx.image.new("images/black")

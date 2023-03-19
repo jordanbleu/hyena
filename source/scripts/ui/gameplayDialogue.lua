@@ -42,13 +42,32 @@ function GameplayDialogue:init(csvFile)
     self.frameSprite:setClipRect(0,0,0,0)
     self.frameSprite:add()
 
+    self.titleFrameImage =gfx.image.new("images/ui/dialogue/gameplay-title-frame")
+    self.titleFrameSprite = gfx.sprite.new(self.titleFrameImage)
+    self.titleFrameSprite:setZIndex(109)
+    self.titleFrameSprite:moveTo(200,110)
+    self.titleFrameSprite:setIgnoresDrawOffset(true)
+    self.titleFrameSprite:setVisible(false)
+    self.titleFrameSprite:add();
+
+    self.titleTextImage = gfx.image.new(self.titleFrameImage:getSize())
+    self.titleTextSprite = gfx.sprite.new(self.titleTextImage)
+    self.titleTextSprite:setIgnoresDrawOffset(true)
+    self.titleTextSprite:setZIndex(110)
+    self.titleTextSprite:moveTo(200,110)
+    self.titleTextSprite:setVisible(false)
+    self.titleTextSprite:add()
+
+    self.titleTextFont = gfx.font.new("fonts/bleu")
+    self.showTitleText = false
+
     self:add()
 end 
 
 
 
 function GameplayDialogue:update()
-
+    self:_updateTitleVisibility()
     if (self.state == STATE.ANIMATING_IN) then
         self:_animateIn()
 
@@ -107,10 +126,44 @@ end
 
 function GameplayDialogue:remove()
     self.frameSprite:remove()
+    self.titleFrameSprite:remove()
+    self.titleTextSprite:remove()
     GameplayDialogue.super.remove(self)
 end
 
 function GameplayDialogue:_loadCurrentTyper()
     local dialogueInfo = self.allDialogues[self.dialogueIndex]
-    self.currentTyper = Typer(320,170, dialogueInfo.text)
+    self.currentTyper = Typer(320,175, dialogueInfo.text)
+
+    if (dialogueInfo.title == nil or dialogueInfo.title == "") then
+        self.showTitleText = false
+
+    else 
+        self.showTitleText = true
+ 
+        -- draw title text onto the image (this only needs to be done when it changes)
+        gfx.pushContext(self.titleTextImage)
+            gfx.setFont(self.titleTextFont)
+            gfx.clear(gfx.kColorClear)
+            gfx.setColor(gfx.kColorBlack)
+            gfx.drawTextAligned(dialogueInfo.title, 64,13,kTextAlignment.center)
+        gfx.popContext()
+
+    end
+
+end
+
+function GameplayDialogue:_updateTitleVisibility()
+    if (self.state == STATE.SHOWN) then
+        if (self.showTitleText) then
+            self.titleFrameSprite:setVisible(true)
+            self.titleTextSprite:setVisible(true)
+        else 
+            self.titleFrameSprite:setVisible(false)
+            self.titleTextSprite:setVisible(false)
+        end
+    else 
+        self.titleFrameSprite:setVisible(false)
+        self.titleTextSprite:setVisible(false)
+    end
 end

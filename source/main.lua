@@ -20,6 +20,7 @@ import 'CoreLibs/animation'
 import "scripts/Extensions/math"
 import "scripts/Extensions/playdate"
 import "scripts/extensions/string.lua"
+import "scripts/extensions/graphics.lua"
 
 import "scripts/globals/enums"
 import "scripts/globals/globals"

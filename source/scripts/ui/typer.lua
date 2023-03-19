@@ -49,7 +49,7 @@ function Typer:init(x, y, text, maxLines, charsPerLine)
     self.textImage = gfx.image.new(400,120)
     self.textSprite = gfx.sprite.new(self.textImage)
     self.textSprite:moveTo(x,y)
-    self.textSprite:setZIndex(110)
+    self.textSprite:setZIndex(115)
     self.textSprite:setIgnoresDrawOffset(true)
     self.textSprite:add()
 
@@ -112,13 +112,11 @@ function Typer:_drawText()
     
     gfx.pushContext(self.textImage)
         gfx.clear(gfx.kColorClear)
-        gfx.setColor(gfx.kColorBlack)
         gfx.setFont(self.textFont)
-
         for i,txt in ipairs(self.fullTextLines) do
             local yOffset = self.lineSpacing * i
             local typedIndex = self.typedChars[i]
-            gfx.drawText(string.sub(txt, 1, typedIndex), 0, yOffset)
+            gfx.drawTextInverted(string.sub(txt, 1, typedIndex), 0, yOffset)
         end
 
     gfx.popContext()

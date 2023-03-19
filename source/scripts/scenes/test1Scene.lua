@@ -25,7 +25,7 @@ class("Test1Scene").extends(Scene)
 function Test1Scene:initialize(sceneManager)
     Test1Scene.super.initialize(self, sceneManager)
     
-    gfx.setImageDrawMode(gfx.kDrawModeNXOR)
+   --gfx.setImageDrawMode(gfx.kDrawModeNXOR)
 
     print ("test1 scene init")
     local textImage = gfx.image.new("images/black")
