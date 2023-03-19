@@ -6,7 +6,7 @@ function playdate.convertMsToFrames(millisecs)
     return (millisecs/1000) * GLOBAL_TARGET_FPS
 end
 
----Loads data from a csv file into a table and returns the data as tables
+---Loads dialogue from the specified file.  Dialogue is delimited by the pipe | (despite the param being named csv)
 ---@param csv string the file name within `strings/en/` including the extension
 function playdate.loadDialogueFromCsv(csv) 
 
@@ -24,7 +24,12 @@ function playdate.loadDialogueFromCsv(csv)
     repeat
         line = pdFile:readline()
 
+        
         if (line ~= nil) then
+            -- comments can be added with #
+            if (string.startsWith(line, "#") or string.isBlank(line)) then
+                goto continue
+            end
             
             local parts = string.split(line, "|")
             
@@ -37,6 +42,7 @@ function playdate.loadDialogueFromCsv(csv)
             table.insert(chunks, chunk)
         end
 
+        ::continue::
     until line == nil
 
     pdFile:close()
