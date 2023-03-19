@@ -3,10 +3,11 @@ avatar_id|title|text
 
 # Max title seems to be 12 characters.
 # Max text length is about 65
+# For empty titles, use '[N/A]'
 
-test|Test 1|The quick brown fox jumps over the lazy dog.
 test|Po|THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG
+test|[N/A]|The quick brown fox jumps over the lazy dog.
 test|Bingo Man|WORD.
-test|ABCDEFGHIJKL|... THIS IS  ME    ADDING   LOTS OF EXTRA SPACES. 
-test|DSFdfs|Hey guys, this is a longer line to make sure the third line works.
-test|yea|This is another longer line of text to scope out max lengths!?!?!?
+#test||The title should not show up.
+#test|DSFdfs|Hey guys, this is a longer line to make sure the third line works.
+#test|yea|This is another longer line of text to scope out max lengths!?!?!?

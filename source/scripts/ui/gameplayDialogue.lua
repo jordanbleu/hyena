@@ -135,7 +135,7 @@ function GameplayDialogue:_loadCurrentTyper()
     local dialogueInfo = self.allDialogues[self.dialogueIndex]
     self.currentTyper = Typer(320,175, dialogueInfo.text)
 
-    if (dialogueInfo.title == nil or dialogueInfo.title == "") then
+    if (dialogueInfo.title == nil or dialogueInfo.title == "[N/A]") then
         self.showTitleText = false
 
     else 
