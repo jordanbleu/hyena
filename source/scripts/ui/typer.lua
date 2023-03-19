@@ -45,7 +45,7 @@ function Typer:init(x, y, text, maxLines, charsPerLine)
     -- if true, the user has acknowledged the text and is ready to move on 
     self.acknowledged = false
 
-    self.textFont = gfx.font.new("fonts/test")
+    self.textFont = gfx.font.new("fonts/bleu")
     self.textImage = gfx.image.new(400,120)
     self.textSprite = gfx.sprite.new(self.textImage)
     self.textSprite:moveTo(x,y)

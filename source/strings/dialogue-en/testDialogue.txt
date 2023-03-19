@@ -1,10 +1,9 @@
 avatar_id|title|text
 # This is a comment btw
 # this line is approximately the max length of a string in gameplay.
-test|Test man|AAA BBB CCC DDD EEE FFF AAAA BB CCCCC DDD EEEE AAAA BB CCCCC DDD EEEE
-test|Test 2|I ONLY ADDED CAPITAL LETTERS TO THE FONT!
-     
-test|Test 3|THIS IS A SLASH/ THIS IS "QUOTES" AND 'SINGLE'.  BLAH BLAH.
-test|Test 3|WORD.
+# test|Test man|AAA BBB CCC DDD EEE FFF AAAA BB CCCCC DDD EEEE AAAA BB CCCCC DDD EEEE
 
+test|Test 2|The quick brown fox jumps over the lazy dog.
+test|Test 3|THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG
+test|Test 3|WORD.
 test|Test 3|... THIS IS  ME    ADDING   LOTS OF EXTRA SPACES. 
