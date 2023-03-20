@@ -4,10 +4,17 @@ avatar_id|title|text
 # Max title seems to be 12 characters.
 # Max text length is about 65
 # For empty titles, use '[N/A]'
+[N/A]|[N/A]|You fly through space and think about life.
+[N/A]|[N/A]|Suddenly, your best bro calls you.
+test1Anim|Cole|Hey Jordan, I love you and I love Ian.
+test2Anim|Jordan|Do you really mean it?.
+test1Anim|Cole|I really do, you're so handsome!
+[N/A]|[N/A]|Jordan is so happy, he loves Cole too.
+[N/A]|[N/A]|Suddenly another man calls...
+test3Anim|Ian|Woah, hey guys! Ian here!
+test3Anim|Ian|Welcome to space ship!
+test2Anim|Jordan|No way!  I love Ian!
+test1Anim|Cole|I love Ian!
+[N/A]|[N/A]|This is your dream come true.
+[N/A]|[N/A]|Such amazing men :)
 
-test|Po|THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG
-test|[N/A]|The quick brown fox jumps over the lazy dog.
-test|Bingo Man|WORD.
-#test||The title should not show up.
-#test|DSFdfs|Hey guys, this is a longer line to make sure the third line works.
-test|yea|This is another longer line of text to scope out max lengths!?!?!?

@@ -61,6 +61,8 @@ function GameplayDialogue:init(csvFile)
     self.titleTextFont = gfx.font.new("fonts/bleu")
     self.showTitleText = false
 
+    self.avatarAnim = nil
+
     self:add()
 end 
 
@@ -96,6 +98,14 @@ end
 
 function GameplayDialogue:_updateDialogues()
 
+    if (self.currentTyper:isFinishedTyping()) then
+        if (self.avatarAnim ~= nil) then
+            -- reset the frame back to 1 and pause it.
+            self.avatarAnim:reset()
+            self.avatarAnim:pause()
+        end    
+    end
+
     if (self.currentTyper:isDismissed()) then
         self.currentTyper:remove()
         self.currentTyper = nil
@@ -105,7 +115,9 @@ function GameplayDialogue:_updateDialogues()
         if (self.dialogueIndex > #self.allDialogues) then
             self.frameAnimator = gfx.animator.new(TRANSITION_DURATION, 1, 0)
             self.state = STATE.ANIMATING_OUT
-
+            if (self.avatarAnim) then 
+                self.avatarAnim:remove()
+            end
         else 
             self:_loadCurrentTyper()
         end
@@ -132,9 +144,15 @@ function GameplayDialogue:remove()
 end
 
 function GameplayDialogue:_loadCurrentTyper()
+    
+    if (self.avatarAnim ~= nil) then
+        self.avatarAnim:remove()
+    end
+
     local dialogueInfo = self.allDialogues[self.dialogueIndex]
     self.currentTyper = Typer(320,175, dialogueInfo.text)
 
+    -- populate the title thing 
     if (dialogueInfo.title == nil or dialogueInfo.title == "[N/A]") then
         self.showTitleText = false
 
@@ -148,9 +166,19 @@ function GameplayDialogue:_loadCurrentTyper()
             gfx.setColor(gfx.kColorBlack)
             gfx.drawTextAligned(dialogueInfo.title, 64,13,kTextAlignment.center)
         gfx.popContext()
-
     end
 
+    -- avatar anim
+    if (dialogueInfo.avatarId ~= "[N/A]") then
+        local imageTablePath = "images/ui/dialogue/avatars/" .. dialogueInfo.avatarId .. "/avatar"
+        self.avatarAnim = SpriteAnimation(imageTablePath, 500, 75, 150)
+        self.avatarAnim:setRepeats(-1)
+        self.avatarAnim:setZIndex(110)
+        self.avatarAnim:setIgnoresDrawOffset(true)
+    else 
+        self.avatarAnim = nil
+    end
+    
 end
 
 function GameplayDialogue:_updateTitleVisibility()

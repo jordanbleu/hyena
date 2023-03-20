@@ -40,7 +40,7 @@ function Typer:init(x, y, text, maxLines, charsPerLine)
 
     self.delayCycleCounter = 0
     -- change this for faster text speed 
-    self.delayCycles = 5
+    self.delayCycles = 2
 
     -- if true, the user has acknowledged the text and is ready to move on 
     self.acknowledged = false
@@ -131,4 +131,8 @@ end
 
 function Typer:isDismissed()
     return self.acknowledged
+end
+
+function Typer:isFinishedTyping()
+    return self.finishedTyping
 end

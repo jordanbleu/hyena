@@ -130,11 +130,13 @@ function SpriteAnimation:show()
     self:setVisible(true)
 end
 
-
-
 function SpriteAnimation:attachTo(obj)
     self.attachedSprite = obj
 end
 
--- function SpriteAnimation:reset()
--- end
+function SpriteAnimation:reset()
+    self.frame = 1
+    self.updateCounter = 0
+    self:setImage(self.imageTable:getImage(1))
+end
+
