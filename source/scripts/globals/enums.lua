@@ -34,3 +34,9 @@ WEAPON =
     EMP = 4,
     SHIELD = 5
 }
+
+CUTSCENE_FRAME_EFFECT = 
+{
+    -- the image moves to the center of the screen and doesnt move 
+    STATIC = 0
+}

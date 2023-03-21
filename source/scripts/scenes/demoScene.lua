@@ -33,10 +33,6 @@ function DemoScene:initialize(sceneManager)
     --gfx.setImageDrawMode(gfx.kDrawModeNXOR)
     
     print ("demo scene init")
-    local textImage = gfx.image.new("images/black")
-    local textSprite = gfx.sprite.new(textImage)
-    textSprite:moveTo(200,120)
-    textSprite:add()
     
     ParallaxLayer(gfx.image.new("images/backgrounds/stars-farther"),1)
     ParallaxLayer(gfx.image.new("images/backgrounds/stars-far"),3)
