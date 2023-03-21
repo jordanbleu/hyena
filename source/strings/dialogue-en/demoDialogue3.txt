@@ -1,0 +1,12 @@
+avatar_id|title|text
+# this is just an example of everything sorta put together
+[N/A]|[N/A]|Suddenly you realize, you just killed a cop...
+[N/A]|[N/A]|Oh god...
+[N/A]|[N/A]|But then you remember.  You are super drunk.
+[N/A]|[N/A]|If the cops arrest you, you can just blame the space beer.
+test3Anim|You|Almost there, boys.  I can smell the hot pockets.
+test1Anim|Boofus|Hells yeah my dude.
+test2Anim|Chud|I'm gonna buy some Totinos as well.
+
+
+

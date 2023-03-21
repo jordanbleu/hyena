@@ -63,6 +63,7 @@ function GameplayDialogue:init(csvFile)
 
     self.avatarAnim = nil
 
+    self.isFullyCompleted = false
     self:add()
 end 
 
@@ -131,6 +132,7 @@ function GameplayDialogue:_animateOut()
     self.frameSprite:setClipRect(0,self.frameSprite.y-40,400,clipHeight)
 
     if (self.frameAnimator:ended()) then
+        self.isFullyCompleted = true
         self:remove()
     end
 
@@ -199,4 +201,8 @@ function GameplayDialogue:_updateTitleVisibility()
         self.titleFrameSprite:setVisible(false)
         self.titleTextSprite:setVisible(false)
     end
+end
+
+function GameplayDialogue:isCompleted()
+    return self.isFullyCompleted
 end
