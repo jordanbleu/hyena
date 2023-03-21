@@ -14,6 +14,7 @@ function CutsceneFrame:init(title, text, imagePath, effect)
 
     self.effect = effect or CUTSCENE_FRAME_EFFECT.STATIC
 
+    -- todo: for some reason the sprite isn't showing 
     self.image = gfx.image.new(imagePath)
     self.sprite = gfx.sprite.new(image)
     self.sprite:setZIndex(50)
