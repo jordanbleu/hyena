@@ -146,12 +146,11 @@ end
 function GameplayDialogue:_loadCurrentTyper()
     
     if (self.avatarAnim ~= nil) then
-        self.avatarAnim:remove()
+        self.avatarAnim:remove()    
     end
 
     local dialogueInfo = self.allDialogues[self.dialogueIndex]
-    self.currentTyper = Typer(320,175, dialogueInfo.text)
-
+    
     -- populate the title thing 
     if (dialogueInfo.title == nil or dialogueInfo.title == "[N/A]") then
         self.showTitleText = false
@@ -170,12 +169,18 @@ function GameplayDialogue:_loadCurrentTyper()
 
     -- avatar anim
     if (dialogueInfo.avatarId ~= "[N/A]") then
+        -- dialogue text will be slightly to the right to accomodate for the avatar sprite 
+        self.currentTyper = Typer(320,175, dialogueInfo.text)
+
         local imageTablePath = "images/ui/dialogue/avatars/" .. dialogueInfo.avatarId .. "/avatar"
         self.avatarAnim = SpriteAnimation(imageTablePath, 500, 75, 150)
         self.avatarAnim:setRepeats(-1)
         self.avatarAnim:setZIndex(110)
         self.avatarAnim:setIgnoresDrawOffset(true)
     else 
+        -- dialogue text shifts to the left and allows for more charactes per line since we have more space.
+        self.currentTyper = Typer(255,175, dialogueInfo.text, 3, 32)
+
         self.avatarAnim = nil
     end
     
