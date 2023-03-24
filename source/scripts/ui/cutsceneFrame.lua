@@ -1,6 +1,7 @@
 local gfx <const> = playdate.graphics
 
 import "scripts/ui/typer"
+import "scripts/effects/hardCutBlack"
 
 --[[ 
     A custcene frame will display an image that is either static or slowly pans. 
@@ -22,6 +23,13 @@ local STD_SPRITE_HEIGHT <const> = 160
 function CutsceneFrame:init(title, text, imagePath, effect)
 
     self.effect = effect or CUTSCENE_FRAME_EFFECT.STATIC
+
+    local blackScreenImage = gfx.image.new(400,240,gfx.kColorBlack)
+    self.transitionSprite = gfx.sprite.new(blackScreenImage)
+    self.transitionSprite:setZIndex(150)
+    self.transitionSprite:moveTo(200,120)
+    self.transitionSprite:setVisible(true)
+    self.transitionSprite:add()
 
     -- this doesn't need to be loaded for each instance
     -- the sprite for the dialogue text frame
@@ -49,16 +57,9 @@ function CutsceneFrame:init(title, text, imagePath, effect)
 
     self:_setupPanningAnimators(w, h,self.effect)
 
-    local blackScreenImage = gfx.image.new("images/black")
-    self.transitionSprite = gfx.sprite.new(blackScreenImage)
-    self.transitionSprite:setZIndex(120)
-    self.transitionSprite:moveTo(200,120)
-    self.transitionSprite:add()
-    self.transitionSprite:setVisible(true)
-
     self.isComplete = false
 
-    self.waitCycles = 35
+    self.waitCycles = 10
     self.preDelayCycleCounter = 0
     self.postDelayCycleCounter = 0
 
@@ -78,7 +79,7 @@ function CutsceneFrame:update()
         self:_applyPanningEffect()
         self.preDelayCycleCounter+=1
         if (self.preDelayCycleCounter>self.waitCycles) then
-            self.typer = Typer(20,180,self.fullText, 3, 42)
+            self.typer = Typer(15,180,self.fullText, 3, 42)
             self.transitionSprite:setVisible(false)
             self.state = STATE.SHOWN
         end
@@ -95,8 +96,12 @@ function CutsceneFrame:update()
         self.postDelayCycleCounter+=1
         if (self.postDelayCycleCounter > self.waitCycles) then
             self.cutsceneSprite:setVisible(false)
-            self.transitionSprite:setVisible(false)
             self.isComplete = true
+            -- this is a silly hack that covers up any potential delay
+            -- in showing the black transition between this and the next 
+            -- cutscene frame.
+            HardCutBlack(250)
+            self:remove()
         end
 
     end
@@ -132,9 +137,10 @@ function CutsceneFrame:_setupPanningAnimators(width, height, effect)
     elseif (effect == CUTSCENE_FRAME_EFFECT.PAN_UP_DOWN) then 
         self.vPanimator = gfx.animator.new(6000, 0, -yDifference, playdate.easingFunctions.inOutSine)
 
-    else 
-
+    elseif (effect == CUTSCENE_FRAME_EFFECT.PAN_DOWN_UP) then 
+        self.vPanimator = gfx.animator.new(6000, -yDifference, 0, playdate.easingFunctions.inOutSine)
     end
+    
 
 end
 
@@ -143,8 +149,8 @@ function CutsceneFrame:remove()
     self.dialogueFrame:remove()
     self.cutsceneSprite:remove()
     self.typer:remove()
-    self.transitionSprite:remove()
     self.animator = nil
+    self.transitionSprite:remove()
 
     CutsceneFrame.super.remove(self)
 end

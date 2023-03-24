@@ -98,6 +98,7 @@ function Typer:_checkInput()
             -- set each typed char index to the length of that line
             for i in ipairs(self.typedChars) do
                 self.typedChars[i] = self.fullTextLengths[i]
+                self:markDirty()
             end
             -- set current line past the last line, so that we are done typing
             self.currentLine = #self.fullTextLines + 1
@@ -107,6 +108,7 @@ function Typer:_checkInput()
     end
 end
 
+-- this is overriding the playdate sdk's bult in draw function.  
 function Typer:draw()
 
     gfx.setFont(self.textFont)
