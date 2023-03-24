@@ -3,6 +3,9 @@
 ---@param sep string delimiter
 ---@return table
 function string.split(inputstr, sep)
+
+    inputstr = inputstr or ""
+    
     if sep == nil then
         sep = "%s"
     end

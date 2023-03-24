@@ -30,6 +30,7 @@ import "scripts/sceneManager"
 import "scripts/scenes/demoScene" -- todo :remove 
 import "scripts/scenes/test1Scene"
 import "scripts/scenes/cutsceneDemo"
+import "scripts/scenes/fuck"
 
 local gfx <const> = playdate.graphics
 
@@ -38,6 +39,7 @@ local function setup()
     math.randomseed(playdate.getSecondsSinceEpoch())
 
     playdate.display.setRefreshRate(GLOBAL_TARGET_FPS)
+    gfx.setImageDrawMode(gfx.kDrawModeCopy)
 
     local sceneMgr = SceneManager()
     sceneMgr:add()
@@ -53,7 +55,7 @@ end
 local function drawDebugText()
     local fon = gfx.font.new("fonts/Nano Sans")
     gfx.setFont(fon)
-    gfx.drawText("Deboooog text:", 10, 10)
+    --gfx.drawText("Deboooog text:", 10, 10)
 
     local enemies = 0
     local actors = 0
@@ -101,8 +103,8 @@ function playdate.update()
     gfx.sprite.update()
     playdate.timer.updateTimers()
     gfx.animation.blinker.updateAll()
-    playdate.drawFPS(0,0)
-    --drawDebugText()
+    --playdate.drawFPS(0,0)
+    -------drawDebugText()
 end
 
 -- ** this should be disabled for the final build **

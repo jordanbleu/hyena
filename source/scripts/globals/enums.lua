@@ -38,5 +38,11 @@ WEAPON =
 CUTSCENE_FRAME_EFFECT = 
 {
     -- the image moves to the center of the screen and doesnt move 
-    STATIC = 0
+    STATIC = 0,
+    PAN_UP_DOWN = 1,
+    -- Image will start on the left side, and scroll to the right.  
+    PAN_LEFT_RIGHT = 2,
+    -- Image will start on the right side then scroll to the left
+    PAN_RIGHT_LEFT = 3,
+    PAN_DOWN_UP = 4,
 }

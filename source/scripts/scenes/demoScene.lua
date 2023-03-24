@@ -30,7 +30,6 @@ end
 
 function DemoScene:initialize(sceneManager)
     self.sceneManager = sceneManager
-    --gfx.setImageDrawMode(gfx.kDrawModeNXOR)
     
     print ("demo scene init")
     

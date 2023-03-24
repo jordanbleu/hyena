@@ -21,5 +21,6 @@ function CutsceneFrameSegment:isCompleted()
 end
 
 function CutsceneFrameSegment:cleanup()
+    self.cutsceneFrame:remove()
     self.cutsceneFrame = nil
 end

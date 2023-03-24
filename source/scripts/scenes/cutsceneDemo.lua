@@ -35,9 +35,20 @@ function CutsceneDemo:initialize(sceneManager)
     local segments = {}
 
     table.insert(segments, function()
-        return CutsceneFrameSegment("title", "this is a text hello there i love you i also love salad because salad is so damn delicious omg this is a lot of text.", "images/cutscene/badCutscene2")
+        return CutsceneFrameSegment("title3", gfx.getString("troy1"), "images/cutscene/troy1")
     end)
 
+    table.insert(segments, function()
+        return CutsceneFrameSegment("title3", gfx.getString("troy2"), "images/cutscene/troy2", CUTSCENE_FRAME_EFFECT.PAN_UP_DOWN)
+    end)
+
+    table.insert(segments, function()
+        return CutsceneFrameSegment("title3", gfx.getString("troy3"), "images/cutscene/troy3", CUTSCENE_FRAME_EFFECT.PAN_LEFT_RIGHT)
+    end)
+
+    table.insert(segments, function()
+        return CutsceneFrameSegment("title3", gfx.getString("troy4"), "images/cutscene/troy4")
+    end)
 
     CutsceneDemo.super.initialize(self, segments, sceneManager)
 

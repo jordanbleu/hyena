@@ -46,27 +46,24 @@ function Typer:init(x, y, text, maxLines, charsPerLine)
     self.acknowledged = false
 
     self.textFont = gfx.font.new("fonts/bleu")
-    self.textImage = gfx.image.new(400,120)
-    self.textSprite = gfx.sprite.new(self.textImage)
-    self.textSprite:moveTo(x,y)
-    self.textSprite:setZIndex(115)
-    self.textSprite:setIgnoresDrawOffset(true)
-    self.textSprite:add()
 
     -- tweak this for spacing in between text lines (in px)
     self.lineSpacing = 18 
 
-    -- self sprite stuff 
-    self:moveTo(x,y)
-    self:setZIndex(110)
+    self.textX = x
+    self.textY = y
+
+    -- Set self up.
+    self:setSize(400,240)
+    self:setCenter(0,0)
+    self:moveTo(0,0)
+    self:setZIndex(115)
     self:add()
 end
 
 function Typer:update()
-
     self:_updateText()
     self:_checkInput()
-    self:_drawText()
 end
 
 function Typer:_updateText()
@@ -87,6 +84,9 @@ function Typer:_updateText()
         end
 
         self.delayCycleCounter = 0
+
+        -- tells the sprite to re-draw itself 
+        self:markDirty()
     else 
         self.delayCycleCounter += 1
     end
@@ -107,27 +107,18 @@ function Typer:_checkInput()
     end
 end
 
-function Typer:_drawText()
+function Typer:draw()
 
-    
-    gfx.pushContext(self.textImage)
-        gfx.clear(gfx.kColorClear)
-        gfx.setFont(self.textFont)
-        for i,txt in ipairs(self.fullTextLines) do
-            local yOffset = self.lineSpacing * i
-            local typedIndex = self.typedChars[i]
-            gfx.drawTextInverted(string.sub(txt, 1, typedIndex), 0, yOffset)
-        end
+    gfx.setFont(self.textFont)
 
-    gfx.popContext()
-
+    for i,txt in ipairs(self.fullTextLines) do
+        local yOffset = self.lineSpacing * (i-1)
+        local typed = string.sub(txt, 1, self.typedChars[i])
+        gfx.drawTextBlack(typed, self.textX, self.textY + yOffset)
+    end
 
 end
 
-function Typer:remove()
-    self.textSprite:remove()
-    Typer.super.remove(self)
-end
 
 function Typer:isDismissed()
     return self.acknowledged
