@@ -21,7 +21,9 @@ local STATE = {
 -- how long transition in / out takes (in ms)
 local TRANSITION_DURATION = 500
 
-function GameplayDialogue:init(csvFile)
+function GameplayDialogue:init(csvFile, playerInst)
+
+    self.player = playerInst 
 
     self.allDialogues = playdate.loadDialogueFromCsv(csvFile)
     self.dialogueIndex = 1
@@ -91,6 +93,9 @@ function GameplayDialogue:_animateIn()
 
     if (self.frameAnimator:ended()) then
         -- enter shown state
+        if (self.player) then
+            self.player:lockControls()
+        end
         self:_loadCurrentTyper()
         self.state = STATE.SHOWN
     end
@@ -133,6 +138,9 @@ function GameplayDialogue:_animateOut()
 
     if (self.frameAnimator:ended()) then
         self.isFullyCompleted = true
+        if (self.player) then
+            self.player:unlockControls()
+        end
         self:remove()
     end
 
@@ -170,9 +178,13 @@ function GameplayDialogue:_loadCurrentTyper()
     end
 
     -- avatar anim
+
+    local typerX = 55
+    local typerY = 130
+
     if (dialogueInfo.avatarId ~= "[N/A]") then
         -- dialogue text will be slightly to the right to accomodate for the avatar sprite 
-        self.currentTyper = Typer(320,175, dialogueInfo.text)
+        self.currentTyper = Typer(typerX + 50,typerY, dialogueInfo.text)
 
         local imageTablePath = "images/ui/dialogue/avatars/" .. dialogueInfo.avatarId .. "/avatar"
         self.avatarAnim = SpriteAnimation(imageTablePath, 500, 75, 150)
@@ -181,7 +193,7 @@ function GameplayDialogue:_loadCurrentTyper()
         self.avatarAnim:setIgnoresDrawOffset(true)
     else 
         -- dialogue text shifts to the left and allows for more charactes per line since we have more space.
-        self.currentTyper = Typer(255,175, dialogueInfo.text, 3, 32)
+        self.currentTyper = Typer(typerX,typerY, dialogueInfo.text, 3, 32)
 
         self.avatarAnim = nil
     end

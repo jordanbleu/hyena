@@ -58,6 +58,7 @@ function Typer:init(x, y, text, maxLines, charsPerLine)
     self:setCenter(0,0)
     self:moveTo(0,0)
     self:setZIndex(115)
+    self:setIgnoresDrawOffset(true)
     self:add()
 end
 

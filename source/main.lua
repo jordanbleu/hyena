@@ -46,8 +46,8 @@ local function setup()
 
     -- long in the future, this will be set to the 'title screen scene'
     -- local firstScene = DemoScene()
-    --local firstScene = Test1Scene() 
-    local firstScene = CutsceneDemo()
+    local firstScene = Test1Scene() 
+    --local firstScene = CutsceneDemo()
     sceneMgr:switchScene(firstScene, SCENE_TRANSITION.FADE_IO)
 end
 
@@ -86,7 +86,6 @@ local function drawDebugText()
     local allTimers = playdate.timer.allTimers()
     timers = #allTimers
     
-
     gfx.drawText("Enemies: " .. tostring(enemies), 10,20)
     gfx.drawText("Actors: " .. tostring(actors), 10, 30)
     gfx.drawText("SpriteAnimations: " .. tostring(spriteanimations), 10, 40)

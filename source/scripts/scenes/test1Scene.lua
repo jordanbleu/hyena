@@ -36,8 +36,9 @@ function Test1Scene:initialize(sceneManager)
 
     local camera = Camera()
 
-    local player = Player(camera)
-    player:moveTo(200, 200)
+    self.player = Player(camera)
+    local player = self.player
+    self.player:moveTo(200, 200)
 
     Hud(player)
     WeaponSelector(player)
@@ -92,7 +93,7 @@ function Test1Scene:update()
         self.frameCounter += 1
 
         if (self.frameCounter == time2Wait-1) then
-            GameplayDialogue("testDialogue.txt")
+            GameplayDialogue("testDialogue.txt", self.player)
             self.frameCounter = time2Wait
             
         end
