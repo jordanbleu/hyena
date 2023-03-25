@@ -63,6 +63,17 @@ function GameplayDialogue:init(csvFile, playerInst)
     self.titleTextFont = gfx.font.new("fonts/bleu")
     self.showTitleText = false
 
+    self.aButtonImage = gfx.image.new("images/ui/aButton")
+    self.aButtonSprite = gfx.sprite.new(self.aButtonImage)
+    self.aButtonSprite:setIgnoresDrawOffset(true)
+    self.aButtonSprite:setZIndex(120)
+    self.aButtonSprite:moveTo(353,175)
+    self.aButtonSprite:setVisible(false)
+    self.aButtonSprite:add();
+
+    self.aButtonBlinker = gfx.animation.blinker.new(500,500, true)
+    self.aButtonBlinker:start()
+
     self.avatarAnim = nil
 
     self.isFullyCompleted = false
@@ -78,11 +89,25 @@ function GameplayDialogue:update()
 
     elseif (self.state == STATE.SHOWN) then
         self:_updateDialogues()
+        self:_blinkAButton()
 
     elseif (self.state == STATE.ANIMATING_OUT) then
         self:_animateOut()
     end
 
+end
+
+function GameplayDialogue:_blinkAButton()
+    if (self.currentTyper and self.currentTyper:isFinishedTyping()) then 
+        if (self.aButtonBlinker.on) then
+            self.aButtonSprite:setVisible(true)
+        else
+            self.aButtonSprite:setVisible(false)
+        end
+    elseif (self.currentTyper) then
+        self.aButtonSprite:setVisible(false) 
+  
+    end
 end
 
 function GameplayDialogue:_animateIn()
@@ -150,6 +175,7 @@ function GameplayDialogue:remove()
     self.frameSprite:remove()
     self.titleFrameSprite:remove()
     self.titleTextSprite:remove()
+    self.aButtonSprite:remove()
     GameplayDialogue.super.remove(self)
 end
 

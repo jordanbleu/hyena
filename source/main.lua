@@ -30,7 +30,6 @@ import "scripts/sceneManager"
 import "scripts/scenes/demoScene" -- todo :remove 
 import "scripts/scenes/test1Scene"
 import "scripts/scenes/cutsceneDemo"
-import "scripts/scenes/fuck"
 
 local gfx <const> = playdate.graphics
 
@@ -46,8 +45,8 @@ local function setup()
 
     -- long in the future, this will be set to the 'title screen scene'
     -- local firstScene = DemoScene()
-    --local firstScene = Test1Scene() 
-    local firstScene = CutsceneDemo()
+    local firstScene = Test1Scene() 
+    --local firstScene = CutsceneDemo()
     sceneMgr:switchScene(firstScene, SCENE_TRANSITION.FADE_IO)
 end
 

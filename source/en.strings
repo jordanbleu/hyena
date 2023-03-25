@@ -11,7 +11,7 @@
 "testDialog1" = "This is a decently long string of dialogue text"
 "testDialog2" = "This is the second line of the dialogue."
 "testDialog3" = "This is the third line of dialogue that will test word wrapping capabilities (maybe)." 
-"troy1" = "This is the tale of Troy Nordbrock, a man who almost never made it to gold nova on CS GO"
+"troy1" = "This is the tale of Troy Nordbrock, a man who almost never made it to gold nova on CS GO.  Here's more text!  Tacos."
 "troy2" = "He kept practicing every day but his aimbots would never work."
 "troy3" = "But then one day he remembered to use his monitor's built in crosshair.",
 "troy4" = "After that happened he became gold nova and head of the SSOCP. The end?"

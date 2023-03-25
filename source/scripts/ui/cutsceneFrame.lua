@@ -87,6 +87,16 @@ function CutsceneFrame:init(title, text, imagePath, effect)
 
     self.fullText = text
     
+    self.aButtonImage = gfx.image.new("images/ui/aButton")
+    self.aButtonSprite = gfx.sprite.new(self.aButtonImage)
+    self.aButtonSprite:setIgnoresDrawOffset(true)
+    self.aButtonSprite:setZIndex(120)
+    self.aButtonSprite:moveTo(380,225)
+    self.aButtonSprite:setVisible(false)
+    self.aButtonSprite:add();
+
+    self.aButtonBlinker = gfx.animation.blinker.new(500,500, true)
+    self.aButtonBlinker:start()
 
     self:add()
 end
@@ -106,6 +116,7 @@ function CutsceneFrame:update()
     
     elseif (self.state == STATE.SHOWN) then
         self:_applyPanningEffect()
+        self:_blinkAButton()
         if (self.typer:isDismissed()) then
             self.state = STATE.TRANSITIONING_OUT
             self.cutsceneSprite:setVisible(false)
@@ -124,6 +135,17 @@ function CutsceneFrame:update()
             self:remove()
         end
 
+    end
+end
+
+function CutsceneFrame:_blinkAButton()
+    if (self.typer:isFinishedTyping()) then 
+        if (self.aButtonBlinker.on) then
+            self.aButtonSprite:setVisible(true)
+        else
+            self.aButtonSprite:setVisible(false)
+        end
+    
     end
 end
 
@@ -190,6 +212,7 @@ function CutsceneFrame:remove()
     self.typer:remove()
     self.animator = nil
     self.transitionSprite:remove()
+    self.aButtonSprite:remove()
 
 
     CutsceneFrame.super.remove(self)
