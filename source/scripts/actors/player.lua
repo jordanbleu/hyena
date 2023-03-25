@@ -34,7 +34,7 @@ function Player:init(cameraInst)
 
     -- how long the user has held A without releasing it.
     self.holdACycles = 0
-    -- how long the user has held B without releaseing it.
+    -- how long the user has held B without releasing it.
     self.holdBCycles = 0
 
     self.maxHealth = 100
@@ -49,17 +49,24 @@ function Player:init(cameraInst)
 
     self.selectedWeapon = WEAPON.LASER
 
+    
     self.energyRefillTimer = PhysicsTimer(50, function() self:_refillEnergy() end)
-
     self.xVelocity = 0
     self.yVelocity = 0
     self:setImage(gfx.image.new("images/player"))
     self:setZIndex(25)
     self:setGroups({COLLISION_LAYER.PLAYER})
+    self:setCollidesWithGroups(COLLISION_LAYER.ENEMY, COLLISION_LAYER.ENEMY_PROJECTILE)
     self:add()
+    
+    local w,h = self:getSize()
+    self:setCollideRect(0,0,self:getSize())
 
     -- set to true when some UI element or something has taken focus.
-    self.isControlsLocked = false 
+    self.isControlsLocked = false
+
+    self.iframeCounter = 0
+    self.iframes = 50
 
     self.usedEmp = false
 end
@@ -71,11 +78,43 @@ function Player:update()
         self.usedEmp = false
     end
 
+    
+
     self:_handlePlayerInput()
+    self:_checkCollisions()
+end
+
+function Player:_checkCollisions()
+    -- player is inviisble 
+    if (self.iframeCounter > 0) then 
+        return
+    end
+
+    local tookDamage = false
+    local collisions = self:overlappingSprites()
+
+    if (#collisions > 0) then
+        tookDamage = true
+    end
+
+    if (tookDamage) then
+        self.health -=10
+        self.camera:bigShake()
+        self.iframeCounter = self.iframes
+        local spr = SingleSpriteAnimation("images/playerAnim/damage", 1000, self.x, self.y)
+        spr:setZIndex(25)
+        spr:attachTo(self)
+    end
+
 end
 
 function Player:physicsUpdate()
     Player.super.physicsUpdate(self)
+
+    if (self.iframeCounter > 0) then
+        self.iframeCounter -= 1
+    end
+
     self:_handleMovement()
     self:_decelerate()
 end

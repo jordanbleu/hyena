@@ -71,7 +71,7 @@ function Test1Scene:initialize(sceneManager)
 
     --DeathStar(200,40, player)
 
-    --Grunt(150,-40,camera, player)
+    Grunt(150,-40,camera, player)
     -- Grunt(200,-30,camera, player)
     --Grunt(100,80,camera, player)
     -- Grunt(250,-30,camera, player)
@@ -88,14 +88,14 @@ end
 
 function Test1Scene:update()
 
-    local time2Wait = 120
-    if (self.frameCounter < time2Wait) then
-        self.frameCounter += 1
+    -- local time2Wait = 120
+    -- if (self.frameCounter < time2Wait) then
+    --     self.frameCounter += 1
 
-        if (self.frameCounter == time2Wait-1) then
-            GameplayDialogue("testDialogue.txt", self.player)
-            self.frameCounter = time2Wait
+    --     if (self.frameCounter == time2Wait-1) then
+    --         GameplayDialogue("testDialogue.txt", self.player)
+    --         self.frameCounter = time2Wait
             
-        end
-    end
+    --     end
+    -- end
 end
