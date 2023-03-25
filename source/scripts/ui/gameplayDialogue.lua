@@ -60,14 +60,14 @@ function GameplayDialogue:init(csvFile, playerInst)
     self.titleTextSprite:setVisible(false)
     self.titleTextSprite:add()
 
-    self.titleTextFont = gfx.font.new("fonts/bleu")
+    self.titleTextFont = gfx.font.new("fonts/big-bleu")
     self.showTitleText = false
 
     self.aButtonImage = gfx.image.new("images/ui/aButton")
     self.aButtonSprite = gfx.sprite.new(self.aButtonImage)
     self.aButtonSprite:setIgnoresDrawOffset(true)
     self.aButtonSprite:setZIndex(120)
-    self.aButtonSprite:moveTo(353,175)
+    self.aButtonSprite:moveTo(352,175)
     self.aButtonSprite:setVisible(false)
     self.aButtonSprite:add();
 
@@ -199,7 +199,7 @@ function GameplayDialogue:_loadCurrentTyper()
             gfx.setFont(self.titleTextFont)
             gfx.clear(gfx.kColorClear)
             gfx.setColor(gfx.kColorBlack)
-            gfx.drawTextAligned(dialogueInfo.title, 64,13,kTextAlignment.center)
+            gfx.drawTextAligned(dialogueInfo.title, 64,11,kTextAlignment.center)
         gfx.popContext()
     end
 
@@ -210,7 +210,7 @@ function GameplayDialogue:_loadCurrentTyper()
 
     if (dialogueInfo.avatarId ~= "[N/A]") then
         -- dialogue text will be slightly to the right to accomodate for the avatar sprite 
-        self.currentTyper = Typer(typerX + 50,typerY, dialogueInfo.text)
+        self.currentTyper = Typer(typerX + 50,typerY, dialogueInfo.text, 3, 21)
 
         local imageTablePath = "images/ui/dialogue/avatars/" .. dialogueInfo.avatarId .. "/avatar"
         self.avatarAnim = SpriteAnimation(imageTablePath, 500, 75, 150)
@@ -219,7 +219,7 @@ function GameplayDialogue:_loadCurrentTyper()
         self.avatarAnim:setIgnoresDrawOffset(true)
     else 
         -- dialogue text shifts to the left and allows for more charactes per line since we have more space.
-        self.currentTyper = Typer(typerX,typerY, dialogueInfo.text, 3, 32)
+        self.currentTyper = Typer(typerX,typerY, dialogueInfo.text, 3, 25)
 
         self.avatarAnim = nil
     end

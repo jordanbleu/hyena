@@ -35,7 +35,7 @@ function CutsceneDemo:initialize(sceneManager)
     local segments = {}
 
     table.insert(segments, function()
-        return CutsceneFrameSegment("Cyber", gfx.getString("troy1"), "images/cutscene/troy1")
+        return CutsceneFrameSegment("AAAAA", "AAA AAA AAAAA AA AAA AAAAA AA AAAAA AA A AA AAAAA AAAA AA AAAA AAAA AA AAAA", "images/cutscene/troy1")
     end)
 
     table.insert(segments, function()

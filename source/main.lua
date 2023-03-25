@@ -39,14 +39,14 @@ local function setup()
 
     playdate.display.setRefreshRate(GLOBAL_TARGET_FPS)
     gfx.setImageDrawMode(gfx.kDrawModeCopy)
-
+ 
     local sceneMgr = SceneManager()
     sceneMgr:add()
 
     -- long in the future, this will be set to the 'title screen scene'
     -- local firstScene = DemoScene()
-    local firstScene = Test1Scene() 
-    --local firstScene = CutsceneDemo()
+    --local firstScene = Test1Scene() 
+    local firstScene = CutsceneDemo()
     sceneMgr:switchScene(firstScene, SCENE_TRANSITION.FADE_IO)
 end
 

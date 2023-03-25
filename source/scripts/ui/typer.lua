@@ -45,10 +45,10 @@ function Typer:init(x, y, text, maxLines, charsPerLine)
     -- if true, the user has acknowledged the text and is ready to move on 
     self.acknowledged = false
 
-    self.textFont = gfx.font.new("fonts/bleu")
+    self.textFont = gfx.font.new("fonts/big-bleu")
 
     -- tweak this for spacing in between text lines (in px)
-    self.lineSpacing = 18 
+    self.lineSpacing = 14
 
     self.textX = x
     self.textY = y

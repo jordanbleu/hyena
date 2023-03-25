@@ -62,7 +62,9 @@ function CutsceneFrame:init(title, text, imagePath, effect)
         self.titleTextSprite:moveTo(200,160)
         self.titleTextSprite:add()
 
-        self.titleTextFont = gfx.font.new("fonts/bleu")
+        -- self.titleTextFont = gfx.font.new("fonts/bleu")
+        self.titleTextFont = gfx.font.new("fonts/big-bleu")
+
         self:_drawTitle()
     end
     
@@ -109,7 +111,7 @@ function CutsceneFrame:update()
         self:_applyPanningEffect()
         self.preDelayCycleCounter+=1
         if (self.preDelayCycleCounter>self.waitCycles) then
-            self.typer = Typer(15,183,self.fullText, 3, 42)
+            self.typer = Typer(15,183,self.fullText, 3, 31)
             self.transitionSprite:setVisible(false)
             self.state = STATE.SHOWN
         end
@@ -154,7 +156,7 @@ function CutsceneFrame:_drawTitle()
         gfx.setFont(self.titleTextFont)
         gfx.clear(gfx.kColorClear)
         gfx.setColor(gfx.kColorBlack)
-        gfx.drawTextAligned(self.title, 64,13,kTextAlignment.center)
+        gfx.drawTextAligned(self.title, 64,10,kTextAlignment.center)
     gfx.popContext()
 end
 
