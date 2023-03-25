@@ -1,0 +1,84 @@
+--metrics={"baseline":-2,"xHeight":3,"capHeight":0,"pairs":{},"left":[],"right":[]}
+datalen=2596
+data=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
+width=10
+height=12
+
+tracking=1
+
+0	8
+1	6
+2	9
+3	9
+4	10
+5	9
+6	9
+7	9
+8	7
+9	8
+space	10
+�	9
+A	9
+B	9
+C	9
+D	9
+E	9
+F	9
+G	9
+H	9
+I	9
+J	9
+K	9
+L	9
+M	9
+N	9
+O	9
+P	9
+Q	9
+R	9
+S	9
+T	9
+U	9
+V	9
+W	9
+X	9
+Y	9
+Z	9
+a	9
+b	9
+c	9
+d	9
+e	9
+f	7
+g	9
+h	9
+i	3
+j	6
+k	9
+l	3
+m	9
+n	8
+o	9
+p	9
+q	8
+r	8
+s	8
+t	7
+u	9
+v	8
+w	9
+x	9
+y	9
+z	9
+!	5
+"	7
+'	3
+(	5
+)	6
+,	3
+-	8
+.	3
+/	9
+?	8
+:	3
+

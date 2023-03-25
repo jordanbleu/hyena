@@ -13,6 +13,10 @@ import "scripts/actors/shieldRangedGrunt"
 
 import "scripts/ui/hud"
 import "scripts/ui/weaponSelector"
+import "scripts/ui/gameplayDialogue"
+
+
+import "scripts/ui/typer"
 
 local gfx <const> = playdate.graphics
 
@@ -21,8 +25,6 @@ class("Test1Scene").extends(Scene)
 function Test1Scene:initialize(sceneManager)
     Test1Scene.super.initialize(self, sceneManager)
     
-    gfx.setImageDrawMode(gfx.kDrawModeNXOR)
-
     print ("test1 scene init")
     local textImage = gfx.image.new("images/black")
     local textSprite = gfx.sprite.new(textImage)
@@ -34,11 +36,14 @@ function Test1Scene:initialize(sceneManager)
 
     local camera = Camera()
 
-    local player = Player(camera)
-    player:moveTo(200, 200)
+    self.player = Player(camera)
+    local player = self.player
+    self.player:moveTo(200, 200)
 
     Hud(player)
     WeaponSelector(player)
+
+    self.frameCounter = 0
 
 
     --local guy1 = TinyGuy(200,-10,nil, camera, player)
@@ -68,7 +73,7 @@ function Test1Scene:initialize(sceneManager)
 
     --Grunt(150,-40,camera, player)
     -- Grunt(200,-30,camera, player)
-    Grunt(100,80,camera, player)
+    --Grunt(100,80,camera, player)
     -- Grunt(250,-30,camera, player)
 
     -- Grunt(150,-70,camera, player)
@@ -82,4 +87,15 @@ function Test1Scene:initialize(sceneManager)
 end
 
 function Test1Scene:update()
+
+    local time2Wait = 120
+    if (self.frameCounter < time2Wait) then
+        self.frameCounter += 1
+
+        if (self.frameCounter == time2Wait-1) then
+            GameplayDialogue("testDialogue.txt", self.player)
+            self.frameCounter = time2Wait
+            
+        end
+    end
 end

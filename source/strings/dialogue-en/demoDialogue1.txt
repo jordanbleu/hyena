@@ -1,0 +1,17 @@
+avatar_id|title|text
+# this is just an example of everything sorta put together
+[N/A]|[N/A]|It's a Tuesday night and you're out flyin' with the homies.
+[N/A]|[N/A]|You just drank a ton of space beer, and things are getting cray.
+test1Anim|Boofus|Bruh I don't think we should be driving like this...
+test2Anim|Chud|Don't be a little baby, Booofus.
+test1Anim|Boofus|What if we crash into something? Or someone?
+test2Anim|Chud|It's space. Nobody is here, idiot.
+[N/A]|[N/A]|You decide to chime in
+test3Anim|You|I got this, you guys.  We just need to get some hot pockets.
+test3Anim|You|I've done this drive a million times
+test3Anim|You|Besides, I don't even feel anything
+[N/A]|[N/A]|There's a strange reading on your radar...
+test1Anim|Boofus|Uhhh...what is that up ahead?
+[N/A]|[N/A]|Suddenly a group of space enemies appears in front of you!
+[N/A]|[N/A]|Time to play it cool...
+test3Anim|You|I got this, boys.

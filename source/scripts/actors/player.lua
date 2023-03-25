@@ -58,6 +58,9 @@ function Player:init(cameraInst)
     self:setGroups({COLLISION_LAYER.PLAYER})
     self:add()
 
+    -- set to true when some UI element or something has taken focus.
+    self.isControlsLocked = false 
+
     self.usedEmp = false
 end
 
@@ -79,9 +82,10 @@ end
 
 function Player:_handlePlayerInput()
 
-    -- This is a terrible way to determine if the weapon selector is open.
-    -- This could be refactored to tell the weapon selector when to open instead of both
-    -- checking for input but for now it will stay awful.
+    if (self.isControlsLocked) then
+        return
+    end
+
     if (playdate.buttonIsPressed(playdate.kButtonB)) then
         self.holdBCycles += 1
     end
@@ -167,7 +171,6 @@ end
 
 --[[ handles movement from controls ]]
 function Player:_handleMovement()
-
     -- Get inputs values, will be between -1 and 1.
     local leftInput = playdate.buttonIsPressed(playdate.kButtonLeft) and -1 or 0
     local rightInput = playdate.buttonIsPressed(playdate.kButtonRight) and 1 or 0
@@ -259,4 +262,16 @@ end
 
 function Player:didUseEmp() 
     return self.usedEmp
+end
+
+function Player:lockControls()
+    self.isControlsLocked = true
+end
+
+function Player:unlockControls()
+    self.isControlsLocked = false
+end
+
+function Player:controlsAreLocked()
+    return self.isControlsLocked
 end

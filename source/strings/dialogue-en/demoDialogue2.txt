@@ -1,0 +1,6 @@
+avatar_id|title|text
+# this is just an example of everything sorta put together
+test1Anim|Boofus|Phew, that was close...
+test2Anim|Chud|Oh no, it's the police!  What are you gonna do now?
+[N/A]|[N/A]|You decide to shoot back.
+

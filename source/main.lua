@@ -19,6 +19,8 @@ import 'CoreLibs/animation'
 -- Extensions
 import "scripts/Extensions/math"
 import "scripts/Extensions/playdate"
+import "scripts/extensions/string.lua"
+import "scripts/extensions/graphics.lua"
 
 import "scripts/globals/enums"
 import "scripts/globals/globals"
@@ -27,6 +29,7 @@ import "scripts/globals/globals"
 import "scripts/sceneManager"
 import "scripts/scenes/demoScene" -- todo :remove 
 import "scripts/scenes/test1Scene"
+import "scripts/scenes/cutsceneDemo"
 
 local gfx <const> = playdate.graphics
 
@@ -35,13 +38,15 @@ local function setup()
     math.randomseed(playdate.getSecondsSinceEpoch())
 
     playdate.display.setRefreshRate(GLOBAL_TARGET_FPS)
-
+    gfx.setImageDrawMode(gfx.kDrawModeCopy)
+ 
     local sceneMgr = SceneManager()
     sceneMgr:add()
 
     -- long in the future, this will be set to the 'title screen scene'
-    local firstScene = DemoScene()
-    -- local firstScene = Test1Scene() <- sandbox scene for testing stuff
+    -- local firstScene = DemoScene()
+    --local firstScene = Test1Scene() 
+    local firstScene = CutsceneDemo()
     sceneMgr:switchScene(firstScene, SCENE_TRANSITION.FADE_IO)
 end
 
@@ -49,7 +54,7 @@ end
 local function drawDebugText()
     local fon = gfx.font.new("fonts/Nano Sans")
     gfx.setFont(fon)
-    gfx.drawText("Deboooog text:", 10, 10)
+    --gfx.drawText("Deboooog text:", 10, 10)
 
     local enemies = 0
     local actors = 0
@@ -80,7 +85,6 @@ local function drawDebugText()
     local allTimers = playdate.timer.allTimers()
     timers = #allTimers
     
-
     gfx.drawText("Enemies: " .. tostring(enemies), 10,20)
     gfx.drawText("Actors: " .. tostring(actors), 10, 30)
     gfx.drawText("SpriteAnimations: " .. tostring(spriteanimations), 10, 40)
@@ -98,7 +102,7 @@ function playdate.update()
     playdate.timer.updateTimers()
     gfx.animation.blinker.updateAll()
     --playdate.drawFPS(0,0)
-    --drawDebugText()
+    -------drawDebugText()
 end
 
 -- ** this should be disabled for the final build **

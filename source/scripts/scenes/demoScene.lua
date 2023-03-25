@@ -12,6 +12,7 @@ import "scripts/actors/shieldRangedGrunt"
 
 import "scripts/segments/hordeSegment"
 import "scripts/segments/waitSegment"
+import "scripts/segments/dialogueSegment"
 import "scripts/scenes/base/segmentedScene"
 import "scripts/scenes/test2Scene"
 
@@ -29,13 +30,8 @@ end
 
 function DemoScene:initialize(sceneManager)
     self.sceneManager = sceneManager
-    gfx.setImageDrawMode(gfx.kDrawModeNXOR)
     
     print ("demo scene init")
-    local textImage = gfx.image.new("images/black")
-    local textSprite = gfx.sprite.new(textImage)
-    textSprite:moveTo(200,120)
-    textSprite:add()
     
     ParallaxLayer(gfx.image.new("images/backgrounds/stars-farther"),1)
     ParallaxLayer(gfx.image.new("images/backgrounds/stars-far"),3)
@@ -57,23 +53,67 @@ function DemoScene:initialize(sceneManager)
     end)
 
     table.insert(segments, function()
-        local enemies = {}
-        enemies[1] = RangedGrunt(200,-30, camera, player)
-        return HordeSegment(enemies)
+        return DialogueSegment("demoDialogue1.txt")
     end)
 
     table.insert(segments, function()
         local enemies = {}
-        enemies[1] = ShieldRangedGrunt(200,-30, camera, player)
-        enemies[2] = DiveBomb(60, -50, camera, player)
+        enemies[1] = TinyGuy(200,-10,nil, camera, player)
+        enemies[2] = TinyGuy(200,-10,enemies[1], camera, player)
+        enemies[3] = TinyGuy(200,-10,enemies[2], camera, player)
+        enemies[4] = TinyGuy(200,-40,enemies[3], camera, player)
+        enemies[5] = TinyGuy(200,-50,enemies[4], camera, player)
+        enemies[6] = TinyGuy(200,-60,enemies[5], camera, player)
         return HordeSegment(enemies)
     end)
 
     table.insert(segments, function()
+        return WaitSegment(2000)
+    end)
+
+    table.insert(segments, function()
+        return DialogueSegment("demoDialogue2.txt")
+    end)
+
+    table.insert(segments, function()
         local enemies = {}
-        enemies[1] = DeathStar(200,-50, player)
+        enemies[1] = ShieldRangedGrunt(200,50, camera, player)
         return HordeSegment(enemies)
     end)
+
+    -- no wait time in between
+    table.insert(segments, function()
+        return DialogueSegment("demoDialogue3.txt")
+    end)
+
+    table.insert(segments, function()
+        return WaitSegment(3000)
+    end)
+    
+
+
+    -- table.insert(segments, function()
+    --     return WaitSegment(3000)
+    -- end)
+
+    -- table.insert(segments, function()
+    --     local enemies = {}
+    --     enemies[1] = RangedGrunt(200,-30, camera, player)
+    --     return HordeSegment(enemies)
+    -- end)
+
+    -- table.insert(segments, function()
+    --     local enemies = {}
+    --     enemies[1] = ShieldRangedGrunt(200,-30, camera, player)
+    --     enemies[2] = DiveBomb(60, -50, camera, player)
+    --     return HordeSegment(enemies)
+    -- end)
+
+    -- table.insert(segments, function()
+    --     local enemies = {}
+    --     enemies[1] = DeathStar(200,-50, player)
+    --     return HordeSegment(enemies)
+    -- end)
 
     DemoScene.super.initialize(self, segments, sceneManager)
 

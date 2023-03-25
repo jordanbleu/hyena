@@ -37,8 +37,8 @@ function SceneManager:init()
 
         -- we are now drawing onto the faded image directly
         gfx.pushContext(fadedImage)
-        local filledRect = gfx.image.new(400,240, gfx.kColorBlack)
-        filledRect:drawFaded(0, 0, alpha, gfx.image.kDitherTypeBayer8x8)
+            local filledRect = gfx.image.new(400,240, gfx.kColorBlack)
+            filledRect:drawFaded(0, 0, alpha, gfx.image.kDitherTypeBayer8x8)
         gfx.popContext()
 
         self.fadedRects[i] = fadedImage

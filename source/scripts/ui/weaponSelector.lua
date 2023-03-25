@@ -109,7 +109,6 @@ function WeaponSelector:update()
     if (playdate.buttonJustReleased(playdate.kButtonB)) then
         self.holdBCycleCount = 0
         if (self.state ~= STATE.HIDDEN and self.state ~= STATE.ANIMATING_OUT) then
-            print "ENTER: ANIMATING OUT"
             self.arrowSprite:remove()
             self.animator = gfx.animator.new(ANIMATION_DURATION, 1, 0, playdate.easingFunctions.outCubic)
             self.state = STATE.ANIMATING_OUT
@@ -119,11 +118,15 @@ function WeaponSelector:update()
 end
 
 function WeaponSelector:_waitForHoldButton()
+
+    if (self.player:controlsAreLocked()) then
+        return
+    end
+
     if (playdate.buttonIsPressed(playdate.kButtonB)) then
         self.holdBCycleCount = self.holdBCycleCount + 1
 
         if (self.holdBCycleCount > self.holdBCyclesToWait) then
-            print "ENTER: ANIMATING IN"
 
             -- disallow attacks while the menu is open.
             self.player:setAllowAttacks(false)
@@ -153,7 +156,6 @@ function WeaponSelector:_waitForAnimateIn()
     self:_updateSelectorPositions(animValue)
 
     if (self.animator:ended()) then
-        print "ENTER: SHOWN"
         self.arrowSprite:add()
         self.state = STATE.SHOWN
     end
