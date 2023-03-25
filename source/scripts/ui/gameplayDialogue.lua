@@ -50,7 +50,7 @@ function GameplayDialogue:init(csvFile, playerInst)
     self.titleFrameSprite:moveTo(200,110)
     self.titleFrameSprite:setIgnoresDrawOffset(true)
     self.titleFrameSprite:setVisible(false)
-    self.titleFrameSprite:add();
+    self.titleFrameSprite:add()
 
     self.titleTextImage = gfx.image.new(self.titleFrameImage:getSize())
     self.titleTextSprite = gfx.sprite.new(self.titleTextImage)

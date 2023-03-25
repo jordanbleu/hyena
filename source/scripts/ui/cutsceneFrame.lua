@@ -45,6 +45,26 @@ function CutsceneFrame:init(title, text, imagePath, effect)
     self.cutsceneSprite:setCenter(0,0) 
     self.cutsceneSprite:moveTo(0, 0)
     self.cutsceneSprite:add()
+
+    if (title and title ~= "") then 
+        self.title = title
+        self.titleFrameImage =gfx.image.new("images/ui/dialogue/gameplay-title-frame")
+        self.titleFrameSprite = gfx.sprite.new(self.titleFrameImage)
+        self.titleFrameSprite:setZIndex(114)
+        self.titleFrameSprite:moveTo(200,160)
+        self.titleFrameSprite:setIgnoresDrawOffset(true)
+        self.titleFrameSprite:add()
+
+        self.titleTextImage = gfx.image.new(self.titleFrameImage:getSize())
+        self.titleTextSprite = gfx.sprite.new(self.titleTextImage)
+        self.titleTextSprite:setIgnoresDrawOffset(true)
+        self.titleTextSprite:setZIndex(115)
+        self.titleTextSprite:moveTo(200,160)
+        self.titleTextSprite:add()
+
+        self.titleTextFont = gfx.font.new("fonts/bleu")
+        self:_drawTitle()
+    end
     
     local w,h = img:getSize()
     
@@ -66,20 +86,20 @@ function CutsceneFrame:init(title, text, imagePath, effect)
     self.state = STATE.TRANSITIONING_IN
 
     self.fullText = text
-    self.title = title
     
+
     self:add()
 end
 
 function CutsceneFrame:update()
 
     CutsceneFrame.super.update(self)
-    
+
     if (self.state == STATE.TRANSITIONING_IN) then
         self:_applyPanningEffect()
         self.preDelayCycleCounter+=1
         if (self.preDelayCycleCounter>self.waitCycles) then
-            self.typer = Typer(15,180,self.fullText, 3, 42)
+            self.typer = Typer(15,183,self.fullText, 3, 42)
             self.transitionSprite:setVisible(false)
             self.state = STATE.SHOWN
         end
@@ -107,6 +127,15 @@ function CutsceneFrame:update()
     end
 end
 
+function CutsceneFrame:_drawTitle()
+    gfx.pushContext(self.titleTextImage)
+        gfx.setFont(self.titleTextFont)
+        gfx.clear(gfx.kColorClear)
+        gfx.setColor(gfx.kColorBlack)
+        gfx.drawTextAligned(self.title, 64,13,kTextAlignment.center)
+    gfx.popContext()
+end
+
 -- Confusing math but just trust that it is probably maybe correct.
 function CutsceneFrame:_applyPanningEffect()
     local newX = 0
@@ -128,17 +157,19 @@ function CutsceneFrame:_setupPanningAnimators(width, height, effect)
     local xDifference = width - STD_SPRITE_WIDTH
     local yDifference = height - STD_SPRITE_HEIGHT
 
+    local panDuration = 3000
+
     if (effect == CUTSCENE_FRAME_EFFECT.PAN_LEFT_RIGHT) then
-        self.hPanimator = gfx.animator.new(6000, 0, -xDifference, playdate.easingFunctions.inOutSine)
+        self.hPanimator = gfx.animator.new(panDuration, 0, -xDifference, playdate.easingFunctions.inOutSine)
 
     elseif (effect == CUTSCENE_FRAME_EFFECT.PAN_RIGHT_LEFT) then
-        self.hPanimator = gfx.animator.new(6000, -xDifference, 0, playdate.easingFunctions.inOutSine)
+        self.hPanimator = gfx.animator.new(panDuration, -xDifference, 0, playdate.easingFunctions.inOutSine)
 
     elseif (effect == CUTSCENE_FRAME_EFFECT.PAN_UP_DOWN) then 
-        self.vPanimator = gfx.animator.new(6000, 0, -yDifference, playdate.easingFunctions.inOutSine)
+        self.vPanimator = gfx.animator.new(panDuration, 0, -yDifference, playdate.easingFunctions.inOutSine)
 
     elseif (effect == CUTSCENE_FRAME_EFFECT.PAN_DOWN_UP) then 
-        self.vPanimator = gfx.animator.new(6000, -yDifference, 0, playdate.easingFunctions.inOutSine)
+        self.vPanimator = gfx.animator.new(panDuration, -yDifference, 0, playdate.easingFunctions.inOutSine)
     end
     
 
@@ -146,11 +177,20 @@ end
 
 function CutsceneFrame:remove()
 
+    if (self.titleFrameSprite) then 
+        self.titleFrameSprite:remove()
+    end
+
+    if (self.titleTextSprite) then
+        self.titleTextSprite:remove()
+    end
+
     self.dialogueFrame:remove()
     self.cutsceneSprite:remove()
     self.typer:remove()
     self.animator = nil
     self.transitionSprite:remove()
+
 
     CutsceneFrame.super.remove(self)
 end
