@@ -54,8 +54,7 @@ end
 local function drawDebugText()
     local fon = gfx.font.new("fonts/Nano Sans")
     gfx.setFont(fon)
-    --gfx.drawText("Deboooog text:", 10, 10)
-
+    
     local enemies = 0
     local actors = 0
     local spriteanimations = 0
