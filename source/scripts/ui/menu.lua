@@ -109,10 +109,10 @@ end
 function Menu:remove()
     self.menuFrameSprite:remove()
     self.selectorAnim:remove()
-    self.itemSprites[1]:remove()
-    self.itemSprites[2]:remove()
-    self.itemSprites[3]:remove()
-    self.itemSprites[4]:remove()
+    if (self.itemSprites[1]) then self.itemSprites[1]:remove() end
+    if (self.itemSprites[2]) then self.itemSprites[2]:remove() end
+    if (self.itemSprites[3]) then self.itemSprites[3]:remove() end
+    if (self.itemSprites[4]) then self.itemSprites[4]:remove() end
     -- remove items
     Menu.super.remove(self)
 end
@@ -121,30 +121,42 @@ end
 function Menu:_drawBaseItemText()
     gfx.setFont(self.itemFont)
 
-    gfx.lockFocus(self.itemImages[1])
-        if (self.selectedIndex == 1) then
-            gfx.drawTextAligned(self.items[1], self.itemW/2,self.itemH/4, kTextAlignment.center)
-        else
-            gfx.drawTextAlignedWhite(self.items[1], self.itemW/2,self.itemH/4, kTextAlignment.center)
-        end
-    gfx.lockFocus(self.itemImages[2])
-        if (self.selectedIndex == 2) then
-            gfx.drawTextAligned(self.items[2], self.itemW/2,self.itemH/4, kTextAlignment.center)
-        else
-            gfx.drawTextAlignedWhite(self.items[2], self.itemW/2,self.itemH/4, kTextAlignment.center)
-        end
-    gfx.lockFocus(self.itemImages[3])
-        if (self.selectedIndex == 3) then
-            gfx.drawTextAligned(self.items[3], self.itemW/2,self.itemH/4, kTextAlignment.center)
-        else
-            gfx.drawTextAlignedWhite(self.items[3], self.itemW/2,self.itemH/4, kTextAlignment.center)
-        end
-    gfx.lockFocus(self.itemImages[4])
-        if (self.selectedIndex == 4) then
-            gfx.drawTextAligned(self.items[4], self.itemW/2,self.itemH/4, kTextAlignment.center)
-        else    
-            gfx.drawTextAlignedWhite(self.items[4], self.itemW/2,self.itemH/4, kTextAlignment.center)
-        end
+    if (self.itemSprites[1]) then
+        gfx.lockFocus(self.itemImages[1])
+            if (self.selectedIndex == 1) then
+                gfx.drawTextAligned(self.items[1], self.itemW/2,self.itemH/4, kTextAlignment.center)
+            else
+                gfx.drawTextAlignedWhite(self.items[1], self.itemW/2,self.itemH/4, kTextAlignment.center)
+            end
+    end
+
+    if (self.itemSprites[2]) then
+        gfx.lockFocus(self.itemImages[2])
+            if (self.selectedIndex == 2) then
+                gfx.drawTextAligned(self.items[2], self.itemW/2,self.itemH/4, kTextAlignment.center)
+            else
+                gfx.drawTextAlignedWhite(self.items[2], self.itemW/2,self.itemH/4, kTextAlignment.center)
+            end
+    end
+
+    if (self.itemSprites[3]) then
+        gfx.lockFocus(self.itemImages[3])
+            if (self.selectedIndex == 3) then
+                gfx.drawTextAligned(self.items[3], self.itemW/2,self.itemH/4, kTextAlignment.center)
+            else
+                gfx.drawTextAlignedWhite(self.items[3], self.itemW/2,self.itemH/4, kTextAlignment.center)
+            end
+    end
+
+    if (self.itemSprites[4]) then
+        gfx.lockFocus(self.itemImages[4])
+            if (self.selectedIndex == 4) then
+                gfx.drawTextAligned(self.items[4], self.itemW/2,self.itemH/4, kTextAlignment.center)
+            else    
+                gfx.drawTextAlignedWhite(self.items[4], self.itemW/2,self.itemH/4, kTextAlignment.center)
+            end
+    end
+
     gfx.unlockFocus()
 
 end
@@ -156,10 +168,10 @@ function Menu:_updatePositions()
     self.menuFrameSprite:moveTo(self.menuFrameSprite.x, animValue)
 
     -- item texts
-    self.itemSprites[1]:moveTo(self.menuFrameSprite.x, animValue-50)
-    self.itemSprites[2]:moveTo(self.menuFrameSprite.x, animValue-20)
-    self.itemSprites[3]:moveTo(self.menuFrameSprite.x, animValue+10)
-    self.itemSprites[4]:moveTo(self.menuFrameSprite.x, animValue+40)
+    if (self.itemSprites[1]) then self.itemSprites[1]:moveTo(self.menuFrameSprite.x, animValue-50) end
+    if (self.itemSprites[2]) then self.itemSprites[2]:moveTo(self.menuFrameSprite.x, animValue-20) end
+    if (self.itemSprites[3]) then self.itemSprites[3]:moveTo(self.menuFrameSprite.x, animValue+10) end
+    if (self.itemSprites[4]) then self.itemSprites[4]:moveTo(self.menuFrameSprite.x, animValue+40) end
 
     -- if the animator is nil then lock to the proper position, else follow the animator
     if (self.selectorMoveAnimator == nil) then        

@@ -13,7 +13,7 @@ function DeathScreen:initialize(sceneManager)
     blackSprite:moveTo(200,120)
     blackSprite:add()
 
-    local menu = Menu("test1", "test2", "test3", "test4")
+    local menu = Menu("Retry", "Quit", nil, nil)
     -- and a kickass background
 
 
