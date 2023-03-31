@@ -27,7 +27,7 @@ import "scripts/globals/globals"
 
 
 import "scripts/sceneManager"
-import "scripts/scenes/demoScene" -- todo :remove 
+import "scripts/scenes/ui/deathScreen" -- todo :remove 
 import "scripts/scenes/test1Scene"
 import "scripts/scenes/cutsceneDemo"
 
@@ -44,8 +44,8 @@ local function setup()
     sceneMgr:add()
 
     -- long in the future, this will be set to the 'title screen scene'
-    -- local firstScene = DemoScene()
-    local firstScene = Test1Scene() 
+    local firstScene = DeathScreen()
+    --local firstScene = Test1Scene() 
     --local firstScene = CutsceneDemo()
     sceneMgr:switchScene(firstScene, SCENE_TRANSITION.FADE_IO)
 end
@@ -54,7 +54,7 @@ end
 local function drawDebugText()
     local fon = gfx.font.new("fonts/Nano Sans")
     gfx.setFont(fon)
-    
+
     local enemies = 0
     local actors = 0
     local spriteanimations = 0

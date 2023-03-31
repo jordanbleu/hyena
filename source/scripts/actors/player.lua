@@ -8,6 +8,7 @@ import "scripts/actors/actor"
 import "scripts/physics/physicsTimer"
 import "scripts/effects/screenFlash"
 import "scripts/ui/livesIndicator"
+import "scripts/scenes/ui/deathScreen"
 
 -- How much speed increases per frame when accelerating 
 local MOVE_SPEED <const> = 0.5
@@ -35,9 +36,11 @@ local STATE <const> = {
 ]]
 class("Player").extends(Actor)
 
-function Player:init(cameraInst)
+function Player:init(cameraInst, sceneManagerInst)
     Player.super.init(self)
    
+    self.sceneManager = sceneManagerInst
+
     -- blocks attacking for the weapon selector or cinematic moments
     self.allowAttacks = true
 
@@ -166,7 +169,10 @@ function Player:_die()
     self:setVisible(false)
     local deathAnimation = SingleSpriteAnimation("images/playerAnim/death", 500, self.x, self.y, function() self:_beginWaitingToRevive() end)
     deathAnimation:setZIndex(27)
-    LivesIndicator(self.lives)
+
+    if (self.lives >=0) then
+        LivesIndicator(self.lives)
+    end
 end
 
 -- death animation finished, now we wait a sec before reviving
@@ -176,13 +182,18 @@ end
 
 -- show revive animation
 function Player:_revive()
-    self.blackScreenSprite:setVisible(false)
-    self.state = STATE.REVIVING
-    local sf = ScreenFlash(1000, gfx.kColorBlack)
-    sf:setZIndex(24)
-
-    local reviveAnimation = SingleSpriteAnimation("images/playerAnim/revive", 1000, self.x, self.y, function() self:_alive() end)
-    reviveAnimation:setZIndex(27)
+    print (tostring(self.lives))
+    if (self.lives <0) then
+        self.sceneManager:switchScene(DeathScreen(), SCENE_TRANSITION.FADE_IO)
+    else
+        self.blackScreenSprite:setVisible(false)
+        self.state = STATE.REVIVING
+        local sf = ScreenFlash(1000, gfx.kColorBlack)
+        sf:setZIndex(24)
+    
+        local reviveAnimation = SingleSpriteAnimation("images/playerAnim/revive", 1000, self.x, self.y, function() self:_alive() end)
+        reviveAnimation:setZIndex(27)
+    end
 end
 
 -- revivve animation completed, now we're alive again 

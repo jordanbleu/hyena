@@ -38,7 +38,7 @@ function DemoScene:initialize(sceneManager)
     
     local camera = Camera()
     
-    local player = Player(camera)
+    local player = Player(camera, sceneManager)
     player:moveTo(200, 200)
     
     Hud(player)

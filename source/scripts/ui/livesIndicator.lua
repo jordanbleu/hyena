@@ -95,9 +95,9 @@ function LivesIndicator:update()
         if (self.cycleCounter > self.postWaitCycles) then
             self.cycleCounter = 0
             self.state = STATE.ANIMATING_OUT
-            self.animators[1]:reset()
-            self.animators[2]:reset()
-            self.animators[3]:reset()
+            self.animators[1]:reset(3000)
+            self.animators[2]:reset(3500)
+            self.animators[3]:reset(4000)
         end
     elseif (self.state == STATE.ANIMATING_OUT) then
         self:_animateOut()
