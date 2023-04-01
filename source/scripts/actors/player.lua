@@ -9,6 +9,7 @@ import "scripts/physics/physicsTimer"
 import "scripts/effects/screenFlash"
 import "scripts/ui/livesIndicator"
 import "scripts/scenes/ui/deathScreen"
+import "scripts/powerups/powerup"
 
 -- How much speed increases per frame when accelerating 
 local MOVE_SPEED <const> = 0.5
@@ -67,7 +68,7 @@ function Player:init(cameraInst, sceneManagerInst)
     self:setImage(gfx.image.new("images/player"))
     self:setZIndex(25)
     self:setGroups({COLLISION_LAYER.PLAYER})
-    self:setCollidesWithGroups(COLLISION_LAYER.ENEMY, COLLISION_LAYER.ENEMY_PROJECTILE)
+    self:setCollidesWithGroups(COLLISION_LAYER.ENEMY, COLLISION_LAYER.ENEMY_PROJECTILE, COLLISION_LAYER.POWERUP)
     self:add()
 
     local blackScreenImage = gfx.image.new("images/black")
@@ -205,22 +206,28 @@ function Player:_alive()
     self:setVisible(true)
 end
 
-
 function Player:_checkCollisions()
-    -- player is inviisble 
-    if (self.iframeCounter > 0 or self.invincible) then 
-        return
-    end
-
+    
     local tookDamage = false
     local collisions = self:overlappingSprites()
 
-    if (#collisions > 0) then
-        tookDamage = true
+    for i,col in ipairs(collisions) do
+        if (col:isa(Enemy)) then
+            tookDamage = true
+
+        elseif (col:isa(HealthPowerup)) then
+            col:collect(self)
+        end
     end
 
+    -- player is inviisble 
+    if (self.iframeCounter > 0 or self.invincible) then 
+        tookDamage = false
+    end
+
+
     if (tookDamage) then
-        self.health -=100 -- todo: change bacc 
+        self.health -= 10
 
         if (self.health > 0) then
             self.camera:bigShake()
@@ -404,6 +411,10 @@ end
 
 function Player:getEnergy()
     return self.energy
+end
+
+function Player:addHealth(amount)
+    self.health += amount
 end
 
 function Player:setAllowAttacks(enable)
