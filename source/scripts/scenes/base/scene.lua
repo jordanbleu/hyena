@@ -29,5 +29,9 @@ function Scene:getSceneManager()
 
 end
 
+---Used for any cleanup after a scene is transitioned from (removal of sprites / etc)
+function Scene:cleanup()
+end
+
 
 

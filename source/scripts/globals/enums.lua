@@ -46,3 +46,11 @@ CUTSCENE_FRAME_EFFECT =
     PAN_RIGHT_LEFT = 3,
     PAN_DOWN_UP = 4,
 }
+
+-- checkpoints are a lame way to track game data without relying on a scene or something.
+-- each checkpoint dictates which items you unlock / player state as well as which scene should be loaded.
+-- It gets saved into a save data file.
+CHECKPOINT = {
+    START = 0,
+    TEST = 1
+}

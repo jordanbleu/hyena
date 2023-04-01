@@ -26,6 +26,7 @@ function SceneManager:init()
     self.transitionState = TRANSITION_STATE.COMPLETE
     self.currentTransition = SCENE_TRANSITION.HARD_CUT
     self.fadedRects = {}
+    self.previousScene = nil
     local fadedImage
 
     -- pre-compute all frames for the fade in effect.
@@ -47,6 +48,7 @@ function SceneManager:init()
 end
 
 --[[
+
     Upon calling this method, the specified transition animation will begin, after which
     the selected scene will be loaded.
 
@@ -56,7 +58,7 @@ end
 ]]
 function SceneManager:switchScene(scene, transition)
 
-    if not self:isReady() then
+    if (not self:isReady()) then
         print ("Called SwitchScene before the the scene manager was ready.  Add a call to check for this pls")
         return
     end
@@ -81,6 +83,7 @@ function SceneManager:switchScene(scene, transition)
 
     self.currentTransition = transition
     self.transitionState = TRANSITION_STATE.FADING_OUT
+    self.previousScene = self.currentScene
     self.currentScene = scene
 
 end
@@ -102,6 +105,13 @@ end
 
 --[[ Removes all the objects from the old scene and initializes the requested scene. ]]
 function SceneManager:_loadRequestedScene()
+
+    -- call cleanup on the previous scene and remove it from memory
+    if (self.previousScene) then
+        self.previousScene:cleanup()
+        self.previousScene = nil
+    end
+
     -- remove all existing sprites
     gfx.sprite.removeAll()
 
@@ -129,6 +139,7 @@ function SceneManager:_handleFade()
                 -- begin the waiting transition
                 self.animator = gfx.animator.new(TRANSITION_DURATION/2, 0, 100)
                 self.transitionState = TRANSITION_STATE.WAITING
+
             
             elseif (self.transitionState == TRANSITION_STATE.FADING_IN) then 
                 self.animator = nil
@@ -167,7 +178,4 @@ end
 function SceneManager:isReady()
     return self.transitionState == TRANSITION_STATE.COMPLETE
 end
-
-
-
 

@@ -81,6 +81,16 @@ function Menu:init(item1Text, item2Text, item3Text, item4Text)
     self.menuSelectorEasingFunction = playdate.easingFunctions.outElastic
     self:add()
 
+    -- an array of callbacks.  The index of the array will be the selectedIndex of the menu (1-4).
+    -- If no callback is specified for an index, the menu will simply close and do nothing.
+    self.callbacks = {}
+    -- what to do if the user goes back.  If this is nil, don't show the prompt to go back,
+    -- and don't show the B button prompt
+    self.goBackCallback = nil
+
+    -- the callback to invoke once the menu is done animating.
+    self.selectedCallback = nil
+
 end
 
 function Menu:update()
@@ -97,7 +107,9 @@ function Menu:update()
     elseif (self.state == STATE.ANIMATING_OUT) then
         if (self.animator:ended()) then
             self.state = STATE.DISMISSED
-            -- todo: invoke and then remove self.
+            if (self.selectedCallback) then
+                self.selectedCallback()
+            end
             self:remove()
         end
         
@@ -194,10 +206,21 @@ end
 function Menu:_checkForInput()
 
     if (playdate.buttonJustPressed(playdate.kButtonA)) then
-        --todo: mark the proper callback for invocation after animation completes
+        self.selectedCallback =self.callbacks[self.selectedIndex]
         self.selectorMoveAnimator = nil
         self.state = STATE.ANIMATING_OUT
         self.animator = gfx.animator.new(self.animationDuration/4, self.menuPosition, 500, playdate.easingFunctions.inBack)
+    end
+
+    if (playdate.buttonJustPressed(playdate.kButtonB)) then
+        if (self.goBackCallback) then
+            self.selectedCallback = self.goBackCallback
+            self.selectorMoveAnimator = nil
+            self.state = STATE.ANIMATING_OUT
+            -- goback anim is different
+            self.selectorAnim:hide()
+            self.animator = gfx.animator.new(250, self.menuPosition, 500, playdate.easingFunctions.outSine)
+        end
     end
 
     local updateSelectedIndex = false 
@@ -230,6 +253,12 @@ function Menu:_checkForInput()
         
     end
 
-    -- todo: if b button pressed mark the 'goback' callback for invocation instead
+end
 
+function Menu:setCallbackForItemIndex(index, callbackFn)
+    self.callbacks[index] = callbackFn
+end
+
+function Menu:setCallbackForGoBack(callbackFn) 
+    self.goBackCallback = callbackFn
 end

@@ -220,7 +220,7 @@ function Player:_checkCollisions()
     end
 
     if (tookDamage) then
-        self.health -=50 -- todo: change bacc 
+        self.health -=100 -- todo: change bacc 
 
         if (self.health > 0) then
             self.camera:bigShake()

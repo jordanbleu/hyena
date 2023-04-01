@@ -22,9 +22,13 @@ import "scripts/Extensions/playdate"
 import "scripts/extensions/string.lua"
 import "scripts/extensions/graphics.lua"
 
+-- Globals
 import "scripts/globals/enums"
 import "scripts/globals/globals"
+import "scripts/globals/gameData"
 
+-- Stuff needed everywhere
+import "scripts/data/dataManager"
 
 import "scripts/sceneManager"
 import "scripts/scenes/ui/deathScreen" -- todo :remove 
@@ -44,8 +48,8 @@ local function setup()
     sceneMgr:add()
 
     -- long in the future, this will be set to the 'title screen scene'
-    local firstScene = DeathScreen()
-    --local firstScene = Test1Scene() 
+    --local firstScene = DeathScreen()
+    local firstScene = Test1Scene() 
     --local firstScene = CutsceneDemo()
     sceneMgr:switchScene(firstScene, SCENE_TRANSITION.FADE_IO)
 end

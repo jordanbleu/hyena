@@ -31,17 +31,19 @@ function Test1Scene:initialize(sceneManager)
     textSprite:moveTo(200,120)
     textSprite:add()
 
-    ParallaxLayer(gfx.image.new("images/backgrounds/stars-farther"),1)
-    ParallaxLayer(gfx.image.new("images/backgrounds/stars-far"),3)
+    local pLayer1 = ParallaxLayer(gfx.image.new("images/backgrounds/stars-farther"),1)
+    local pLayer2 = ParallaxLayer(gfx.image.new("images/backgrounds/stars-far"),3)
 
     local camera = Camera()
 
-    self.player = Player(camera)
+    self.camera = camera
+
+    self.player = Player(camera, sceneManager)
     local player = self.player
     self.player:moveTo(200, 200)
 
-    Hud(player)
-    WeaponSelector(player)
+    self.hud = Hud(player)
+    self.weaponSelector = WeaponSelector(player)
 
     self.frameCounter = 0
 
@@ -98,4 +100,11 @@ function Test1Scene:update()
             
     --     end
     -- end
+end
+
+function Test1Scene:cleanup()
+    -- in a real scene we would clean EVERYTHING up here but i m lazy
+    self.camera:remove()
+
+    Test1Scene.super.cleanup(self)
 end
