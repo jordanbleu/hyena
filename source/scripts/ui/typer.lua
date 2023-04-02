@@ -117,7 +117,7 @@ function Typer:draw()
     for i,txt in ipairs(self.fullTextLines) do
         local yOffset = self.lineSpacing * (i-1)
         local typed = string.sub(txt, 1, self.typedChars[i])
-        gfx.drawTextBlack(typed, self.textX, self.textY + yOffset)
+        gfx.drawTextWhite(typed, self.textX, self.textY + yOffset)
     end
 
 end

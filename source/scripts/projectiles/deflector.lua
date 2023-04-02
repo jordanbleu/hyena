@@ -6,7 +6,9 @@ import 'scripts/actors/actor'
 class("Deflector").extends(SingleSpriteAnimation)
 
 function Deflector:init(playerInst)
-    Deflector.super.init(self, "images/projectiles/deflectorAnim/deflector", 750, playerInst.x, playerInst.y)
+    Deflector.super.init(self, "images/projectiles/deflectorAnim/deflector", 750, playerInst.x, playerInst.y, function() self:onShieldCompleted() end)
+    
+    self.player = playerInst
     self.didDamage = false
 
     -- really this is 'isDeflectionEnabled' 
@@ -23,6 +25,8 @@ function Deflector:init(playerInst)
     self:setGroups({COLLISION_LAYER.PROJECTILE_DEFLECTOR})
     self:add()
     self:attachTo(playerInst)
+
+    self.player:setInvincibility(true)
 end
 
 function Deflector:update()
@@ -57,4 +61,8 @@ function Deflector:update()
         self.isDamageEnabled = false
     end
 
+end
+
+function Deflector:onShieldCompleted()
+    self.player:setInvincibility(false)
 end

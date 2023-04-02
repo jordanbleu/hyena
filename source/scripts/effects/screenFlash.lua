@@ -3,12 +3,12 @@ local gfx <const> = playdate.graphics
 --[[
     flashes white on the screen.
 ]]
-class("WhiteScreenFlash").extends(gfx.sprite)
+class("ScreenFlash").extends(gfx.sprite)
 
 -- tweak this for more frames / worse performance (max is 100)
 local TRANSITION_QUALITY <const> = 25
 
-function WhiteScreenFlash:init(durationMs)
+function ScreenFlash:init(durationMs, bgColor)
 
     self.fadedRects = {}
     local fadedImage
@@ -24,12 +24,12 @@ function WhiteScreenFlash:init(durationMs)
         fadedImage = gfx.image.new(400,240)
 
         if (playdate.getReduceFlashing()) then
-            alpha = math.clamp(alpha, 0, 0.15)
+            bgColor = gfx.kColorBlack
         end
 
         -- we are now drawing onto the faded image directly
         gfx.pushContext(fadedImage)
-            local filledRect = gfx.image.new(400,240, gfx.kColorBlack)
+            local filledRect = gfx.image.new(400,240, bgColor)
             filledRect:drawFaded(0, 0, alpha, gfx.image.kDitherTypeBurkes)
         gfx.popContext()
 
@@ -43,7 +43,7 @@ function WhiteScreenFlash:init(durationMs)
     self:add()
 end
 
-function WhiteScreenFlash:update()
+function ScreenFlash:update()
 
     local currentTimerValue = self.animator:currentValue()
     local frameIndex = math.ceil(TRANSITION_QUALITY * currentTimerValue)
@@ -57,3 +57,4 @@ function WhiteScreenFlash:update()
 
 
 end
+

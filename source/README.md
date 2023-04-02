@@ -98,7 +98,10 @@ end
     * Calling a super class method without passing in `self`
     * Using `gfx.image.load('path')` instead of `gfx.image.new('path')`
     * Calling a super class method like `self.xxx` instead of `self:xxx`
-    * Infinite recursion or something   
+    * Missing an import.
+        *  To test this in the debugger, check if the function you're calling is `nil`
+    * Infinite recursion or something  
+   * If you're still stuck, try running the .pdx manually without debugging, this makes the playdate terminal work.
 
 
 * VS Code Debug button stops working with the playdate debug extension 

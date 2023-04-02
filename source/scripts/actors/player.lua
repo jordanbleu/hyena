@@ -6,7 +6,10 @@ import "scripts/projectiles/playerMissile"
 import "scripts/projectiles/deflector"
 import "scripts/actors/actor"
 import "scripts/physics/physicsTimer"
-import "scripts/effects/whiteScreenFlash"
+import "scripts/effects/screenFlash"
+import "scripts/ui/livesIndicator"
+import "scripts/scenes/ui/deathScreen"
+import "scripts/powerups/powerup"
 
 -- How much speed increases per frame when accelerating 
 local MOVE_SPEED <const> = 0.5
@@ -21,20 +24,30 @@ local DASH_SPEED <const> = 20
 local HOLD_A_CYCLES_TO_WAIT <const> = 20
 local HOLD_B_CYCLES_TO_WAIT<const> = 10
 
+local STATE <const> = {
+    ALIVE = 1,
+    WAITING_TO_DIE =2,
+    DYING = 3, 
+    WAITING_TO_REVIVE = 4,
+    REVIVING = 5
+}
+
 --[[
     This is the player object, for normal gameplay
 ]]
 class("Player").extends(Actor)
 
-function Player:init(cameraInst)
+function Player:init(cameraInst, sceneManagerInst)
     Player.super.init(self)
    
+    self.sceneManager = sceneManagerInst
+
     -- blocks attacking for the weapon selector or cinematic moments
     self.allowAttacks = true
 
     -- how long the user has held A without releasing it.
     self.holdACycles = 0
-    -- how long the user has held B without releaseing it.
+    -- how long the user has held B without releasing it.
     self.holdBCycles = 0
 
     self.maxHealth = 100
@@ -50,34 +63,182 @@ function Player:init(cameraInst)
     self.selectedWeapon = WEAPON.LASER
 
     self.energyRefillTimer = PhysicsTimer(50, function() self:_refillEnergy() end)
-
     self.xVelocity = 0
     self.yVelocity = 0
     self:setImage(gfx.image.new("images/player"))
     self:setZIndex(25)
     self:setGroups({COLLISION_LAYER.PLAYER})
+    self:setCollidesWithGroups(COLLISION_LAYER.ENEMY, COLLISION_LAYER.ENEMY_PROJECTILE, COLLISION_LAYER.POWERUP)
     self:add()
 
+    local blackScreenImage = gfx.image.new("images/black")
+    self.blackScreenSprite = gfx.sprite.new(blackScreenImage)
+    self.blackScreenSprite:setZIndex(24)
+    self.blackScreenSprite:setIgnoresDrawOffset(true)
+    self.blackScreenSprite:setVisible(false)
+    self.blackScreenSprite:moveTo(200,120)
+    self.blackScreenSprite:add()
+    
+    local w,h = self:getSize()
+    self:setCollideRect(0,0,self:getSize())
+
     -- set to true when some UI element or something has taken focus.
-    self.isControlsLocked = false 
+    self.isControlsLocked = false
+
+    self.iframeCounter = 0
+    self.iframes = 50
+
+    self.lives = 3
+    self.state = STATE.ALIVE
+    
+    -- generic cycle counter for death animation and stuff (depends on state)
+    self.cycleCounter = 0
+    -- time to wait between death animation and revive animation 
+    self.postDeathWaitCycles = 100
+    -- time to wait before showing death animation
+    self.preDeathWaitCycles = 50
 
     self.usedEmp = false
+
+    self.invincible = false
 end
 
 function Player:update()
     Player.super.update(self)
 
-    if (self.usedEmp) then
-        self.usedEmp = false
-    end
+    if (self.state == STATE.ALIVE) then
 
-    self:_handlePlayerInput()
+        if (self.health <= 0) then
+            self:_beginToDie()
+        end
+
+        if (self.usedEmp) then
+            self.usedEmp = false
+        end
+    
+        self:_handlePlayerInput()
+        self:_checkCollisions()
+    elseif (self.state == STATE.WAITING_TO_REVIVE) then
+        self.cycleCounter += 1
+        if (self.cycleCounter > self.postDeathWaitCycles) then
+            self.cycleCounter = 0
+            self:_revive()
+        end
+    elseif (self.state == STATE.WAITING_TO_DIE) then
+        self.cycleCounter+=1
+        if (self.cycleCounter > self.preDeathWaitCycles) then
+            self.cycleCounter = 0
+            self:_die()
+        end
+    elseif (self.state == STATE.REVIVING) then
+        -- neat little health increasing animation 
+        if (self.health < self.maxHealth) then
+            self.health += 5
+        end
+
+        if (self.energy < self.maxEnergy) then
+            self.energy += 5
+        end
+
+    end
 end
 
 function Player:physicsUpdate()
     Player.super.physicsUpdate(self)
-    self:_handleMovement()
-    self:_decelerate()
+
+    if (self.state == STATE.ALIVE) then
+        if (self.iframeCounter > 0) then
+            self.iframeCounter -= 1
+        end
+        
+        self:_handleMovement()
+        self:_decelerate()
+    end
+end
+
+-- player died, show the death animation
+function Player:_beginToDie()
+    ScreenFlash(500, gfx.kColorWhite)
+    self.lives -= 1
+    self.state = STATE.WAITING_TO_DIE
+    self.blackScreenSprite:setVisible(true)
+end
+
+function Player:_die()
+    self.camera:massiveSway()
+    self.state = STATE.DYING
+    self:setVisible(false)
+    local deathAnimation = SingleSpriteAnimation("images/playerAnim/death", 500, self.x, self.y, function() self:_beginWaitingToRevive() end)
+    deathAnimation:setZIndex(27)
+
+    if (self.lives >=0) then
+        LivesIndicator(self.lives)
+    end
+end
+
+-- death animation finished, now we wait a sec before reviving
+function Player:_beginWaitingToRevive() 
+    self.state = STATE.WAITING_TO_REVIVE
+end
+
+-- show revive animation
+function Player:_revive()
+    print (tostring(self.lives))
+    if (self.lives <0) then
+        self.sceneManager:switchScene(DeathScreen(), SCENE_TRANSITION.FADE_IO)
+    else
+        self.blackScreenSprite:setVisible(false)
+        self.state = STATE.REVIVING
+        local sf = ScreenFlash(1000, gfx.kColorBlack)
+        sf:setZIndex(24)
+    
+        local reviveAnimation = SingleSpriteAnimation("images/playerAnim/revive", 1000, self.x, self.y, function() self:_alive() end)
+        reviveAnimation:setZIndex(27)
+    end
+end
+
+-- revivve animation completed, now we're alive again 
+function Player:_alive()
+    Deflector(self)
+    self.iframeCounter = self.iframes
+    self.state = STATE.ALIVE
+    self.health = 100
+    self:setVisible(true)
+end
+
+function Player:_checkCollisions()
+    
+    local tookDamage = false
+    local collisions = self:overlappingSprites()
+
+    for i,col in ipairs(collisions) do
+        if (col:isa(Enemy)) then
+            tookDamage = true
+
+        elseif (col:isa(HealthPowerup)) then
+            col:collect(self)
+        end
+    end
+
+    -- player is inviisble 
+    if (self.iframeCounter > 0 or self.invincible) then 
+        tookDamage = false
+    end
+
+
+    if (tookDamage) then
+        self.health -= 10
+
+        if (self.health > 0) then
+            self.camera:bigShake()
+            self.iframeCounter = self.iframes
+        end
+
+        local spr = SingleSpriteAnimation("images/playerAnim/damage", 1000, self.x, self.y)
+        spr:setZIndex(25)
+        spr:attachTo(self)
+    end
+
 end
 
 function Player:_handlePlayerInput()
@@ -155,7 +316,7 @@ function Player:_handlePlayerInput()
                 if (self.energy >= 100) then
                     self.energy -= 100
                     self.camera:massiveSway()
-                    WhiteScreenFlash(500)
+                    ScreenFlash(500, gfx.kColorWhite)
                     self.usedEmp = true
                 end
             end
@@ -252,6 +413,10 @@ function Player:getEnergy()
     return self.energy
 end
 
+function Player:addHealth(amount)
+    self.health += amount
+end
+
 function Player:setAllowAttacks(enable)
     self.allowAttacks = enable
 end
@@ -274,4 +439,8 @@ end
 
 function Player:controlsAreLocked()
     return self.isControlsLocked
+end
+
+function Player:setInvincibility(enable) 
+    self.invincible = enable
 end

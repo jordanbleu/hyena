@@ -58,4 +58,7 @@ function SingleSpriteAnimation:play()
     self.animation:play()
 end
 
+function SingleSpriteAnimation:setIgnoresDrawOffset(ignore) 
+    self.animation:setIgnoresDrawOffset(ignore)
+end
 

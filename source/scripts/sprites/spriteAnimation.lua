@@ -1,5 +1,7 @@
 local gfx <const> = playdate.graphics
 
+import "scripts/actors/actor"
+
 --[[
     Sprite animator that has better controls than the build in playdate one.
     This doesn't use the timer system which gives us more flexibility (probs worse performance tho).
@@ -122,6 +124,10 @@ function SpriteAnimation:getFrame()
     return self.frame
 end
 
+function SpriteAnimation:setFrame(num)
+    self.frame = num
+end
+
 function SpriteAnimation:hide()
     self:setVisible(false)
 end
@@ -139,4 +145,5 @@ function SpriteAnimation:reset()
     self.updateCounter = 0
     self:setImage(self.imageTable:getImage(1))
 end
+
 

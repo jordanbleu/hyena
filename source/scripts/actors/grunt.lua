@@ -8,6 +8,7 @@ import "scripts/projectiles/playerMissile"
 import "scripts/projectiles/playerMissileExplosion"
 import "scripts/projectiles/playerMine"
 import "scripts/projectiles/playerMineExplosion"
+import "scripts/powerups/healthPowerup"
 --[[
     The grunt enemy moves vaguely downwards and towards the player
 ]]
@@ -193,6 +194,7 @@ end
 
 function Grunt:_onDead()
     --self.animator:remove()
+    HealthPowerup(self.x, self.y)
     SingleSpriteAnimation("images/enemies/grimideanGruntAnim/death", 500, self.x, self.y)
     self:remove()
 end
