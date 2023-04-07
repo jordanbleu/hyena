@@ -31,8 +31,8 @@ function Test1Scene:initialize(sceneManager)
     textSprite:moveTo(200,120)
     textSprite:add()
 
-    local pLayer1 = ParallaxLayer(gfx.image.new("images/backgrounds/stars-farther"),1)
-    local pLayer2 = ParallaxLayer(gfx.image.new("images/backgrounds/stars-far"),3)
+    local pLayer1 = ParallaxLayer(gfx.image.new("images/backgrounds/stars-farther"),0,1)
+    local pLayer2 = ParallaxLayer(gfx.image.new("images/backgrounds/stars-far"),0,3)
 
     local camera = Camera()
 

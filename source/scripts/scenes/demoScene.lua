@@ -33,8 +33,8 @@ function DemoScene:initialize(sceneManager)
     
     print ("demo scene init")
     
-    ParallaxLayer(gfx.image.new("images/backgrounds/stars-farther"),1)
-    ParallaxLayer(gfx.image.new("images/backgrounds/stars-far"),3)
+    ParallaxLayer(gfx.image.new("images/backgrounds/stars-farther"),0,1)
+    ParallaxLayer(gfx.image.new("images/backgrounds/stars-far"),0,3)
     
     local camera = Camera()
     

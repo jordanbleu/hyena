@@ -14,7 +14,10 @@ function DeathScreen:initialize(sceneManager)
     blackSprite:moveTo(200,120)
     blackSprite:add()
 
-    local menu = Menu("Retry", "Quit")
+    local retryText = gfx.getString("deathscreen.menuitems.retry")
+    local quitText = gfx.getString("deathscreen.menuitems.quit")
+
+    local menu = Menu(retryText, quitText)
     menu:setCallbackForItemIndex(1, function() self:_retry(sceneManager) end)
     menu:setCallbackForItemIndex(2, function() self:_quitToMenu(sceneManager) end)
     --todo: add a kickass background

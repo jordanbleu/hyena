@@ -30,7 +30,7 @@ function Menu:init(item1Text, item2Text, item3Text, item4Text)
     
     self.selectorAnim = SpriteAnimation("images/ui/menu/selectorAnim/selector",1000, 0,0)
     self.selectorAnim:setZIndex(158)
-
+    self.selectorAnim:moveTo(-500,-500)
     self.selectorAnim:setRepeats(-1)
 
     self.itemImages = {}

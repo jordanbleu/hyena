@@ -5,9 +5,20 @@ import "scripts/physics/smartTimer"
 
 class("WaitSegment").extends(Segment)
 
-function WaitSegment:init(waitTime)
-    print ("Enter wait segment.  Wait time is " .. tostring(waitTime))
+---Waits for the specified Milliseconds 
+---@param waitTime integer wait time in ms
+---@param imagePath string path to a static image to display (optional)
+function WaitSegment:init(waitTime, imagePath)
     self.timerCompleted = false
+
+    self.sprite = nil
+    if (imagePath) then
+        self.sprite = gfx.sprite.new(gfx.image.new(imagePath))
+        self.sprite:moveTo(200,120)
+        self.sprite:setIgnoresDrawOffset(true)
+        self.sprite:setZIndex(999)
+        self.sprite:add()
+    end
 
     self.timer = SmartTimer(waitTime)
     self.timer:setRepeats(false)
@@ -19,5 +30,8 @@ function WaitSegment:isCompleted()
 end
 
 function WaitSegment:cleanup()
+    if (self.sprite) then
+        self.sprite:remove()
+    end
     self.timer:remove()
 end

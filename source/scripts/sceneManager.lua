@@ -13,8 +13,8 @@ local TRANSITION_STATE =
 {
     COMPLETE = 0,
     FADING_OUT = 1,
-    WAITING = 2,
-    FADING_IN = 3
+    WAITING = 4,
+    FADING_IN = 5
 }
 
 -- How long the fade duration should be 
@@ -63,6 +63,13 @@ function SceneManager:switchScene(scene, transition)
         return
     end
 
+    -- immediately stops all calls to `update` on the scene itself.  
+    -- I'm hoping this doesn't cause any weirdness. 
+    -- The reason for this is if cleanup gets called in the current drawing batch,
+    -- one more `update` will be called before the end, leading to nil-references. 
+    -- Calling remove here should halt updates immediately, then cleanup will happen later.
+    if (self.currentScene) then self.currentScene:remove() end
+
     self.animator = nil
   
     if not transition then
@@ -96,6 +103,8 @@ function SceneManager:update()
 
     elseif (self.transitionState == TRANSITION_STATE.FADING_OUT or self.transitionState == TRANSITION_STATE.FADING_IN) then
         self:_handleFade()
+
+
 
     elseif (self.transitionState == TRANSITION_STATE.WAITING) then
         self:_handleWaiting()

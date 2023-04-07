@@ -128,12 +128,14 @@ function CutsceneFrame:update()
     elseif (self.state == STATE.TRANSITIONING_OUT) then
         self.postDelayCycleCounter+=1
         if (self.postDelayCycleCounter > self.waitCycles) then
-            self.cutsceneSprite:setVisible(false)
             self.isComplete = true
+
             -- this is a silly hack that covers up any potential delay
             -- in showing the black transition between this and the next 
             -- cutscene frame.
             HardCutBlack(250)
+        
+            self.cutsceneSprite:setVisible(false)
             self:remove()
         end
 
