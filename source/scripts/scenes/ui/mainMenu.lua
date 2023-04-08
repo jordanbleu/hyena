@@ -54,6 +54,7 @@ function MainMenu:_updateLogo()
 end
 
 function MainMenu:_createMenu()
+    
     self.plax1:setScrollX(0.25)
     self.plax1:setScrollX(-0.5)
 

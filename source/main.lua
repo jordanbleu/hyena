@@ -96,7 +96,6 @@ local function drawDebugText()
     gfx.drawText("Scenes: " .. tostring(scenes), 10, 50)
     gfx.drawText("Timers: " .. tostring(timers), 10, 60)
 
-
 end
 
 setup()
