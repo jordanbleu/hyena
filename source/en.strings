@@ -8,6 +8,9 @@
 
 -- Characters
 "character.guard" = "Guard"
+"character.?" = "???"
+"character.man" = "Man"
+"character.cyber" = "Cyber"
 
 -- Main menu
 "mainmenu.pressbuttontobegin" = "Press ~ to begin"
@@ -15,27 +18,47 @@
 "mainmenu.menuitems.endless" = "Endless Mode"
 "mainmenu.menuitems.settings" = "Settings"
 "mainmenu.menuitems.extras" = "Extras"
-
--- scene0010
+ 
+--
+-- [[ scene0010 ]]
+-- narration
+--
 "scene0010.planet" = "North Galactic Prison Planet, Year 3076..."
 "scene0010.prison" = "...where some of the most dangerous intergalactic war criminals reside."
 "scene0010.hallway" = "An infamous mercenary named 'Cyber' awaits his final fate."
+
+-- guard
 "scene0010.hallway1" = "So you're the infamous Cyber."
 "scene0010.hallway2" = "I was told to be careful around you."
 "scene0010.hallway3" = "Now why might that be?"
 "scene0010.cell" = "You gonna try to hurt me?"
-"scene0010.cell1" = "Go ahead.  You've got nothing to lose anyway."
-"scene0010.grabcyber" = "You hear me, asshole!? Take a swing at me!"
-"scene0010.grabcyber1" = "You've got three days left to live, why not make 'em count?"
-
--- Characters
-"cyber" = "Cyber"
-
--- Testing
-"testDialog1" = "This is a decently long string of dialogue text"
-"testDialog2" = "This is the second line of the dialogue."
-"testDialog3" = "This is the third line of dialogue that will test word wrapping capabilities (maybe)." 
-"troy1" = "This is the tale of Troy Nordbrock, a man who almost never made it to gold nova on CS GO.  Here's more text!  Tacos."
-"troy2" = "He kept practicing every day but his aimbots would never work."
-"troy3" = "But then one day he remembered to use his monitor's built in crosshair.",
-"troy4" = "After that happened he became gold nova and head of the SSOCP. The end?"
+"scene0010.cell1" = "Go ahead.  You've got nothing to lose."
+"scene0010.grabcyber" = "Hey, I'm talking to you asshole!"
+"scene0010.grabcyber1" = "You've got three days left to live, why don't you make 'em count?"
+"scene0010.grabcyber2" = "I'm gonna make your life a living hell, scumbag."
+-- man
+"scene0010.legs" = "That's enough." 
+-- guard
+"scene0010.legs1" = "Who the hell are you?"
+-- man
+"scene0010.legs2" = "Not important."
+-- guard
+"scene0010.legs3" = "Get the hell outta here, pal..."
+"scene0010.zap" = "Gahhhhh!"
+-- man
+"scene0010.topdown" = "Hello, Cyber."
+"scene0010.topdown1" = "I have an offer for you."
+"scene0010.topdown2" = "Given your present situation, I feel you will likely accept."
+"scene0010.topdown3" = "Come with me."
+-- Next scene
+-- man
+"scene0010.cybersit" = "Care for a drink?"
+-- Cyber
+"scene0010.cybersit1" = "Sure."
+-- Man
+"scene0010.pour" = "It's an intergalactic vintage style spirit."
+"scene0010.pour1" = "A synthetic creation based on drinks created thousands of years ago."
+"scene0010.chug" = "I don't recall which planet it comes from, but ever since the recent war began"
+"scene0010.chug1" = "it is extremely difficult to find."
+"scene0010.slam-drink" = "..."
+"scene0010.slam-drink1" = "...right"

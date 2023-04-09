@@ -2,7 +2,7 @@ local gfx <const> = playdate.graphics
 
 import "scripts/ui/typer"
 import "scripts/effects/hardCutBlack"
-
+import "scripts/camera/camera"
 --[[ 
     A custcene frame will display an image that is either static or slowly pans. 
 
@@ -66,11 +66,12 @@ function CutsceneFrame:init(title, text, imagePath, effect)
 
     self.titleTextFont = gfx.font.new("fonts/big-bleu")
 
-    
+    self.camera = Camera()
+    self.camera:removeNormalSway()
+
     local w,h = img:getSize()
     
     -- panning animator == panimator lolz
-    
     
     -- horizontal panning animator
     self.hPanimator = nil
@@ -114,6 +115,9 @@ function CutsceneFrame:update()
         self:_applyPanningEffect()
         self.preDelayCycleCounter+=1
         if (self.preDelayCycleCounter>self.waitCycles) then
+            if (self.effect == CUTSCENE_FRAME_EFFECT.SINGLE_SHAKE) then
+                self.camera:smallShake()
+            end        
             self.typer = Typer(15,183,self.fullTexts[self.fullTextIndex], 3, 31)
             self.transitionSprite:setVisible(false)
             self.state = STATE.SHOWN
@@ -242,6 +246,7 @@ function CutsceneFrame:remove()
     self.transitionSprite:remove()
     self.aButtonSprite:remove()
 
+    self.camera:remove()
 
     CutsceneFrame.super.remove(self)
 end

@@ -100,3 +100,11 @@ function Camera:massiveSway()
     self.swayAmount = 25
     self.swaySpeed = 8
 end
+
+-- changes the camera to static (but still responds to shake)
+function Camera:removeNormalSway()
+    self.normalSwayAmount = 0
+    self.normalSwaySpeed  =0
+    self.currentSwayXOffset = 0
+    self.currentSwayYOffset = 0
+end
