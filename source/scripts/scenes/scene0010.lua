@@ -106,6 +106,36 @@ function Scene0010:initialize(sceneManager)
         return c
     end)
 
+    table.insert(segments, function()
+        local c = CutsceneFrameSegment(man, gfx.getString("scene0010.man-desk"), "images/cutscene/scene0010/man-desk", CUTSCENE_FRAME_EFFECT.PAN_DOWN_UP)
+        c:append(man, gfx.getString("scene0010.man-desk1"))
+        return c
+    end)
+
+    table.insert(segments, function()
+        local c = CutsceneFrameSegment(cyber, gfx.getString("scene0010.cybersit3"), "images/cutscene/scene0010/cyber-sit-static")
+        c:append(man, gfx.getString("scene0010.cybersit4"))
+        c:append(cyber, gfx.getString("scene0010.cybersit5"))
+        return c
+    end)
+
+    table.insert(segments, function()
+        local c = CutsceneFrameSegment(man, gfx.getString("scene0010.man-desk-cropped"), "images/cutscene/scene0010/man-desk-cropped")
+        c:append(cyber, gfx.getString("scene0010.man-desk-cropped1"))
+        c:append(cyber, gfx.getString("scene0010.man-desk-cropped2"))
+        c:append(cyber, gfx.getString("scene0010.man-desk-cropped3"))
+        c:append(man, gfx.getString("scene0010.man-desk-cropped4"))
+        c:append(man, gfx.getString("scene0010.man-desk-cropped5"))
+        return c
+    end)
+
+    table.insert(segments, function()
+        return CutsceneFrameSegment(man, gfx.getString("scene0010.cybersit6"), "images/cutscene/scene0010/cyber-sit")
+    end)
+
+    table.insert(segments, function()
+        return WaitSegment(3000, "images/black")
+    end)
 
     Scene0010.super.initialize(self, segments, sceneManager)
 end

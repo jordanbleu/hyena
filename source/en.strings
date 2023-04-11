@@ -25,11 +25,11 @@
 --
 "scene0010.planet" = "North Galactic Prison Planet, Year 3076..."
 "scene0010.prison" = "...where some of the most dangerous intergalactic war criminals reside."
-"scene0010.hallway" = "An infamous mercenary named 'Cyber' awaits his final fate."
+"scene0010.hallway" = "A man named 'Cyber' awaits his final fate."
 
 -- guard
-"scene0010.hallway1" = "So you're the infamous Cyber."
-"scene0010.hallway2" = "I was told to be careful around you."
+"scene0010.hallway1" = "So you're the infamous mercenary I'm supposed to babysit.."
+"scene0010.hallway2" = "I was told to be careful around you, Cyber."
 "scene0010.hallway3" = "Now why might that be?"
 "scene0010.cell" = "You gonna try to hurt me?"
 "scene0010.cell1" = "Go ahead.  You've got nothing to lose."
@@ -44,11 +44,11 @@
 "scene0010.legs2" = "Not important."
 -- guard
 "scene0010.legs3" = "Get the hell outta here, pal..."
-"scene0010.zap" = "Gahhhhh!"
+"scene0010.zap" = "What the hell!? Gahhhhh!"
 -- man
 "scene0010.topdown" = "Hello, Cyber."
 "scene0010.topdown1" = "I have an offer for you."
-"scene0010.topdown2" = "Given your present situation, I feel you will likely accept."
+"scene0010.topdown2" = "Given your current situation, I feel you'll likely accept."
 "scene0010.topdown3" = "Come with me."
 -- Next scene
 -- man
@@ -62,3 +62,25 @@
 "scene0010.chug1" = "it is extremely difficult to find."
 "scene0010.slam-drink" = "..."
 "scene0010.slam-drink1" = "...right"
+"scene0010.man-desk" = "Anyway, let's discuss the offer I mentioned."
+"scene0010.man-desk1" = "We need a pilot, and you're one of the best in the galaxy."
+
+-- cyber
+"scene0010.cybersit3" = "You've got a whole army of pilots."
+-- man
+"scene0010.cybersit4" = "It's a bit of a political issue."
+-- cyber 
+"scene0010.cybersit5" = "I hate politics."
+
+-- man
+"scene0010.man-desk-cropped" = "I suppose that's why you became a mercenary?"
+-- cyber
+"scene0010.man-desk-cropped1" = "Nah."
+"scene0010.man-desk-cropped2" = "There's lots of money in it."
+"scene0010.man-desk-cropped3" = "That's all."
+-- man
+"scene0010.man-desk-cropped4" = "Well, how about this..."
+"scene0010.man-desk-cropped5" = "Complete this task for us and we will give you something much more valuable than money."
+
+"scene0010.cybersit6" = "...your life"
+
