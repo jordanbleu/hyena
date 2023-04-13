@@ -60,7 +60,7 @@ function Player:init(cameraInst, sceneManagerInst)
 
     self.camera = cameraInst
 
-    self.selectedWeapon = WEAPON.LASER
+    self.selectedWeapon = WEAPON.NONE
 
     self.energyRefillTimer = PhysicsTimer(50, function() self:_refillEnergy() end)
     self.xVelocity = 0

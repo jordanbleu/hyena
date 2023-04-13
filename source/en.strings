@@ -1,16 +1,14 @@
 -- Secret font characters ;)
 -- ~ => (A) button
 -- ^ => (B) button
+-- _ => Dpad Button
 
+--------------------------------------------------------------------------------------------------------
+-- UI
+--------------------------------------------------------------------------------------------------------
 -- Death Screen
 "deathscreen.menuitems.retry" = "Retry"
 "deathscreen.menuitems.quit" = "Quit"
-
--- Characters
-"character.guard" = "Guard"
-"character.?" = "???"
-"character.man" = "Man"
-"character.cyber" = "Cyber"
 
 -- Main menu
 "mainmenu.pressbuttontobegin" = "Press ~ to begin"
@@ -18,11 +16,24 @@
 "mainmenu.menuitems.endless" = "Endless Mode"
 "mainmenu.menuitems.settings" = "Settings"
 "mainmenu.menuitems.extras" = "Extras"
+
+-- tutorial screens 
+"tutorial.move" = "_ Move ship"
+"tutorial.shoot" = "~ Shoot"
  
---
--- [[ scene0010 ]]
+--------------------------------------------------------------------------------------------------------
+-- General
+--------------------------------------------------------------------------------------------------------
+-- Characters
+"character.guard" = "Guard"
+"character.?" = "???"
+"character.man" = "Man"
+"character.cyber" = "Cyber"
+
+--------------------------------------------------------------------------------------------------------
+-- scene0010
+--------------------------------------------------------------------------------------------------------
 -- narration
---
 "scene0010.planet" = "North Galactic Prison Planet, Year 3076..."
 "scene0010.prison" = "...where some of the most dangerous intergalactic war criminals reside."
 "scene0010.hallway" = "A man named 'Cyber' awaits his final fate."

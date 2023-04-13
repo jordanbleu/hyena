@@ -1,6 +1,7 @@
 local gfx <const> = playdate.graphics
 
 import "scripts/scenes/base/segmentedScene"
+import "scripts/scenes/scene0020"
 --[[
     Intro cutscene
     Cyber is in prison and he gets his mission. Shit gets real mysterious.
@@ -11,6 +12,7 @@ class("Scene0010").extends(SegmentedScene)
 
 function Scene0010:initialize(sceneManager)
     local segments = {}
+    self.sceneManager = sceneManager
 
     table.insert(segments, function()
         return WaitSegment(3000, "images/black")
@@ -139,4 +141,10 @@ function Scene0010:initialize(sceneManager)
 
     Scene0010.super.initialize(self, segments, sceneManager)
 end
+
+function Scene0010:completeScene()
+    self.sceneManager:switchScene(Scene0020(), SCENE_TRANSITION.FADE_IO)
+end
+
+
 

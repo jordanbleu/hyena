@@ -29,6 +29,7 @@ COLLISION_LAYER =
 
 WEAPON = 
 {
+    NONE = 0,
     MINE = 1,
     LASER = 2,
     MISSILE = 3,
