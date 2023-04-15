@@ -25,5 +25,5 @@ end
 
 function PhysicsTimer:remove()
     self.timer:remove()
-    PhysicsTimer.super.remove(this)
+    PhysicsTimer.super.remove(self)
 end

@@ -88,7 +88,7 @@ function Player:init(cameraInst, sceneManagerInst)
     self.iframeCounter = 0
     self.iframes = 50
 
-    self.lives = 3
+    self.lives = 0 -- todo: undo
     self.state = STATE.ALIVE
     
     -- generic cycle counter for death animation and stuff (depends on state)
@@ -183,9 +183,9 @@ end
 
 -- show revive animation
 function Player:_revive()
-    print (tostring(self.lives))
     if (self.lives <0) then
         self.sceneManager:switchScene(DeathScreen(), SCENE_TRANSITION.FADE_IO)
+        self.state = STATE.REVIVING
     else
         self.blackScreenSprite:setVisible(false)
         self.state = STATE.REVIVING
@@ -227,7 +227,7 @@ function Player:_checkCollisions()
 
 
     if (tookDamage) then
-        self.health -= 10
+        self.health -= 100 -- todo: fix
 
         if (self.health > 0) then
             self.camera:bigShake()

@@ -7,7 +7,6 @@ import "scripts/actors/enemy"
 class("HordeSegment").extends(Segment)
 
 function HordeSegment:init(enemies)
-    print ("Enter HordeSegment.")
     self.enemies = enemies
 end
 

@@ -120,7 +120,6 @@ function Grunt:_checkCollisions()
     for i,col in ipairs(collisions) do
         if (col:isa(PlayerBullet)) then
             tookDamage= true
-            print "ouch"
             -- create a new explosion object at the bullets position
             SingleSpriteAnimation("images/effects/playerBulletExplosionAnim/player-bullet-explosion", 500,col.x, col.y)
             col:destroy()
@@ -133,7 +132,6 @@ function Grunt:_checkCollisions()
         elseif (col:isa(PlayerLaser)) then
             tookDamage= true
             if (col.isDamageEnabled) then
-                print "oof"
                 self:damage(5)
             end
 
@@ -144,7 +142,6 @@ function Grunt:_checkCollisions()
         elseif (col:isa(PlayerMissileExplosion)) then
             tookDamage= true
             if (col.isDamageEnabled) then
-                print "owie!"
                 self:damage(15)
             end
         
@@ -155,7 +152,6 @@ function Grunt:_checkCollisions()
         elseif (col:isa(PlayerMineExplosion)) then
             tookDamage= true
             if (col.isDamageEnabled) then
-                print "ouchie :("
                 self:damage(10)
             end
         end

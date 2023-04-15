@@ -228,7 +228,6 @@ function WeaponSelector:_waitForAnimateOut()
     self:_updateSelectorPositions(animValue)
 
     if (self.animator:ended()) then
-        print "ENTER: HIDDEN"
 
         -- re-allow attacks.
         self.player:setAllowAttacks(true)

@@ -97,14 +97,11 @@ end
 
 
 function SceneManager:update()
-
     if (self.transitionState == TRANSITION_STATE.COMPLETE) then
         return
 
     elseif (self.transitionState == TRANSITION_STATE.FADING_OUT or self.transitionState == TRANSITION_STATE.FADING_IN) then
         self:_handleFade()
-
-
 
     elseif (self.transitionState == TRANSITION_STATE.WAITING) then
         self:_handleWaiting()
@@ -121,8 +118,17 @@ function SceneManager:_loadRequestedScene()
         self.previousScene = nil
     end
 
+    local sprites = gfx.sprite.getAllSprites()
+    if (sprites ~= nil and #sprites > 0) then
+        for i,spr in ipairs(sprites) do
+            -- removeAll() doesn't call :remove()
+            spr:remove()
+        end
+    end
+
     -- remove all existing sprites
-    gfx.sprite.removeAll()
+    -- gfx.sprite.removeAll()
+
 
     -- re-add the scene manager and the transition sprite
     self:add()

@@ -25,7 +25,6 @@ class("Test1Scene").extends(Scene)
 function Test1Scene:initialize(sceneManager)
     Test1Scene.super.initialize(self, sceneManager)
     
-    print ("test1 scene init")
     local textImage = gfx.image.new("images/black")
     local textSprite = gfx.sprite.new(textImage)
     textSprite:moveTo(200,120)

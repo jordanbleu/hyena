@@ -21,7 +21,6 @@ end
 
 function Scene:getSceneManager() 
     if not sceneMgr then 
-        print ("Scene Manager was not available.  Did you forget to call super.initialize in a scene?")
         error ("Unable to retrieve scene manager")
     end
 

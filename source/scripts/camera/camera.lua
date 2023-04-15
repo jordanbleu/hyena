@@ -121,3 +121,7 @@ function Camera:setNormalSway(amount, speed)
     self.normalSwayAmount = amount
     self.normalSwaySpeed = speed
 end
+
+function Camera:remove()
+    Camera.super.remove(self)
+end

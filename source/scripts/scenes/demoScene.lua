@@ -30,9 +30,7 @@ end
 
 function DemoScene:initialize(sceneManager)
     self.sceneManager = sceneManager
-    
-    print ("demo scene init")
-    
+        
     ParallaxLayer(gfx.image.new("images/backgrounds/stars-farther"),0,1)
     ParallaxLayer(gfx.image.new("images/backgrounds/stars-far"),0,3)
 
@@ -156,6 +154,5 @@ function DemoScene:initialize(sceneManager)
 end
 
 function DemoScene:completeScene()
-    print ("scene completed")
     self.sceneManager:switchScene(Test2Scene(), SCENE_TRANSITION.FADE_IO)
 end
