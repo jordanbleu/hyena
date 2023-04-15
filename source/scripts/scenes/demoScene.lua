@@ -35,14 +35,12 @@ function DemoScene:initialize(sceneManager)
     
     ParallaxLayer(gfx.image.new("images/backgrounds/stars-farther"),0,1)
     ParallaxLayer(gfx.image.new("images/backgrounds/stars-far"),0,3)
-    
-    local camera = Camera()
-    
-    local player = Player(camera, sceneManager)
+
+    sceneHelper.addBlackBackground()
+    local stuff = sceneHelper.setupGameplayScene(sceneManager)
+    local player = stuff.player
     player:moveTo(200, 200)
-    
-    Hud(player)
-    WeaponSelector(player)
+
     
     --< segments >-- 
 
@@ -53,7 +51,7 @@ function DemoScene:initialize(sceneManager)
     end)
 
     table.insert(segments, function()
-        return DialogueSegment("demoDialogue1.txt")
+        return DialogueSegment("demoDialogue1.txt",player)
     end)
 
     table.insert(segments, function()
@@ -72,7 +70,7 @@ function DemoScene:initialize(sceneManager)
     end)
 
     table.insert(segments, function()
-        return DialogueSegment("demoDialogue2.txt")
+        return DialogueSegment("demoDialogue2.txt", player)
     end)
 
     table.insert(segments, function()
@@ -83,7 +81,7 @@ function DemoScene:initialize(sceneManager)
 
     -- no wait time in between
     table.insert(segments, function()
-        return DialogueSegment("demoDialogue3.txt")
+        return DialogueSegment("demoDialogue3.txt",player)
     end)
 
     table.insert(segments, function()

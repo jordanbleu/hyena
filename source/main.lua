@@ -33,6 +33,7 @@ import "scripts/data/dataManager"
 import "scripts/sceneManager"
 import "scripts/scenes/ui/deathScreen" -- todo :remove 
 import "scripts/scenes/test1Scene"
+import "scripts/scenes/demoScene"
 import "scripts/scenes/scene0020"
 import "scripts/scenes/scene0030"
 import "scripts/scenes/cutsceneDemo"
@@ -53,7 +54,8 @@ local function setup()
     -- long in the future, this will be set to the 'title screen scene'
     --local firstScene = DeathScreen()
     --local firstScene = Test1Scene() 
-    local firstScene = CutsceneDemo()
+    --local firstScene = CutsceneDemo()
+    local firstScene = DemoScene()
     --local firstScene = MainMenu() -- Uncomment to start at main menu
     --local firstScene = Scene0020() -- Uncomment to start from the opening credits
     --local firstScene = Scene0030() -- Start from first gameplay section
