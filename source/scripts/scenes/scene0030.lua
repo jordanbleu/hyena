@@ -62,7 +62,6 @@ function Scene0030:initialize(sceneManager)
         local enemies = {}
         table.insert(enemies, Grunt(300,-50, camera, player))
         table.insert(enemies, Grunt(120,-10, camera, player))
-        table.insert(enemies, Grunt(50,-30, camera, player))
         table.insert(enemies, DiveBomb(100, -20, camera, player))
         table.insert(enemies, DiveBomb(30, -30, camera, player))
         return HordeSegment(enemies)
@@ -75,6 +74,33 @@ function Scene0030:initialize(sceneManager)
 
     table.insert(segments, function()
         return DialogueSegment("scene0030/introductions.txt", player)
+    end)
+
+    
+    table.insert(segments, function()
+
+        -- First wave flies from left to right
+        local guy1 = TinyGuy(200,-10,nil, camera, player)
+        local guy2 = TinyGuy(200,-10,guy1, camera, player)
+        local guy3 = TinyGuy(200,-10,guy2, camera, player)
+        local guy4 = TinyGuy(200,-40,guy3, camera, player)
+        local guy5 = TinyGuy(200,-50,guy4, camera, player)
+        local guy6 = TinyGuy(200,-60,guy5, camera, player)
+        local guy7 = TinyGuy(200,-70,guy6, camera, player)
+        local guy8 = TinyGuy(200,-80,guy7, camera, player)
+
+        -- Second wave flies from riht to left
+        local wave2_guy1 = TinyGuy(200,-100,nil, camera, player)
+        wave2_guy1:setXVelocity(-2)
+        local wave2_guy2 = TinyGuy(200,-100,wave2_guy1, camera, player)
+        local wave2_guy3 = TinyGuy(200,-100,wave2_guy2, camera, player)
+        local wave2_guy4 = TinyGuy(200,-100,wave2_guy3, camera, player)
+        local wave2_guy5 = TinyGuy(200,-100,wave2_guy4, camera, player)
+        local wave2_guy6 = TinyGuy(200,-100,wave2_guy5, camera, player)
+        local wave2_guy7 = TinyGuy(200,-100,wave2_guy6, camera, player)
+        local wave2_guy8 = TinyGuy(200,-100,wave2_guy7, camera, player)
+
+        return HordeSegment(enemies)
     end)
 
 

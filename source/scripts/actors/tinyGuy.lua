@@ -106,7 +106,6 @@ function TinyGuy:_checkCollisions()
     end
 end
 
-
 function TinyGuy:physicsUpdate()
 
     -- It is the leader
@@ -186,4 +185,8 @@ end
 function TinyGuy:remove()
     self.animator:remove()
     Grunt.super.remove(self)
+end
+
+function TinyGuy:setXVelocity(amount) 
+    self.xVelocity = amount
 end
