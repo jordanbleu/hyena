@@ -18,8 +18,9 @@
 "mainmenu.menuitems.extras" = "Extras"
 
 -- tutorial screens 
-"tutorial.move" = "_ Move ship"
-"tutorial.shoot" = "~ Shoot"
+"tutorial.move" = "_ Steer ship"
+"tutorial.shoot" = "~ Fire main cannons"
+"tutorial.dash" = "^ Dash left/right"
  
 --------------------------------------------------------------------------------------------------------
 -- General

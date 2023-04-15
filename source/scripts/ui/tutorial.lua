@@ -19,8 +19,7 @@ local STATE = {
 -- how long transition in / out takes (in ms)
 local TRANSITION_DURATION = 750
 
-function Tutorial:init(message, playerInst)
-    self.player = playerInst 
+function Tutorial:init(message)
 
     self.text = message
     
@@ -62,7 +61,6 @@ function Tutorial:init(message, playerInst)
     self.isFullyCompleted = false
     self:add()
 
-    self.player:lockControls()
 end
 
 function Tutorial:update()
@@ -90,7 +88,6 @@ function Tutorial:_animate()
         if (self.state == STATE.ANIMATING_IN) then
             self.state = STATE.SHOWN
         elseif (self.state == STATE.ANIMATING_OUT) then
-            self.player:unlockControls()
             self:remove()
         end
     end
