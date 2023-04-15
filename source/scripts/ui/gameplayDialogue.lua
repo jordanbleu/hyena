@@ -84,6 +84,7 @@ end
 
 function GameplayDialogue:update()
     self:_updateTitleVisibility()
+    
     if (self.state == STATE.ANIMATING_IN) then
         self:_animateIn()
 

@@ -96,3 +96,11 @@ end
 function ParallaxLayer:setScrollY(sy)
     self.scrollY = sy
 end
+
+function ParallaxLayer:setZIndex(z)
+    ParallaxLayer.super.setZIndex(self,z)
+    self.leftImage:setZIndex(z)
+    self.rightImage:setZIndex(z)
+    self.upperImage:setZIndex(z)
+    self.lowerImage:setZIndex(z)
+end

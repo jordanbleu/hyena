@@ -54,9 +54,9 @@ local function setup()
     --local firstScene = DeathScreen()
     --local firstScene = Test1Scene() 
     --local firstScene = CutsceneDemo()
-    --local firstScene = MainMenu() -- Uncomment to start at main menu
+    local firstScene = MainMenu() -- Uncomment to start at main menu
     --local firstScene = Scene0020() -- Uncomment to start from the opening credits
-    local firstScene = Scene0030() -- Start from first gameplay section
+    --local firstScene = Scene0030() -- Start from first gameplay section
     sceneMgr:switchScene(firstScene, SCENE_TRANSITION.FADE_IO)
 end
 

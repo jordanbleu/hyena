@@ -43,7 +43,7 @@ Dialogue files go somewhere inside the `strings/dialogue-en` folder.  A single f
 
 There are three parts to each line in the dialogue files:
 
-* Avatar ID is the avatar animation (see below for details)
+* Avatar ID is the avatar animation (see below for details).  
 * Title is the name of the character, or "[N/A]" if there's no one talking (narration, etc)
 * The text is the actual dialogue text obviously :)
 

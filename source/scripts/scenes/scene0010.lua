@@ -68,7 +68,7 @@ function Scene0010:initialize(sceneManager)
     end)
 
     table.insert(segments, function()
-        return CutsceneFrameSegment(nobody, gfx.getString("scene0010.zap"), "images/cutscene/scene0010/kill-guard", CUTSCENE_FRAME_EFFECT.SINGLE_SHAKE)
+        return CutsceneFrameSegment(guard, gfx.getString("scene0010.zap"), "images/cutscene/scene0010/kill-guard", CUTSCENE_FRAME_EFFECT.SINGLE_SHAKE)
     end)
 
     table.insert(segments, function()

@@ -27,6 +27,20 @@ function playdate.graphics.drawTextAlignedWhite(text, x,y, alignment)
 	gfx.setImageDrawMode( original_draw_mode )
 end
 
+---The only reason i wrote this is because gfx.setFont would not work for some damn reason.
+---@param font any the loaded font 
+---@param x any x position
+---@param y any y position
+---@param text string text to write
+function playdate.graphics.drawTextFromFontWhite(font, text, x,y, alignment)
+	local gfx = playdate.graphics
+ 
+	local original_draw_mode = gfx.getImageDrawMode()
+	gfx.setImageDrawMode( playdate.graphics.kDrawModeFillWhite )
+	font:drawTextAligned(text, x,y, alignment)
+	gfx.setImageDrawMode( original_draw_mode )
+end
+
 ---Syntactic sugar method for retrieving localized text based on the global language code.
 ---@param key string the key within {language_code}.strings
 ---@return any the string from the strings file.
