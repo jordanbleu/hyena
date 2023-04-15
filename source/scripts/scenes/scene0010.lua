@@ -73,9 +73,9 @@ function Scene0010:initialize(sceneManager)
 
     table.insert(segments, function()
         local c = CutsceneFrameSegment(man, gfx.getString("scene0010.topdown"), "images/cutscene/scene0010/topdown")
-        c:append(guard, gfx.getString("scene0010.topdown1"))
-        c:append(guard, gfx.getString("scene0010.topdown2"))
-        c:append(guard, gfx.getString("scene0010.topdown3"))
+        c:append(man, gfx.getString("scene0010.topdown1"))
+        c:append(man, gfx.getString("scene0010.topdown2"))
+        c:append(man, gfx.getString("scene0010.topdown3"))
         return c
     end)
 

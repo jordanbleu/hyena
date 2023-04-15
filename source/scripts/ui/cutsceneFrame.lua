@@ -102,7 +102,11 @@ function CutsceneFrame:init(title, text, imagePath, effect)
     
     self.aButtonBlinker = gfx.animation.blinker.new(500,500, true)
     self.aButtonBlinker:start()
-    
+
+    -- When the title changes, move the title frame a bit to signal to the player that something is different.
+    -- Clever psychology tricks ;)
+    self.titleAnimator = nil
+
     self:_drawTitle()
     self:add()
 end
@@ -110,6 +114,7 @@ end
 function CutsceneFrame:update()
 
     CutsceneFrame.super.update(self)
+    self:_updateTitlePosition()
 
     if (self.state == STATE.TRANSITIONING_IN) then
         self:_applyPanningEffect()
@@ -127,7 +132,16 @@ function CutsceneFrame:update()
         self:_applyPanningEffect()
         self:_blinkAButton()
         if (self.typer:isDismissed()) then
+            local oldTitle = self.titles[self.fullTextIndex]
             self.fullTextIndex +=1
+            local newTitle = self.titles[self.fullTextIndex]
+
+            -- if the next dialogue segment is different from the old one, jiggle the title a big to 
+            -- bring attention to it.
+            if (oldTitle ~= newTitle) then
+                self.titleAnimator = gfx.animator.new(500, self.titleFrameSprite.y - 5, self.titleFrameSprite.y, playdate.easingFunctions.outBounce)
+            end
+
             if (self.fullTextIndex <= #self.fullTexts) then
                 self.typer:remove()
                 self.typer = Typer(15,183,self.fullTexts[self.fullTextIndex], 3, 31)
@@ -169,6 +183,12 @@ function CutsceneFrame:_blinkAButton()
         self.aButtonSprite:setVisible(false)
     
     end
+end
+
+function CutsceneFrame:_updateTitlePosition()
+    if (self.titleAnimator == nil) then return end 
+    self.titleFrameSprite:moveTo(self.titleFrameSprite.x, self.titleAnimator:currentValue())
+    self.titleTextSprite:moveTo(self.titleTextSprite.x, self.titleAnimator:currentValue())
 end
 
 function CutsceneFrame:_drawTitle()
