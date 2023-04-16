@@ -88,7 +88,7 @@ function Player:init(cameraInst, sceneManagerInst)
     self.iframeCounter = 0
     self.iframes = 50
 
-    self.lives = 0 -- todo: undo
+    self.lives = 3
     self.state = STATE.ALIVE
     
     -- generic cycle counter for death animation and stuff (depends on state)
@@ -227,7 +227,7 @@ function Player:_checkCollisions()
 
 
     if (tookDamage) then
-        self.health -= 100 -- todo: fix
+        self.health -= 10
 
         if (self.health > 0) then
             self.camera:bigShake()
@@ -415,6 +415,9 @@ end
 
 function Player:addHealth(amount)
     self.health += amount
+    if (self.health > self.maxHealth) then
+        self.health = self.maxHealth
+    end
 end
 
 function Player:setAllowAttacks(enable)

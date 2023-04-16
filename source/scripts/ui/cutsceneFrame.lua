@@ -96,7 +96,7 @@ function CutsceneFrame:init(title, text, imagePath, effect)
     self.aButtonSprite = gfx.sprite.new(self.aButtonImage)
     self.aButtonSprite:setIgnoresDrawOffset(true)
     self.aButtonSprite:setZIndex(999)
-    self.aButtonSprite:moveTo(380,225)
+    self.aButtonSprite:moveTo(370,225)
     self.aButtonSprite:setVisible(false)
     self.aButtonSprite:add();
     
