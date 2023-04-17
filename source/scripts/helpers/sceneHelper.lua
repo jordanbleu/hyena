@@ -9,7 +9,7 @@ function sceneHelper.setupGameplayScene(sceneManager)
     local player = Player(camera, sceneManager)
     local hud = Hud(player)
     local weaponSelector = WeaponSelector(player)
-
+    
     return {
         camera = camera,
         player = player,

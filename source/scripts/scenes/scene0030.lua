@@ -5,6 +5,7 @@ import "scripts/effects/screenFlash"
 import "scripts/ui/tutorial"
 import "scripts/actors/tinyGuyVertical"
 import "scripts/scenes/scene0040"
+import "scripts/sprites/bgSpriteEmitter"
 
 
 --[[
@@ -26,6 +27,21 @@ function Scene0030:initialize(sceneManager)
     plax1:setZIndex(1)
     local plax2 = ParallaxLayer(gfx.image.new("images/backgrounds/stars-far"),0,3)
     plax2:setZIndex(2)
+
+    -- emit randmo background stuff
+    local bgEmitter = BgSpriteEmitter(1)
+    bgEmitter:addImage(gfx.image.new("images/backgrounds/bg-sprites/blanet"))
+    bgEmitter:addImage(gfx.image.new("images/backgrounds/bg-sprites/blanet2"))
+    bgEmitter:addImage(gfx.image.new("images/backgrounds/bg-sprites/blanet3"))
+    bgEmitter:addImage(gfx.image.new("images/backgrounds/bg-sprites/satellite"))
+    bgEmitter:addImage(gfx.image.new("images/backgrounds/bg-sprites/satellite2"))
+    bgEmitter:addImage(gfx.image.new("images/backgrounds/bg-sprites/asteroid"))
+    bgEmitter:addImage(gfx.image.new("images/backgrounds/bg-sprites/asteroid2"))
+    bgEmitter:addImage(gfx.image.new("images/backgrounds/bg-sprites/mist"))
+    bgEmitter:addImage(gfx.image.new("images/backgrounds/bg-sprites/mist2"))
+
+
+
 
     self.sceneItems = sceneHelper.setupGameplayScene(sceneManager)
     local player = self.sceneItems.player

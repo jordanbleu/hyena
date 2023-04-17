@@ -6,12 +6,9 @@ import "scripts/ui/tutorial"
 import "scripts/actors/tinyGuyVertical"
 
 --[[
-    First gameplay scene.
-
-    Player learns the basics, no bosses in this scene.  Lots of dialogue.
+    This is strictly an animation sequence.  The first boss appears and destroys the two allies.
 ]]
 class("Scene0040").extends(SegmentedScene)
-
 
 function Scene0040:initialize(sceneManager)
 
@@ -23,12 +20,6 @@ function Scene0040:initialize(sceneManager)
     plax1:setZIndex(1)
     local plax2 = ParallaxLayer(gfx.image.new("images/backgrounds/stars-far"),0,3)
     plax2:setZIndex(2)
-
-    self.sceneItems = sceneHelper.setupGameplayScene(sceneManager)
-    local player = self.sceneItems.player
-    local camera = self.sceneItems.camera
-
-    player:moveTo(200,200)
 
     local segments = {}
 
