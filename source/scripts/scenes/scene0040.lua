@@ -4,6 +4,7 @@ import "scripts/helpers/sceneHelper"
 import "scripts/effects/screenFlash"
 import "scripts/ui/tutorial"
 import "scripts/actors/tinyGuyVertical"
+import "scripts/actors/cursedNeuron/cursedNeuron"
 
 --[[
     This is strictly an animation sequence.  The first boss appears and destroys the two allies.
@@ -27,10 +28,14 @@ function Scene0040:initialize(sceneManager)
         return WaitSegment(3000)
     end)
 
+    -- temp - testing boss
+    CursedNeuron()
+
+
     Scene0040.super.initialize(self, segments, sceneManager)
 end
 
 function Scene0040:completeScene()
-    self.sceneManager:switchScene(Scene0040())
+    --self.sceneManager:switchScene(Scene0040())
 end
 

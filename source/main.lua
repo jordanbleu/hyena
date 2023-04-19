@@ -62,7 +62,7 @@ local function setup()
     --local firstScene = Scene0030() -- Start from first gameplay section
     local firstScene = Scene0040() -- Start from first gameplay section
 
-    sceneMgr:switchScene(firstScene, SCENE_TRANSITION.FADE_IO)
+    sceneMgr:switchScene(firstScene, SCENE_TRANSITION.HARD_CUT)
 end
 
 
