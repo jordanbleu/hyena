@@ -6,7 +6,7 @@ import "scripts/sprites/singleSpriteAnimation"
 class("HealthPowerup").extends(Powerup)
 
 function HealthPowerup:init(x,y)
-    HealthPowerup.super.init(self, "images/powerups/healthPickupAnim/health", 2000, x,y)
+    HealthPowerup.super.init(self, "images/powerups/healthPickupAnim/health", 500, x,y)
 end
 
 function HealthPowerup:_onCollected(player)

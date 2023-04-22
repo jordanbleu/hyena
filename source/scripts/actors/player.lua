@@ -12,17 +12,17 @@ import "scripts/scenes/ui/deathScreen"
 import "scripts/powerups/powerup"
 
 -- How much speed increases per frame when accelerating 
-local MOVE_SPEED <const> = 0.5
+local MOVE_SPEED <const> = 1
 -- Max speed overall of your ship
-local MAX_VELOCITY <const> = 2
+local MAX_VELOCITY <const> = 4
 -- Deceleration rate.  Higher numbers make ship stop faster, lower makes the ship more floaty
-local DECELERATION_RATE = 0.1
+local DECELERATION_RATE = 0.2
 -- speed of the dash
-local DASH_SPEED <const> = 20
+local DASH_SPEED <const> = 25
 
 -- how long to hold the A button before using weapon.
-local HOLD_A_CYCLES_TO_WAIT <const> = 20
-local HOLD_B_CYCLES_TO_WAIT<const> = 10
+local HOLD_A_CYCLES_TO_WAIT <const> = 10
+local HOLD_B_CYCLES_TO_WAIT<const> = 5
 
 local STATE <const> = {
     ALIVE = 1,

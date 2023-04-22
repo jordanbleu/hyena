@@ -8,7 +8,7 @@ class("PlayerBullet").extends(Actor)
 function PlayerBullet:init(x,y)
     PlayerBullet.super.init(self)
     
-    self.yVelocity = -10
+    self.yVelocity = -16
     self.xVelocity = 0
 
     self.isActive = true

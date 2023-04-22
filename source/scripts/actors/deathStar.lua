@@ -30,6 +30,7 @@ function DeathStar:init(x,y, playerInst)
     self.player = playerInst
     self.ySpeed = math.random() * 1.5
 
+    self:moveTo(x,y)
     -- idle image animation
     self.animator = SpriteAnimation("images/enemies/deathStarAnim/idle", math.random(1500,2000), self.x, self.y)
     self.animator:setRepeats(-1)
@@ -42,7 +43,6 @@ function DeathStar:init(x,y, playerInst)
 
     self.state = STATE.IDLE
 
-    self:moveTo(x,y)
     self:add()
 
 end
