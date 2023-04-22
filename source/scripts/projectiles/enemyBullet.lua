@@ -8,7 +8,7 @@ class("EnemyBullet").extends(Actor)
 function EnemyBullet:init(x,y)
     EnemyBullet.super.init(self)
     
-    self.yVelocity = 4
+    self.yVelocity = 8
     self.xVelocity = 0
 
     self.isActive = true
