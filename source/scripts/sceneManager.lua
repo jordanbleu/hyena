@@ -13,8 +13,8 @@ local TRANSITION_STATE =
 {
     COMPLETE = 0,
     FADING_OUT = 1,
-    WAITING = 2,
-    FADING_IN = 3
+    WAITING = 4,
+    FADING_IN = 5
 }
 
 -- How long the fade duration should be 
@@ -63,6 +63,13 @@ function SceneManager:switchScene(scene, transition)
         return
     end
 
+    -- immediately stops all calls to `update` on the scene itself.  
+    -- I'm hoping this doesn't cause any weirdness. 
+    -- The reason for this is if cleanup gets called in the current drawing batch,
+    -- one more `update` will be called before the end, leading to nil-references. 
+    -- Calling remove here should halt updates immediately, then cleanup will happen later.
+    if (self.currentScene) then self.currentScene:remove() end
+
     self.animator = nil
   
     if not transition then
@@ -90,7 +97,6 @@ end
 
 
 function SceneManager:update()
-
     if (self.transitionState == TRANSITION_STATE.COMPLETE) then
         return
 
@@ -112,8 +118,17 @@ function SceneManager:_loadRequestedScene()
         self.previousScene = nil
     end
 
+    local sprites = gfx.sprite.getAllSprites()
+    if (sprites ~= nil and #sprites > 0) then
+        for i,spr in ipairs(sprites) do
+            -- removeAll() doesn't call :remove()
+            spr:remove()
+        end
+    end
+
     -- remove all existing sprites
-    gfx.sprite.removeAll()
+    -- gfx.sprite.removeAll()
+
 
     -- re-add the scene manager and the transition sprite
     self:add()

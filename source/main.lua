@@ -33,7 +33,12 @@ import "scripts/data/dataManager"
 import "scripts/sceneManager"
 import "scripts/scenes/ui/deathScreen" -- todo :remove 
 import "scripts/scenes/test1Scene"
+import "scripts/scenes/demoScene"
+import "scripts/scenes/scene0020"
+import "scripts/scenes/scene0030"
+import "scripts/scenes/scene0040"
 import "scripts/scenes/cutsceneDemo"
+import "scripts/scenes/ui/mainMenu"
 
 local gfx <const> = playdate.graphics
 
@@ -49,9 +54,15 @@ local function setup()
 
     -- long in the future, this will be set to the 'title screen scene'
     --local firstScene = DeathScreen()
-    local firstScene = Test1Scene() 
+    --local firstScene = Test1Scene() 
     --local firstScene = CutsceneDemo()
-    sceneMgr:switchScene(firstScene, SCENE_TRANSITION.FADE_IO)
+    --local firstScene = DemoScene()
+    --local firstScene = MainMenu() -- Uncomment to start at main menu
+    --local firstScene = Scene0020() -- Uncomment to start from the opening credits
+    --local firstScene = Scene0030() -- Start from first gameplay section
+    local firstScene = Scene0040() -- Start from first gameplay section
+
+    sceneMgr:switchScene(firstScene, SCENE_TRANSITION.HARD_CUT)
 end
 
 
@@ -64,9 +75,9 @@ local function drawDebugText()
     local spriteanimations = 0
     local scenes = 0
     local timers = 0
-
+    local sprites = gfx.sprite.getAllSprites()
     -- sprite info
-    for i,spr in ipairs(gfx.sprite.getAllSprites()) do
+    for i,spr in ipairs(sprites) do
         if (spr:isa(Enemy)) then
             enemies+=1
         end 
@@ -88,11 +99,12 @@ local function drawDebugText()
     local allTimers = playdate.timer.allTimers()
     timers = #allTimers
     
-    gfx.drawText("Enemies: " .. tostring(enemies), 10,20)
-    gfx.drawText("Actors: " .. tostring(actors), 10, 30)
-    gfx.drawText("SpriteAnimations: " .. tostring(spriteanimations), 10, 40)
-    gfx.drawText("Scenes: " .. tostring(scenes), 10, 50)
-    gfx.drawText("Timers: " .. tostring(timers), 10, 60)
+    gfx.drawTextWhite("Enemies: " .. tostring(enemies), 10,20)
+    gfx.drawTextWhite("Actors: " .. tostring(actors), 10, 30)
+    gfx.drawTextWhite("SpriteAnimations: " .. tostring(spriteanimations), 10, 40)
+    gfx.drawTextWhite("Scenes: " .. tostring(scenes), 10, 50)
+    gfx.drawTextWhite("Timers: " .. tostring(timers), 10, 60)
+    gfx.drawTextWhite("Sprites: " .. tostring(#sprites), 10, 70)
 
 
 end
@@ -105,7 +117,7 @@ function playdate.update()
     playdate.timer.updateTimers()
     gfx.animation.blinker.updateAll()
     --playdate.drawFPS(0,0)
-    -------drawDebugText()
+    --drawDebugText()
 end
 
 -- ** this should be disabled for the final build **

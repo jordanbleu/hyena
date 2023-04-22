@@ -15,7 +15,14 @@ class("SpriteAnimation").extends(Actor)
 ---@param animationTime integer how long the overall animation should be in ms
 ---@param x integer x coordinate
 ---@param y integer y coordinate 
-function SpriteAnimation:init(imageTablePath, animationTime, x, y)
+function SpriteAnimation:init(imageTablePath, animationTime, x, y, isReversed)
+
+    isReversed = isReversed or false 
+
+    self.animDirection = 1
+    if (isReversed) then 
+        self.animDirection = -1
+    end
 
     SpriteAnimation.super.init(self)
 
@@ -31,6 +38,9 @@ function SpriteAnimation:init(imageTablePath, animationTime, x, y)
     
     -- 'frames' here refers to the sprite sheet image
     self.frame = 1
+    if (isReversed) then
+        self.frame = #self.imageTable
+    end
 
     self.repeatCount = 0
     self.repeats = 0
@@ -42,6 +52,8 @@ function SpriteAnimation:init(imageTablePath, animationTime, x, y)
     self:setImage(self.imageTable:getImage(1))
 
     self.attachedSprite = nil
+
+    self.removeOnComplete = true
 
     self:moveTo(x,y)
     self:add()
@@ -56,20 +68,27 @@ function SpriteAnimation:physicsUpdate()
 
         -- update the sprite frame 
         if (self.updateCounter >= self.updatesPerFrame) then
-            self.frame = self.frame + 1
+            self.frame = self.frame + self.animDirection
             self.updateCounter = 0
             
-            if (self.frame >= self.imageTable:getLength()) then
+            if (self.frame > self.imageTable:getLength() or self.frame < 1) then
                 if (self.repeats == 0) then
                     self:_complete()
                 elseif (self.repeats ~= -1) then
                     self.frame = 1
+                    if (self.animDirection == -1) then
+                        self.frame = self.imageTable:getLength()
+                    end
+
                     self.repeatCount = self.repeatCount + 1
                     if (self.repeatCount > self.repeats) then
                         self:_complete()
                     end
                 else 
                     self.frame = 1
+                    if (self.animDirection == -1) then
+                        self.frame = self.imageTable:getLength()
+                    end
 
                 end
                 
@@ -117,7 +136,11 @@ function SpriteAnimation:_complete()
         self.onCompletedCallback()
     end
 
-    self:remove()
+    if (self.removeOnComplete) then
+        self:remove()
+    else 
+        self:pause()
+    end
 end
 
 function SpriteAnimation:getFrame()
@@ -146,4 +169,6 @@ function SpriteAnimation:reset()
     self:setImage(self.imageTable:getImage(1))
 end
 
-
+function SpriteAnimation:setRemoveOnComplete(enable)
+    self.removeOnComplete = enable
+end

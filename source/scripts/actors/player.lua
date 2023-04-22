@@ -60,7 +60,7 @@ function Player:init(cameraInst, sceneManagerInst)
 
     self.camera = cameraInst
 
-    self.selectedWeapon = WEAPON.LASER
+    self.selectedWeapon = WEAPON.NONE
 
     self.energyRefillTimer = PhysicsTimer(50, function() self:_refillEnergy() end)
     self.xVelocity = 0
@@ -183,9 +183,9 @@ end
 
 -- show revive animation
 function Player:_revive()
-    print (tostring(self.lives))
     if (self.lives <0) then
         self.sceneManager:switchScene(DeathScreen(), SCENE_TRANSITION.FADE_IO)
+        self.state = STATE.REVIVING
     else
         self.blackScreenSprite:setVisible(false)
         self.state = STATE.REVIVING
@@ -415,6 +415,9 @@ end
 
 function Player:addHealth(amount)
     self.health += amount
+    if (self.health > self.maxHealth) then
+        self.health = self.maxHealth
+    end
 end
 
 function Player:setAllowAttacks(enable)

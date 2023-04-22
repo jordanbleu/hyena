@@ -21,7 +21,6 @@ function SmartTimer:init(timeMs)
 
     self.isPlaying = true
     self:add()
-    print ("timer started at " .. tostring(playdate.getElapsedTime()))
 end
 
 
@@ -39,7 +38,6 @@ function SmartTimer:physicsUpdate()
     end
 
     if (self.cycleCounter > self.cycles) then
-        print ("timer ended at: (should be 3 seconds later)" .. tostring(playdate.getElapsedTime()))
   
         if (self.completeCallback) then
             self.completeCallback()

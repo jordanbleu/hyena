@@ -91,7 +91,14 @@ end
 
 function Hud:_updateWeaponSprite()
     local selectedWeapon = self.player:getSelectedWeaponId()
-    self.weaponSprite:setImage(self.weaponImages[selectedWeapon])
+
+    if (selectedWeapon == WEAPON.NONE) then
+        -- before the player unlocks the first weapon, they won't have a selected weapon
+        self.weaponSprite:setVisible(false)
+    else 
+        self.weaponSprite:setVisible(true)
+        self.weaponSprite:setImage(self.weaponImages[selectedWeapon])
+    end
 end
 
 function Hud:_updateHealthBar()

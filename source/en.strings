@@ -1,17 +1,98 @@
--- Test
-"helloWorld" = "Hello world!?"
-"helloWorld1" = "hello worl"
-"testscene1" = "Test scene 1 is active"
-"testscene2" = "Test scene 2 is active"
+-- Secret font characters ;)
+-- ~ => (A) button
+-- ^ => (B) button
+-- _ => Dpad Button
 
+--------------------------------------------------------------------------------------------------------
+-- UI
+--------------------------------------------------------------------------------------------------------
+-- Death Screen
+"deathscreen.menuitems.retry" = "Retry"
+"deathscreen.menuitems.quit" = "Quit"
+
+-- Main menu
+"mainmenu.pressbuttontobegin" = "Press ~ to begin"
+"mainmenu.menuitems.play" = "Play Game"
+"mainmenu.menuitems.endless" = "Endless Mode"
+"mainmenu.menuitems.settings" = "Settings"
+"mainmenu.menuitems.extras" = "Extras"
+
+-- tutorial screens 
+"tutorial.move" = "_ Steer ship"
+"tutorial.shoot" = "~ Fire main cannons"
+"tutorial.dash" = "^ Dash left/right"
+ 
+--------------------------------------------------------------------------------------------------------
+-- General
+--------------------------------------------------------------------------------------------------------
 -- Characters
-"cyber" = "Cyber"
+"character.guard" = "Guard"
+"character.?" = "???"
+"character.man" = "Man"
+"character.cyber" = "Cyber"
 
--- Testing
-"testDialog1" = "This is a decently long string of dialogue text"
-"testDialog2" = "This is the second line of the dialogue."
-"testDialog3" = "This is the third line of dialogue that will test word wrapping capabilities (maybe)." 
-"troy1" = "This is the tale of Troy Nordbrock, a man who almost never made it to gold nova on CS GO.  Here's more text!  Tacos."
-"troy2" = "He kept practicing every day but his aimbots would never work."
-"troy3" = "But then one day he remembered to use his monitor's built in crosshair.",
-"troy4" = "After that happened he became gold nova and head of the SSOCP. The end?"
+--------------------------------------------------------------------------------------------------------
+-- scene0010
+--------------------------------------------------------------------------------------------------------
+-- narration
+"scene0010.planet" = "North Galactic Prison Planet, Year 3076..."
+"scene0010.prison" = "...where some of the most dangerous intergalactic war criminals reside."
+"scene0010.hallway" = "An infamous mercenary named 'Cyber' awaits his final fate."
+
+-- guard
+"scene0010.hallway1" = "So you're the asshole I'm supposed to babysit..."
+"scene0010.hallway2" = "I was told to be careful around you, Cyber."
+"scene0010.hallway3" = "Now why might that be?"
+"scene0010.cell" = "You gonna try to hurt me?"
+"scene0010.cell1" = "Go ahead.  You've got nothing to lose."
+"scene0010.grabcyber" = "Hey, I'm talking to you!"
+"scene0010.grabcyber1" = "You've got three days left to live, why don't you make 'em count?"
+"scene0010.grabcyber2" = "I'm gonna make your life a living hell, scumbag."
+-- man
+"scene0010.legs" = "That's enough." 
+-- guard
+"scene0010.legs1" = "Who the hell are you?"
+-- man
+"scene0010.legs2" = "Not important."
+-- guard
+"scene0010.legs3" = "Get the hell outta here, pal..."
+"scene0010.zap" = "What the hell!? Gahhhhh!"
+-- man
+"scene0010.topdown" = "Hello, Cyber."
+"scene0010.topdown1" = "I have an offer for you."
+"scene0010.topdown2" = "Given your current situation, I feel you'll likely accept."
+"scene0010.topdown3" = "Come with me."
+-- Next scene
+-- man
+"scene0010.cybersit" = "Care for a drink?"
+-- Cyber
+"scene0010.cybersit1" = "Sure."
+-- Man
+"scene0010.pour" = "It's an intergalactic vintage style spirit."
+"scene0010.pour1" = "A synthetic creation based on drinks created thousands of years ago."
+"scene0010.chug" = "I don't recall which planet it comes from, but ever since the recent war began"
+"scene0010.chug1" = "it is extremely difficult to find."
+"scene0010.slam-drink" = "..."
+"scene0010.slam-drink1" = "...right"
+"scene0010.man-desk" = "Anyway, let's discuss the offer I mentioned."
+"scene0010.man-desk1" = "We need a pilot, and you're one of the best in the galaxy."
+
+-- cyber
+"scene0010.cybersit3" = "You've got a whole army of pilots."
+-- man
+"scene0010.cybersit4" = "It's a bit of a political issue."
+-- cyber 
+"scene0010.cybersit5" = "I hate politics."
+
+-- man
+"scene0010.man-desk-cropped" = "I suppose that's why you became a mercenary?"
+-- cyber
+"scene0010.man-desk-cropped1" = "Nah."
+"scene0010.man-desk-cropped2" = "There's lots of money in it."
+"scene0010.man-desk-cropped3" = "That's all."
+-- man
+"scene0010.man-desk-cropped4" = "Well, how about this..."
+"scene0010.man-desk-cropped5" = "Complete this task for us and we will give you something much more valuable than money."
+
+"scene0010.cybersit6" = "...your life"
+

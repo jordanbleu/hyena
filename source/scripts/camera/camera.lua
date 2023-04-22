@@ -19,11 +19,7 @@ function Camera:init()
         self.currentSwayXDirection = -1
     end
 
-    self.currentSwayXOffset = 0
-    self.currentSwayYOffset = 0
-
-    self.normalSwayAmount = 3 -- change this to determine how far the camera sways normally.  Determines the bounds of the camera.
-    self.normalSwaySpeed = 0.10 -- change this to determine how fast the camera sways
+    self:restoreNormalSway()
 
     self.swayAmount = self.normalSwayAmount -- change this for camera shake (it will slowly return to the normal sway amount)
     self.swaySpeed = self.normalSwaySpeed -- change this to determine how fast to shake / sway
@@ -99,4 +95,33 @@ end
 function Camera:massiveSway()
     self.swayAmount = 25
     self.swaySpeed = 8
+end
+
+-- changes the camera to static (but still responds to shake)
+function Camera:removeNormalSway()
+    self.normalSwayAmount = 0
+    self.normalSwaySpeed  =0
+    self.currentSwayXOffset = 0
+    self.currentSwayYOffset = 0
+end
+
+function Camera:restoreNormalSway()
+    self.currentSwayXOffset = 0
+    self.currentSwayYOffset = 0
+    self.normalSwayAmount = 3 -- change this to determine how far the camera sways normally.  Determines the bounds of the camera.
+    self.normalSwaySpeed = 0.10 -- change this to determine how fast the camera sways
+end
+
+---Sets the standard movement for the camera (when no shake or other sway is applied)
+---@param amount integer How far off center the camera moves naturally 
+---@param speed integer How quickly the camera sways
+function Camera:setNormalSway(amount, speed) 
+    self.currentSwayXOffset = 0
+    self.currentSwayYOffset = 0
+    self.normalSwayAmount = amount
+    self.normalSwaySpeed = speed
+end
+
+function Camera:remove()
+    Camera.super.remove(self)
 end

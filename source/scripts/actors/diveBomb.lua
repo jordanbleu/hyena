@@ -8,6 +8,7 @@ function DiveBomb:init(x,y,cameraInst, playerInst)
     self.player = playerInst
     self.camera = cameraInst
 
+    self:moveTo(x,y)
     -- idle image animation
     self.animator = SpriteAnimation("images/enemies/celluloidAnim/idle", 750, self.x, self.y)
     self.animator:setRepeats(-1)
@@ -18,7 +19,6 @@ function DiveBomb:init(x,y,cameraInst, playerInst)
 
     self.ySpeed = 2.5
 
-    self:moveTo(x,y)
     self:add()
 end
 

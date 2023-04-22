@@ -48,35 +48,35 @@ function WeaponSelector:init(playerInst)
     self.arrowSprite:setIgnoresDrawOffset(true)
 
     self.empSelectorSelectedImage = gfx.image.new("images/ui/hud/emp-selector-selected")
-    self.empSelectorImage = gfx.image.new("images/ui/hud/emp-selector")
+    self.empSelectorImage = math.ternary(DATA.GAME.HasEmp, gfx.image.new("images/ui/hud/emp-selector"), gfx.image.new("images/ui/hud/selector-locked"))
     self.empSelectorSprite = gfx.sprite.new(self.empSelectorImage)
     self.empSelectorSprite:moveTo(200,120)
     self.empSelectorSprite:setZIndex(103)
     self.empSelectorSprite:setIgnoresDrawOffset(true)
 
     self.laserSelectorSelectedImage = gfx.image.new("images/ui/hud/laser-selector-selected")
-    self.laserSelectorImage = gfx.image.new("images/ui/hud/laser-selector")
+    self.laserSelectorImage = math.ternary(DATA.GAME.HasLaser, gfx.image.new("images/ui/hud/laser-selector"), gfx.image.new("images/ui/hud/selector-locked"))
     self.laserSelectorSprite = gfx.sprite.new(self.laserSelectorImage)
     self.laserSelectorSprite:moveTo(200,120)
     self.laserSelectorSprite:setZIndex(103)
     self.laserSelectorSprite:setIgnoresDrawOffset(true)
 
     self.mineSelectorSelectedImage = gfx.image.new("images/ui/hud/mine-selector-selected")
-    self.mineSelectorImage = gfx.image.new("images/ui/hud/mine-selector")
+    self.mineSelectorImage = math.ternary(DATA.GAME.HasMine, gfx.image.new("images/ui/hud/mine-selector"), gfx.image.new("images/ui/hud/selector-locked"))
     self.mineSelectorSprite = gfx.sprite.new(self.mineSelectorImage)
     self.mineSelectorSprite:moveTo(200,120)
     self.mineSelectorSprite:setZIndex(103)
     self.mineSelectorSprite:setIgnoresDrawOffset(true)
 
     self.missileSelectorSelectedImage = gfx.image.new("images/ui/hud/missile-selector-selected")
-    self.missileSelectorImage = gfx.image.new("images/ui/hud/missile-selector")
+    self.missileSelectorImage = math.ternary(DATA.GAME.HasMissile, gfx.image.new("images/ui/hud/missile-selector"), gfx.image.new("images/ui/hud/selector-locked"))
     self.missileSelectorSprite = gfx.sprite.new(self.missileSelectorImage)
     self.missileSelectorSprite:moveTo(200,120)
     self.missileSelectorSprite:setZIndex(103)
     self.missileSelectorSprite:setIgnoresDrawOffset(true)
 
     self.shieldSelectorSelectedImage = gfx.image.new("images/ui/hud/shield-selector-selected")
-    self.shieldSelectorImage = gfx.image.new("images/ui/hud/shield-selector")
+    self.shieldSelectorImage = math.ternary(DATA.GAME.HasShield, gfx.image.new("images/ui/hud/shield-selector"), gfx.image.new("images/ui/hud/selector-locked"))
     self.shieldSelectorSprite = gfx.sprite.new(self.shieldSelectorImage)
     self.shieldSelectorSprite:moveTo(200,120)
     self.shieldSelectorSprite:setZIndex(103)
@@ -122,8 +122,14 @@ function WeaponSelector:_waitForHoldButton()
     if (self.player:controlsAreLocked()) then
         return
     end
+    
+    if (not DATA.GAME.HasWeaponSelector) then
+        return
+    end
 
     if (playdate.buttonIsPressed(playdate.kButtonB)) then
+
+
         self.holdBCycleCount = self.holdBCycleCount + 1
 
         if (self.holdBCycleCount > self.holdBCyclesToWait) then
@@ -191,18 +197,17 @@ function WeaponSelector:_updateUI()
 
     -- now we check for arrows
     -- todo: click noises should be played here 
-    -- todo: Prevent selecting weapons you don't have access to yet 
-    if (playdate.buttonJustPressed(playdate.kButtonLeft)) then
+    if (DATA.GAME.HasMissile and playdate.buttonJustPressed(playdate.kButtonLeft)) then
         self.player:setSelectedWeaponId(WEAPON.MISSILE)
-    elseif (playdate.buttonJustPressed(playdate.kButtonRight)) then
+    elseif (DATA.GAME.HasEmp and playdate.buttonJustPressed(playdate.kButtonRight)) then
         self.player:setSelectedWeaponId(WEAPON.EMP)
     elseif (playdate.buttonJustPressed(playdate.kButtonUp)) then
-        if (weaponId == WEAPON.LASER) then
+        if (DATA.GAME.HasMine and weaponId == WEAPON.LASER) then
             self.player:setSelectedWeaponId(WEAPON.MINE)
         else
             self.player:setSelectedWeaponId(WEAPON.LASER)
         end
-    elseif (playdate.buttonJustPressed(playdate.kButtonDown)) then
+    elseif (DATA.GAME.HasShield and playdate.buttonJustPressed(playdate.kButtonDown)) then
         self.player:setSelectedWeaponId(WEAPON.SHIELD)
     end
 
@@ -223,7 +228,6 @@ function WeaponSelector:_waitForAnimateOut()
     self:_updateSelectorPositions(animValue)
 
     if (self.animator:ended()) then
-        print "ENTER: HIDDEN"
 
         -- re-allow attacks.
         self.player:setAllowAttacks(true)

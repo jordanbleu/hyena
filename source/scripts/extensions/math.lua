@@ -62,3 +62,14 @@ function math.choose(array)
     local val = math.random(1,len)
     return array[val]
 end
+
+---Ternary operator
+---@param condition boolean Condition to evaluate
+---@param trueCondition any Thing to return if true
+---@param falseCondition any Thing to return if false
+function math.ternary(condition, trueResult, falseResult)
+    if (condition) then
+        return trueResult
+    end
+    return falseResult
+end

@@ -33,17 +33,17 @@ Note that:
 * the folder holding animations is suffixed with 'anim'
 * multiple animations can go inside the same folder
 
-## localization
+# localization
 
 Normal localization for things like menus / etc are done via normal playdate localization framework, i.e. use the en.strings file.  
 
-### dialogue localization
+## dialogue localization
 
 Dialogue files go somewhere inside the `strings/dialogue-en` folder.  A single file should be a single dialogue exchange between characters.  
 
 There are three parts to each line in the dialogue files:
 
-* Avatar ID is the avatar animation (see below for details)
+* Avatar ID is the avatar animation (see below for details).  
 * Title is the name of the character, or "[N/A]" if there's no one talking (narration, etc)
 * The text is the actual dialogue text obviously :)
 
@@ -66,4 +66,22 @@ For example:
 * Inside whateverSadFaceAnim there'd be 'avatar-table-1, avatar-table-2, etc
 * in the dialogue text file you'd say something like "whatevetSadFaceAnim|Sad Guy|I am so sad"
 
+# sprite sizes
 
+* Standard cutscene background is 400 x 160
+
+# naming conventions
+
+## scenes
+
+* scenes are generally just named 'sceneXXXX', regardless if theyre a cutscene or whatever.  The XXXX indicates the general order.
+* XXXX increases in increments of 10 in case new stuff needs to get stuffed in between later
+* Always pad with zeros so the order looks correct in vs code (so 0010, 0110, etc) 
+
+
+# .strings 
+
+* the goal is just to quickly understand what a thing is used for / where it is located in code.
+* do something like 'sceneName.category.description' or 'sceneName.descripton'
+* So if it's a cutscene we can just call it 'scene01010.thingIsSaid' where 'thingIsSaid' is a basic summary of what is said 
+* If it's something more complex like a ui we'd do 'mainMenu.playButton.text'

@@ -23,3 +23,7 @@ end
 function CutsceneFrameSegment:cleanup()
     self.cutsceneFrame = nil
 end
+
+function CutsceneFrameSegment:append(title, dialogue)
+    self.cutsceneFrame:append(title,dialogue)
+end

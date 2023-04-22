@@ -2,7 +2,7 @@ local gfx <const> = playdate.graphics
 
 import "scripts/ui/typer"
 import "scripts/effects/hardCutBlack"
-
+import "scripts/camera/camera"
 --[[ 
     A custcene frame will display an image that is either static or slowly pans. 
 
@@ -22,6 +22,7 @@ local STD_SPRITE_HEIGHT <const> = 160
 
 function CutsceneFrame:init(title, text, imagePath, effect)
 
+    title = title or ""
     self.effect = effect or CUTSCENE_FRAME_EFFECT.STATIC
 
     local blackScreenImage = gfx.image.new(400,240,gfx.kColorBlack)
@@ -46,72 +47,83 @@ function CutsceneFrame:init(title, text, imagePath, effect)
     self.cutsceneSprite:moveTo(0, 0)
     self.cutsceneSprite:add()
 
-    if (title and title ~= "") then 
-        self.title = title
-        self.titleFrameImage =gfx.image.new("images/ui/dialogue/gameplay-title-frame")
-        self.titleFrameSprite = gfx.sprite.new(self.titleFrameImage)
-        self.titleFrameSprite:setZIndex(114)
-        self.titleFrameSprite:moveTo(200,160)
-        self.titleFrameSprite:setIgnoresDrawOffset(true)
-        self.titleFrameSprite:add()
+    self.titles = {}
+    self.titles[1] = title
 
-        self.titleTextImage = gfx.image.new(self.titleFrameImage:getSize())
-        self.titleTextSprite = gfx.sprite.new(self.titleTextImage)
-        self.titleTextSprite:setIgnoresDrawOffset(true)
-        self.titleTextSprite:setZIndex(115)
-        self.titleTextSprite:moveTo(200,160)
-        self.titleTextSprite:add()
+    self.titleFrameImage =gfx.image.new("images/ui/dialogue/gameplay-title-frame")
+    self.titleFrameSprite = gfx.sprite.new(self.titleFrameImage)
+    self.titleFrameSprite:setZIndex(114)
+    self.titleFrameSprite:moveTo(200,160)
+    self.titleFrameSprite:setIgnoresDrawOffset(true)
+    self.titleFrameSprite:add()
 
-        -- self.titleTextFont = gfx.font.new("fonts/bleu")
-        self.titleTextFont = gfx.font.new("fonts/big-bleu")
+    self.titleTextImage = gfx.image.new(self.titleFrameImage:getSize())
+    self.titleTextSprite = gfx.sprite.new(self.titleTextImage)
+    self.titleTextSprite:setIgnoresDrawOffset(true)
+    self.titleTextSprite:setZIndex(115)
+    self.titleTextSprite:moveTo(200,160)
+    self.titleTextSprite:add()
 
-        self:_drawTitle()
-    end
-    
+    self.titleTextFont = gfx.font.new("fonts/big-bleu")
+
+    self.camera = Camera()
+    self.camera:removeNormalSway()
+
     local w,h = img:getSize()
     
     -- panning animator == panimator lolz
-
+    
     -- horizontal panning animator
     self.hPanimator = nil
     -- vertical panning animator 
     self.vPanimator = nil
-
+    
     self:_setupPanningAnimators(w, h,self.effect)
-
+    
     self.isComplete = false
-
+    
     self.waitCycles = 10
     self.preDelayCycleCounter = 0
     self.postDelayCycleCounter = 0
-
+    
     self.state = STATE.TRANSITIONING_IN
-
-    self.fullText = text
+    
+    self.fullTextIndex = 1
+    self.fullTexts = {}
+    self.fullTexts[1] = text
     
     self.aButtonImage = gfx.image.new("images/ui/aButton")
     self.aButtonSprite = gfx.sprite.new(self.aButtonImage)
     self.aButtonSprite:setIgnoresDrawOffset(true)
-    self.aButtonSprite:setZIndex(120)
-    self.aButtonSprite:moveTo(380,225)
+    self.aButtonSprite:setZIndex(999)
+    self.aButtonSprite:moveTo(370,225)
     self.aButtonSprite:setVisible(false)
     self.aButtonSprite:add();
-
+    
     self.aButtonBlinker = gfx.animation.blinker.new(500,500, true)
     self.aButtonBlinker:start()
 
+    -- When the title changes, move the title frame a bit to signal to the player that something is different.
+    -- Clever psychology tricks ;)
+    self.titleAnimator = nil
+
+    self:_drawTitle()
     self:add()
 end
 
 function CutsceneFrame:update()
 
     CutsceneFrame.super.update(self)
+    self:_updateTitlePosition()
 
     if (self.state == STATE.TRANSITIONING_IN) then
         self:_applyPanningEffect()
         self.preDelayCycleCounter+=1
         if (self.preDelayCycleCounter>self.waitCycles) then
-            self.typer = Typer(15,183,self.fullText, 3, 31)
+            if (self.effect == CUTSCENE_FRAME_EFFECT.SINGLE_SHAKE) then
+                self.camera:smallShake()
+            end        
+            self.typer = Typer(15,183,self.fullTexts[self.fullTextIndex], 3, 31)
             self.transitionSprite:setVisible(false)
             self.state = STATE.SHOWN
         end
@@ -120,20 +132,40 @@ function CutsceneFrame:update()
         self:_applyPanningEffect()
         self:_blinkAButton()
         if (self.typer:isDismissed()) then
-            self.state = STATE.TRANSITIONING_OUT
-            self.cutsceneSprite:setVisible(false)
-            self.transitionSprite:setVisible(true)
+            local oldTitle = self.titles[self.fullTextIndex]
+            self.fullTextIndex +=1
+            local newTitle = self.titles[self.fullTextIndex]
+
+            -- if the next dialogue segment is different from the old one, jiggle the title a big to 
+            -- bring attention to it.
+            if (oldTitle ~= newTitle) then
+                self.titleAnimator = gfx.animator.new(500, self.titleFrameSprite.y - 5, self.titleFrameSprite.y, playdate.easingFunctions.outBounce)
+            end
+
+            if (self.fullTextIndex <= #self.fullTexts) then
+                self.typer:remove()
+                self.typer = Typer(15,183,self.fullTexts[self.fullTextIndex], 3, 31)
+                self:_drawTitle()
+            else
+                self.state = STATE.TRANSITIONING_OUT
+                self.aButtonSprite:setVisible(false)
+                self.aButtonBlinker:stop()
+                self.cutsceneSprite:setVisible(false)
+                self.transitionSprite:setVisible(true)
+            end
         end
 
     elseif (self.state == STATE.TRANSITIONING_OUT) then
         self.postDelayCycleCounter+=1
         if (self.postDelayCycleCounter > self.waitCycles) then
-            self.cutsceneSprite:setVisible(false)
             self.isComplete = true
+
             -- this is a silly hack that covers up any potential delay
             -- in showing the black transition between this and the next 
             -- cutscene frame.
             HardCutBlack(250)
+        
+            self.cutsceneSprite:setVisible(false)
             self:remove()
         end
 
@@ -147,17 +179,35 @@ function CutsceneFrame:_blinkAButton()
         else
             self.aButtonSprite:setVisible(false)
         end
+    else 
+        self.aButtonSprite:setVisible(false)
     
     end
 end
 
+function CutsceneFrame:_updateTitlePosition()
+    if (self.titleAnimator == nil) then return end 
+    self.titleFrameSprite:moveTo(self.titleFrameSprite.x, self.titleAnimator:currentValue())
+    self.titleTextSprite:moveTo(self.titleTextSprite.x, self.titleAnimator:currentValue())
+end
+
 function CutsceneFrame:_drawTitle()
-    gfx.pushContext(self.titleTextImage)
-        gfx.setFont(self.titleTextFont)
-        gfx.clear(gfx.kColorClear)
-        gfx.setColor(gfx.kColorBlack)
-        gfx.drawTextAligned(self.title, 64,10,kTextAlignment.center)
-    gfx.popContext()
+    local title = self.titles[self.fullTextIndex]
+
+    if (title ~= "") then
+        self.titleTextSprite:setVisible(true)
+        self.titleFrameSprite:setVisible(true)        
+        gfx.pushContext(self.titleTextImage)
+            gfx.setFont(self.titleTextFont)
+            gfx.clear(gfx.kColorClear)
+            gfx.setColor(gfx.kColorBlack)
+            gfx.drawTextAligned(title, 64,10,kTextAlignment.center)
+        gfx.popContext()
+    else 
+        self.titleTextSprite:setVisible(false)
+        self.titleFrameSprite:setVisible(false)
+    end
+
 end
 
 -- Confusing math but just trust that it is probably maybe correct.
@@ -216,10 +266,18 @@ function CutsceneFrame:remove()
     self.transitionSprite:remove()
     self.aButtonSprite:remove()
 
+    self.camera:remove()
 
     CutsceneFrame.super.remove(self)
 end
 
 function CutsceneFrame:isCompleted()
     return self.isComplete
+end
+
+function CutsceneFrame:append(title, dialogue)
+    title = title or ""
+    dialogue = dialogue or ""
+    table.insert(self.fullTexts, dialogue)
+    table.insert(self.titles, title)
 end

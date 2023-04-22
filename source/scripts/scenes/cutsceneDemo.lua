@@ -35,11 +35,15 @@ function CutsceneDemo:initialize(sceneManager)
     local segments = {}
 
     table.insert(segments, function()
-        return CutsceneFrameSegment("AAAAA", "AAA AAA AAAAA AA AAA AAAAA AA AAAAA AA A AA AAAAA AAAA AA AAAA AAAA AA AAAA", "images/cutscene/troy1")
+        local c= CutsceneFrameSegment("AAAAA", "AAA AAA AAAAA AA AAA AAAAA AA AAAAA AA A AA AAAAA AAAA AA AAAA AAAA AA AAAA", "images/cutscene/troy1")
+        c:append("Jordan", "I am testing the new title frame jiggle")
+        c:append("Jordan", "No jiggle...")
+        c:append("Jordan1", "Jiggle!")
+        return c
     end)
 
     table.insert(segments, function()
-        return CutsceneFrameSegment("", gfx.getString("troy2"), "images/cutscene/troy2", CUTSCENE_FRAME_EFFECT.PAN_UP_DOWN)
+        return CutsceneFrameSegment("burger", gfx.getString("troy2"), "images/cutscene/troy2", CUTSCENE_FRAME_EFFECT.PAN_UP_DOWN)
     end)
 
     table.insert(segments, function()
