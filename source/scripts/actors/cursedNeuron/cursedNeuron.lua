@@ -1,7 +1,7 @@
 local gfx <const> = playdate.graphics
 
 import "scripts/sprites/spriteAnimation"
-
+import "scripts/actors/cursedNeuron/neuronNode"
 
 --[[ 
     The cursed neuron is the first boss of the game (as of this writing).
@@ -92,6 +92,20 @@ function CursedNeuron:init(playerInst, cameraInst)
         end   
     end
 
+    self.leftNode = NeuronNode()
+    self.bottomNode = NeuronNode()
+    self.rightNode = NeuronNode()
+
+    self.shield = gfx.sprite.new(gfx.image.new("images/bosses/cursedNeuron/shield"))
+    self.shield:setZIndex(24)
+    self.shield:add()
+
+    self.leftConnector = SpriteAnimation("images/bosses/cursedNeuron/connectorAnim/horizontal", 200, self.x, self.y)
+    self.leftConnector:setRepeats(-1)
+    self.rightConnector = SpriteAnimation("images/bosses/cursedNeuron/connectorAnim/horizontal", 200, self.x, self.y)
+    self.rightConnector:setRepeats(-1)
+    self.bottomConnector = SpriteAnimation("images/bosses/cursedNeuron/connectorAnim/vertical", 200, self.x, self.y)
+    self.bottomConnector:setRepeats(-1)
     self:add()
 end
 
@@ -125,5 +139,12 @@ function CursedNeuron:_moveAllSprites()
     self.armBottomLeftSprite:moveTo(self.x-36,self.y+36)
     self.armBottomRightSprite:moveTo(self.x+36,self.y+36)
 
+    self.leftNode:moveTo(self.x - 100, self.y)
+    self.rightNode:moveTo(self.x + 100, self.y)
+    self.bottomNode:moveTo(self.x, self.y + 100)
+    self.shield:moveTo(self.x, self.y)
 
+    self.leftConnector:moveTo(self.x-80, self.y)
+    self.rightConnector:moveTo(self.x+80, self.y)
+    self.bottomConnector:moveTo(self.x, self.y+80)
 end
