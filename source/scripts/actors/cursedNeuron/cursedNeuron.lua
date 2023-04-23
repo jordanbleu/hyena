@@ -16,7 +16,7 @@ class("CursedNeuron").extends(Enemy)
 function CursedNeuron:init(playerInst, cameraInst)
     CursedNeuron.super.init(self,500)
 
-    self:moveTo(200, 100)
+    self:moveTo(200, 50)
     -- parts
 
     -- the 'eye' / nucleus thing
@@ -92,13 +92,13 @@ function CursedNeuron:init(playerInst, cameraInst)
         end   
     end
 
-    self.leftNode = NeuronNode()
-    self.bottomNode = NeuronNode()
-    self.rightNode = NeuronNode()
+    self.leftNode = NeuronNode(playerInst, cameraInst)
+    self.bottomNode = NeuronNode(playerInst, cameraInst)
+    self.rightNode = NeuronNode(playerInst, cameraInst)
 
-    self.shield = gfx.sprite.new(gfx.image.new("images/bosses/cursedNeuron/shield"))
-    self.shield:setZIndex(24)
-    self.shield:add()
+    self.shieldSprite = gfx.sprite.new(gfx.image.new("images/bosses/cursedNeuron/shield"))
+    self.shieldSprite:setZIndex(24)
+    self.shieldSprite:add()
 
     self.leftConnector = SpriteAnimation("images/bosses/cursedNeuron/connectorAnim/horizontal", 200, self.x, self.y)
     self.leftConnector:setRepeats(-1)
@@ -106,12 +106,54 @@ function CursedNeuron:init(playerInst, cameraInst)
     self.rightConnector:setRepeats(-1)
     self.bottomConnector = SpriteAnimation("images/bosses/cursedNeuron/connectorAnim/vertical", 200, self.x, self.y)
     self.bottomConnector:setRepeats(-1)
+
+    --
+    -- Movement Patterns
+    -- Moves to a location, waits a random amount of time, and moves to a new location 
+    --
+    self.xMin = 100
+    self.xMax = 300
+    self.yMin = 25
+    self.yMax = 75
+    self.moveSpeed = 1
+    self.xDestination = self.x
+    self.yDestination = self.y
+
+    self.moveWaitCycleCounter = 0
+    -- how long to wait before picking a new location to move to 
+    self.moveWaitCycles = 200
+
+    -- how far up / down to bob
+    self.yOffsetSize = 5
+    -- current amount the boss has bobbed
+    self.yOffset = 0
+    -- how fast the boss bobs
+    self.yOffsetVelocity = 0.35
+    
     self:add()
 end
 
 function CursedNeuron:update()
+    self:_updatePosition()
     self:_moveAllSprites()
+    self:_updateShieldState()
+
     CursedNeuron.super.update(self)
+end
+
+function CursedNeuron:_updateShieldState()
+    local leftNodeAlive = self.leftNode:isAlive()
+    local rightNodeAlive = self.rightNode:isAlive()
+    local bottomNodeAlive = self.bottomNode:isAlive()
+
+    local allDead = not leftNodeAlive and not rightNodeAlive and not bottomNodeAlive
+
+    if (allDead) then
+        self.shieldSprite:setVisible(false)
+        -- disable the shield functionality too
+    else
+        self.shieldSprite:setVisible(true)
+    end
 end
 
 function CursedNeuron:_moveAllSprites()
@@ -142,9 +184,52 @@ function CursedNeuron:_moveAllSprites()
     self.leftNode:moveTo(self.x - 100, self.y)
     self.rightNode:moveTo(self.x + 100, self.y)
     self.bottomNode:moveTo(self.x, self.y + 100)
-    self.shield:moveTo(self.x, self.y)
+    self.shieldSprite:moveTo(self.x, self.y)
 
     self.leftConnector:moveTo(self.x-80, self.y)
+    self.leftConnector:setVisible(self.leftNode:isAlive())
+
     self.rightConnector:moveTo(self.x+80, self.y)
+    self.rightConnector:setVisible(self.rightNode:isAlive())
+    
     self.bottomConnector:moveTo(self.x, self.y+80)
+    self.bottomConnector:setVisible(self.bottomNode:isAlive())
+end
+
+function CursedNeuron:_updatePosition()
+    
+    local newX = self.x 
+    local newY = self.y - self.yOffset
+    
+    -- offset 
+    local currentOffset = math.abs(self.yOffset)
+    if (currentOffset > self.yOffsetSize) then
+        self.yOffsetVelocity = -self.yOffsetVelocity
+    end
+
+    self.yOffset += self.yOffsetVelocity
+
+    -- move towards the destination 
+    self.moveWaitCycleCounter += 1
+    if (self.moveWaitCycleCounter > self.moveWaitCycles) then
+        self.xDestination = math.random(self.xMin, self.xMax)
+        self.yDestination = math.random(self.yMin, self.yMax)
+        
+        self.moveWaitCycleCounter = 0
+    end
+
+    if (math.isWithin(newX, self.moveSpeed, self.xDestination)) then
+        newX = self.xDestination
+    else 
+        newX = math.moveTowards(newX, self.xDestination, self.moveSpeed)
+    end
+
+    if (math.isWithin(newY, self.moveSpeed, self.yDestination)) then
+        newY = self.yDestination
+    else 
+        newY = math.moveTowards(newY, self.yDestination, self.moveSpeed)
+    end
+
+
+    self:moveTo(newX, newY + self.yOffset)
 end
