@@ -29,6 +29,8 @@ function OpeningCredit:init(imageTablePath)
 
     self.cycleCounter = 0
     self.waitCycles = 150
+
+    self.onCompleted = nil
     self:add()
 end
 
@@ -64,6 +66,13 @@ function OpeningCredit:_animCompleted()
         self.state = STATE.WAITING
     elseif (self.state == STATE.ANIMATING_OUT) then
         self.sprite:remove()
+        if (self.onCompleted ~= nil) then
+            self.onCompleted()
+        end
         self:remove()
     end 
+end
+
+function OpeningCredit:setOnCompleted(fn)
+    self.onCompleted = fn
 end

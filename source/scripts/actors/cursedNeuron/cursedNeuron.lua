@@ -2,6 +2,9 @@ local gfx <const> = playdate.graphics
 
 import "scripts/sprites/spriteAnimation"
 import "scripts/actors/cursedNeuron/neuronNode"
+import "scripts/actors/diveBomb"
+import "scripts/actors/grunt"
+import "scripts/effects/screenFlash"
 
 --[[ 
     The cursed neuron is the first boss of the game (as of this writing).
@@ -13,8 +16,13 @@ import "scripts/actors/cursedNeuron/neuronNode"
 ]] 
 class("CursedNeuron").extends(Enemy)
 
-function CursedNeuron:init(playerInst, cameraInst)
-    CursedNeuron.super.init(self,500)
+function CursedNeuron:init(playerInst, cameraInst, bossBarInst)
+    
+    CursedNeuron.super.init(self,100)
+
+    self.bossBar = bossBarInst
+    self.camera = cameraInst
+    self.player = playerInst 
 
     self:moveTo(200, 50)
     -- parts
@@ -119,6 +127,8 @@ function CursedNeuron:init(playerInst, cameraInst)
     self.xDestination = self.x
     self.yDestination = self.y
 
+    self.moveWaitCycleCounterEnabled = false 
+
     self.moveWaitCycleCounter = 0
     -- how long to wait before picking a new location to move to 
     self.moveWaitCycles = 200
@@ -129,7 +139,24 @@ function CursedNeuron:init(playerInst, cameraInst)
     self.yOffset = 0
     -- how fast the boss bobs
     self.yOffsetVelocity = 0.35
+
+    -- collision 
+    self:setCollideRect(-32,-32,64,64)
+    self:setGroups({COLLISION_LAYER.ENEMY})
+    self:setCollidesWithGroups({COLLISION_LAYER.PLAYER, COLLISION_LAYER.PLAYER_PROJECTILE})
     
+    self.shieldActive = true
+    
+    --[[
+
+        0 - dude just sits there
+        1 - moves around
+        2 - spawn enemies
+        3 - moves more and spawn enemies
+        4 - spawn a few more enemies
+    ]]
+    self.phase = 0
+
     self:add()
 end
 
@@ -137,6 +164,8 @@ function CursedNeuron:update()
     self:_updatePosition()
     self:_moveAllSprites()
     self:_updateShieldState()
+    self:_checkCollisions()
+    self:_updatePhase()
 
     CursedNeuron.super.update(self)
 end
@@ -149,9 +178,10 @@ function CursedNeuron:_updateShieldState()
     local allDead = not leftNodeAlive and not rightNodeAlive and not bottomNodeAlive
 
     if (allDead) then
+        self.shieldActive = false
         self.shieldSprite:setVisible(false)
-        -- disable the shield functionality too
     else
+        self.shieldActive = true
         self.shieldSprite:setVisible(true)
     end
 end
@@ -210,7 +240,10 @@ function CursedNeuron:_updatePosition()
     self.yOffset += self.yOffsetVelocity
 
     -- move towards the destination 
-    self.moveWaitCycleCounter += 1
+    if (self.moveWaitCycleCounterEnabled) then
+        self.moveWaitCycleCounter += 1
+    end
+
     if (self.moveWaitCycleCounter > self.moveWaitCycles) then
         self.xDestination = math.random(self.xMin, self.xMax)
         self.yDestination = math.random(self.yMin, self.yMax)
@@ -232,4 +265,65 @@ function CursedNeuron:_updatePosition()
 
 
     self:moveTo(newX, newY + self.yOffset)
+end
+
+function CursedNeuron:_checkCollisions()
+    local collisions = self:overlappingSprites()
+    
+    for i,col in ipairs(collisions) do
+         
+        if (col:isa(PlayerBullet)) then
+
+            if (self.shieldActive) then
+                col:ricochet()
+                local spr = SingleSpriteAnimation("images/effects/shieldAbsorbAnim/absorb", 250,col.x, col.y)
+                spr:setZIndex(50)
+
+            else
+
+                local spr = SingleSpriteAnimation("images/effects/explosionAnim/explosion-inverted", 250,self.x, self.y)
+                spr:setZIndex(50)
+                col:destroy()
+                self:damage(1)
+                self.bossBar:setPercent(self:getHealthPercent())
+                self.camera:mediumShake()             
+
+            end
+        end
+    end
+end
+
+function CursedNeuron:_updatePhase()
+    local hp = self:getHealthPercent() 
+
+    -- phase 1
+    if (hp < 0.8 and self.phase == 0) then
+        -- move right when the phase is hit so the player knows what's up 
+        self.moveWaitCycleCounter = self.moveWaitCycles
+        self.moveWaitCycleCounterEnabled = true
+        ScreenFlash(250, gfx.kColorWhite)
+        self.phase = 1
+    
+    -- phase 2
+    elseif (hp < 0.65 and self.phase == 1) then
+        DiveBomb(50, -30, self.camera, self.player)
+        DiveBomb(100, -40, self.camera, self.player)
+        DiveBomb(300, -60, self.camera, self.player)
+        DiveBomb(300, -35, self.camera, self.player)
+        ScreenFlash(300, gfx.kColorWhite)
+        self.phase = 2
+        
+    -- phase 3 
+    elseif (hp < 0.3 and self.phase == 2) then
+        DiveBomb(50, -30, self.camera, self.player)
+        DiveBomb(300, -35, self.camera, self.player)
+        Grunt(100, -30, self.camera, self.player)
+        Grunt(120, -45, self.camera, self.player)
+        ScreenFlash(500, gfx.kColorWhite)
+        -- set movement wait time 
+        self.phase = 3
+    
+    
+    end
+
 end

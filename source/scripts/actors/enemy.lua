@@ -33,3 +33,11 @@ end
 function Enemy:getHealth()
     return self.health
 end
+
+function Enemy:getMaxHealth() 
+    return self.maxHealth
+end
+
+function Enemy:getHealthPercent()
+    return self.health / self.maxHealth
+end

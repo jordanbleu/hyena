@@ -6,6 +6,8 @@ import "scripts/ui/tutorial"
 import "scripts/actors/tinyGuyVertical"
 import "scripts/actors/cursedNeuron/cursedNeuron"
 import "scripts/ui/openingCredit"
+import "scripts/ui/bossBar"
+
 
 --[[
     This is strictly an animation sequence.  The first boss appears and destroys the two allies.
@@ -18,6 +20,8 @@ function Scene0040:initialize(sceneManager)
 
     sceneHelper.addBlackBackground()
     local sceneItems = sceneHelper.setupGameplayScene(sceneManager)
+    sceneItems.bossBar:setIconImage("images/ui/hud/boss-bar/icon-cursed-neuron")
+
     local plax1 = ParallaxLayer(gfx.image.new("images/backgrounds/stars-farther"),0,1)
     plax1:setZIndex(1)
     local plax2 = ParallaxLayer(gfx.image.new("images/backgrounds/stars-far"),0,3)
@@ -29,10 +33,15 @@ function Scene0040:initialize(sceneManager)
         return WaitSegment(3000)
     end)
 
-    OpeningCredit("images/ui/boss-logos/cursed-neuron/logo")
+    table.insert(segments, function()
 
-    -- temp - testing boss
-    CursedNeuron(sceneItems.player, sceneItems.camera)
+        local bossTitle = OpeningCredit("images/ui/boss-logos/cursed-neuron/logo")
+        bossTitle:setOnCompleted(function() sceneItems.bossBar:show() end)
+    
+        CursedNeuron(sceneItems.player, sceneItems.camera, sceneItems.bossBar)
+
+        return DoNothingSegment()
+    end)
 
     Scene0040.super.initialize(self, segments, sceneManager)
 end

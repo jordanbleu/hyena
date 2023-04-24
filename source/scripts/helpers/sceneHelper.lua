@@ -9,12 +9,14 @@ function sceneHelper.setupGameplayScene(sceneManager)
     local player = Player(camera, sceneManager)
     local hud = Hud(player)
     local weaponSelector = WeaponSelector(player)
+    local bossBar = BossBar()
     
     return {
         camera = camera,
         player = player,
         hud = hud,
-        weaponSelector = weaponSelector
+        weaponSelector = weaponSelector,
+        bossBar = bossBar
     }
 
 end
