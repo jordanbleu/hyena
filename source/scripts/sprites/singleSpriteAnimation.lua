@@ -14,9 +14,9 @@ class("SingleSpriteAnimation").extends(Actor)
 ---@param duration integer Overall animation time in milliseconds
 ---@param x integer x position
 ---@param y integer y position
-function SingleSpriteAnimation:init(imageTablePath, duration,x, y, onComplete)
+function SingleSpriteAnimation:init(imageTablePath, duration,x, y, onComplete, useCache)
     SingleSpriteAnimation.super.init(self)
-    self.animation = SpriteAnimation(imageTablePath, duration, x,y)
+    self.animation = SpriteAnimation(imageTablePath, duration, x,y, false, useCache)
 
     if (onComplete) then
         self.completedCallback = onComplete

@@ -12,7 +12,11 @@ function PlayerBullet:init(x,y)
     self.xVelocity = 0
 
     self.isActive = true
-    self:setImage(gfx.image.new("images/projectiles/player-bullet"))
+
+    local sceneManager = gameContext.getSceneManager()
+    local image = sceneManager:getImageFromCache("images/projectiles/player-bullet")
+    self:setImage(image)
+
     self:moveTo(x,y)
     self:setCollideRect(0,0,self:getSize())
     self:setGroups({COLLISION_LAYER.PLAYER_PROJECTILE})
