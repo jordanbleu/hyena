@@ -1,4 +1,6 @@
 avatar_id|title|text
-# The game has just started, and Cyber is talking to himself. 
+# The two boys are talking to Cyber when suddenly they notice a big scary thing appearing
 cyberNeutralAnim|Cyber|Feels good to be in the cockpit again.
 cyberNeutralAnim|Cyber|Hope I'm not too rusty.
+
+

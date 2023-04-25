@@ -1,0 +1,10 @@
+avatar_id|title|text
+# The game has just started, and Cyber is talking to himself. 
+tinyNeutralAnim|Tiny|Uh boss...
+tinyNeutralAnim|Tiny|Do you see that thing?
+cyberNeutralAnim|Cyber|Yeah, I see it.
+spiderNeutralAnim|Spider|What the hell is it?
+tinyNeutralAnim|Tiny|Some sorta...giant...thing
+spiderNeutralAnim|Spider|How do we kill it?
+cyberNeutralAnim|Cyber|Tiny!
+cyberNeutralAnim|Cyber|Get out of the way, now!!!
