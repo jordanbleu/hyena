@@ -322,8 +322,6 @@ function CursedNeuron:_updatePhase()
         ScreenFlash(500, gfx.kColorWhite)
         -- set movement wait time 
         self.phase = 3
-    
-    
-    end
 
+    end
 end

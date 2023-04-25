@@ -206,14 +206,28 @@ function Player:_alive()
     self:setVisible(true)
 end
 
+--[[
+
+    Common collisions are checked here.  This includes common enemies, projectiles, etc.
+
+    This is to limit most collision logic to a single check.
+
+    Uncommon projectiles such as those in boss battles should be checked from those objects instead,
+    so that this method is not bogged down.
+
+]]
 function Player:_checkCollisions()
     
     local tookDamage = false
+    local totalDamageAmount = 0
     local collisions = self:overlappingSprites()
 
     for i,col in ipairs(collisions) do
-        if (col:isa(Enemy)) then
-            tookDamage = true
+        if (col:isa(Enemy) or col:isa(EnemyProjectileSprite)) then
+            if (col:damageEnabled()) then
+                totalDamageAmount += col:getDamageAmount()
+                tookDamage = true
+            end
 
         elseif (col:isa(HealthPowerup)) then
             col:collect(self)
@@ -227,7 +241,7 @@ function Player:_checkCollisions()
 
 
     if (tookDamage) then
-        self.health -= 10
+        self.health -= totalDamageAmount
 
         if (self.health > 0) then
             self.camera:bigShake()
@@ -417,6 +431,13 @@ function Player:addHealth(amount)
     self.health += amount
     if (self.health > self.maxHealth) then
         self.health = self.maxHealth
+    end
+end
+
+function Player:depleteHealth(amount) 
+    self.health -= amount
+    if (self.health < 0) then
+        self.health = 0
     end
 end
 
