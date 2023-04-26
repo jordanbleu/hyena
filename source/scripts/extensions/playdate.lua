@@ -36,8 +36,18 @@ function playdate.loadDialogueFromCsv(csv)
             local chunk = {
                 avatarId = parts[1],
                 title = parts[2],
-                text = parts[3]
+                text = parts[3],
+                textDelay = 0,
+                camShakeLevel = 0
             }
+
+            if (#parts > 3) then
+                chunk.textDelay = tonumber(parts[4])
+            end
+
+            if (#parts > 4) then
+                chunk.camShakeLevel = tonumber(parts[5])
+            end
             
             table.insert(chunks, chunk)
         end

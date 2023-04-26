@@ -53,8 +53,11 @@ function Scene0040:initialize(sceneManager)
         return AnimationSegment({FriendsDiePt1Animation(self.leftActor, self.centerActor, self.rightActor)})
     end)
 
+
+    --todo: I think we should add more properties to the gameplay dialogue that support a camera shake / slow typing text for drama.
+
     table.insert(segments, function()
-        return DialogueSegment("scene0040/friendsPreDeath.txt", player)
+        return DialogueSegment("scene0040/friendsPreDeath.txt", player, self.camera)
     end)
 
     

@@ -6,8 +6,8 @@ import "scripts/actors/enemy"
 --[[ a bunch of dialogue will be shown, and the segment will be completed once it has all been dismissed. ]]
 class("DialogueSegment").extends(Segment)
 
-function DialogueSegment:init(dialogueCsv, playerInst)
-    self.dialogue = GameplayDialogue(dialogueCsv, playerInst)
+function DialogueSegment:init(dialogueCsv, playerInst, cameraInst)
+    self.dialogue = GameplayDialogue(dialogueCsv, playerInst, cameraInst)
 end
 
 function DialogueSegment:isCompleted()

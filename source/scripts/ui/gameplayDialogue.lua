@@ -21,9 +21,10 @@ local STATE = {
 -- how long transition in / out takes (in ms)
 local TRANSITION_DURATION = 500
 
-function GameplayDialogue:init(csvFile, playerInst)
+function GameplayDialogue:init(csvFile, playerInst, cameraInst)
 
     self.player = playerInst 
+    self.camera = cameraInst
 
     self.allDialogues = playdate.loadDialogueFromCsv(csvFile)
     self.dialogueIndex = 1
@@ -187,32 +188,41 @@ function GameplayDialogue:_loadCurrentTyper()
     end
 
     local dialogueInfo = self.allDialogues[self.dialogueIndex]
+
+    
+    if (self.camera) then
+        if (dialogueInfo.camShakeLevel == 1) then
+            self.camera:smallShake()
+        elseif (dialogueInfo.camShakeLevel == 2) then
+            self.camera:bigShake()    
+        end        
+    end
     
     -- populate the title thing 
     if (dialogueInfo.title == nil or dialogueInfo.title == "[N/A]") then
         self.showTitleText = false
-
+        
     else 
         self.showTitleText = true
- 
+        
         -- draw title text onto the image (this only needs to be done when it changes)
         gfx.pushContext(self.titleTextImage)
-            gfx.setFont(self.titleTextFont)
-            gfx.clear(gfx.kColorClear)
-            gfx.setColor(gfx.kColorBlack)
-            gfx.drawTextAligned(dialogueInfo.title, 64,11,kTextAlignment.center)
+        gfx.setFont(self.titleTextFont)
+        gfx.clear(gfx.kColorClear)
+        gfx.setColor(gfx.kColorBlack)
+        gfx.drawTextAligned(dialogueInfo.title, 64,11,kTextAlignment.center)
         gfx.popContext()
     end
-
+    
     -- avatar anim
-
+    
     local typerX = 55
     local typerY = 130
-
+    
     if (dialogueInfo.avatarId ~= "[N/A]") then
         -- dialogue text will be slightly to the right to accomodate for the avatar sprite 
         self.currentTyper = Typer(typerX + 50,typerY, dialogueInfo.text, 3, 21)
-
+        
         local imageTablePath = "images/ui/dialogue/avatars/" .. dialogueInfo.avatarId .. "/avatar"
         self.avatarAnim = SpriteAnimation(imageTablePath, 500, 75, 150)
         self.avatarAnim:setRepeats(-1)
@@ -221,9 +231,10 @@ function GameplayDialogue:_loadCurrentTyper()
     else 
         -- dialogue text shifts to the left and allows for more charactes per line since we have more space.
         self.currentTyper = Typer(typerX,typerY, dialogueInfo.text, 3, 25)
-
+        
         self.avatarAnim = nil
     end
+    self.currentTyper:setDelayCycles(dialogueInfo.textDelay)
     
 end
 

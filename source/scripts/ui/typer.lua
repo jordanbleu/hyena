@@ -130,3 +130,7 @@ end
 function Typer:isFinishedTyping()
     return self.finishedTyping
 end
+
+function Typer:setDelayCycles(num) 
+    self.delayCycles = num
+end
