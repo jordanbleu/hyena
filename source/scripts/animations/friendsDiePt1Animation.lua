@@ -13,9 +13,9 @@ function FriendsDiePt1Animation:init(leftActor, middleActor, rightActor)
     self.centerActor = middleActor
     self.rightActor = rightActor
 
-    self.leftAnimation = gfx.animator.new(2000, 270, 220, playdate.easingFunctions.outCubic, 1000)
-    self.centerAnimation = gfx.animator.new(3000, 270, 200, playdate.easingFunctions.outCubic, 3000)
-    self.rightAnimation = gfx.animator.new(2000, 270, 210, playdate.easingFunctions.outCubic, 1500)
+    self.leftAnimation = gfx.animator.new(1000, 270, 220, playdate.easingFunctions.outCubic, 1000)
+    self.centerAnimation = gfx.animator.new(900, 270, 200, playdate.easingFunctions.outCubic, 3000)
+    self.rightAnimation = gfx.animator.new(1200, 270, 210, playdate.easingFunctions.outCubic, 1500)
     
     self:add()
 end

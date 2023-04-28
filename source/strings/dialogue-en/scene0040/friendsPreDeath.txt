@@ -1,15 +1,8 @@
 avatar_id|title|text|typeDelay|cameraShakeLevel
 # Just moments before Cyber's friends die
-spiderNeutralAnim|Spider|small camera shake|0|1
-spiderNeutralAnim|Spider|big camera shake|0|2
-spiderNeutralAnim|Spider|slow text....|4|0
-spiderNeutralAnim|Spider|v e r y slow|8|0
-spiderNeutralAnim|Spider|slow text and cam shake|4|2
-tinyNeutralAnim|Tiny|Uh boss...
-tinyNeutralAnim|Tiny|Do you see that thing?
-cyberNeutralAnim|Cyber|Yeah, I see it.
-spiderNeutralAnim|Spider|What the hell is it?
-tinyNeutralAnim|Tiny|Some sorta...giant...thing
-spiderNeutralAnim|Spider|How do we kill it?
-cyberNeutralAnim|Cyber|Tiny!
-cyberNeutralAnim|Cyber|Get out of the way, now!!!
+tinyNeutralAnim|Tiny|Look like we got 'em, boss.
+spiderNeutralAnim|Spider|Yeah but...something doesn't seem right.
+tinyNeutralAnim|Tiny|What are you talkin' about?
+spiderNeutralAnim|Spider|I'm still getting a reading on my scanners.
+cyberNeutralAnim|Cyber|Yeah, same here...
+cyberNeutralAnim|Cyber|Tiny, look out!!!|0|2

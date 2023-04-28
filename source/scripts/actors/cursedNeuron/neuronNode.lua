@@ -7,7 +7,7 @@ import "scripts/actors/cursedNeuron/neuronNodeLaserBlast"
 --[[ 
     There are four neuron nodes that protect the cursed neuron
 ]] 
-class("NeuronNode").extends(Actor)
+class("NeuronNode").extends(Animation)
 
 local STATE <const> = {
     ALIVE = 0,
