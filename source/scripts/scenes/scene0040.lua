@@ -10,6 +10,9 @@ import "scripts/ui/bossBar"
 import "scripts/segments/animationSegment"
 import "scripts/animations/animationDirector"
 import "scripts/animations/friendsDiePt1Animation"
+import "scripts/animations/friendsDiePt2Animation"
+import "scripts/animations/CursedNeuronAnimation"
+
 
 --[[
     This is strictly an animation sequence.  The first boss appears and destroys the two allies.
@@ -27,11 +30,10 @@ function Scene0040:initialize(sceneManager)
     self.bgSprite:setZIndex(0)
     self.bgSprite:add()
 
-    self.parallax1 = ParallaxLayer(gfx.image.new("images/backgrounds/stars-farther"),0,0.5)
-    self.parallax2 = ParallaxLayer(gfx.image.new("images/backgrounds/stars-far"),0,1)
+    self.parallax1 = ParallaxLayer(gfx.image.new("images/backgrounds/stars-farther"),0,1)
+    self.parallax2 = ParallaxLayer(gfx.image.new("images/backgrounds/stars-far"),0,2)
 
     self.camera = Camera()
-    self.camera:removeNormalSway()
 
     local image = gfx.image.new("images/player")
     self.leftActor = gfx.sprite.new(image)
@@ -48,19 +50,37 @@ function Scene0040:initialize(sceneManager)
     self.rightActor:setZIndex(50)
     self.rightActor:moveTo(300, 290)
     self.rightActor:add()
+    self.cursedNeuron = nil
 
     table.insert(segments, function()
         return AnimationSegment({FriendsDiePt1Animation(self.leftActor, self.centerActor, self.rightActor)})
     end)
 
-
-    --todo: I think we should add more properties to the gameplay dialogue that support a camera shake / slow typing text for drama.
-
     table.insert(segments, function()
         return DialogueSegment("scene0040/friendsPreDeath.txt", player, self.camera)
     end)
 
-    
+    table.insert(segments, function()
+        return AnimationSegment({FriendsDiePt2Animation(self.leftActor, self.centerActor, self.rightActor,self.camera)})
+    end)
+
+    table.insert(segments, function()
+        return DialogueSegment("scene0040/friendsPostDeath.txt", player, self.camera)
+    end)
+
+    table.insert(segments, function()
+        self.cursedNeuron = CursedNeuronAnimation()
+        return AnimationSegment({self.cursedNeuron})
+    end)
+
+    table.insert(segments, function()
+        return DialogueSegment("scene0040/cursedNeuronIntros.txt", player, self.camera)
+    end)
+
+    table.insert(segments, function()
+        self.cursedNeuron = CursedNeuronAnimation()
+        return AnimationSegment({self.cursedNeuron})
+    end)
 
 
 
