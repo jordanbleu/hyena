@@ -66,14 +66,14 @@ function Player:init(cameraInst, sceneManagerInst)
     self.xVelocity = 0
     self.yVelocity = 0
     self:setImage(gfx.image.new("images/player"))
-    self:setZIndex(25)
+    self:setZIndex(31)
     self:setGroups({COLLISION_LAYER.PLAYER})
     self:setCollidesWithGroups(COLLISION_LAYER.ENEMY, COLLISION_LAYER.ENEMY_PROJECTILE, COLLISION_LAYER.POWERUP)
     self:add()
 
     local blackScreenImage = gfx.image.new("images/black")
     self.blackScreenSprite = gfx.sprite.new(blackScreenImage)
-    self.blackScreenSprite:setZIndex(24)
+    self.blackScreenSprite:setZIndex(30)
     self.blackScreenSprite:setIgnoresDrawOffset(true)
     self.blackScreenSprite:setVisible(false)
     self.blackScreenSprite:moveTo(200,120)
@@ -169,7 +169,7 @@ function Player:_die()
     self.state = STATE.DYING
     self:setVisible(false)
     local deathAnimation = SingleSpriteAnimation("images/playerAnim/death", 500, self.x, self.y, function() self:_beginWaitingToRevive() end)
-    deathAnimation:setZIndex(27)
+    deathAnimation:setZIndex(32)
 
     if (self.lives >=0) then
         LivesIndicator(self.lives)
@@ -193,7 +193,7 @@ function Player:_revive()
         sf:setZIndex(24)
     
         local reviveAnimation = SingleSpriteAnimation("images/playerAnim/revive", 1000, self.x, self.y, function() self:_alive() end)
-        reviveAnimation:setZIndex(27)
+        reviveAnimation:setZIndex(32)
     end
 end
 
@@ -249,7 +249,7 @@ function Player:_checkCollisions()
         end
 
         local spr = SingleSpriteAnimation("images/playerAnim/damage", 1000, self.x, self.y)
-        spr:setZIndex(25)
+        spr:setZIndex(32)
         spr:attachTo(self)
     end
 
@@ -270,7 +270,8 @@ function Player:_handlePlayerInput()
         if (self.holdBCycles < HOLD_B_CYCLES_TO_WAIT) then
             if (self.energy > 25) then
                 self.energy -= 25
-                SingleSpriteAnimation("images/effects/playerDashShadowAnim/dash-shadow", 1000, self.x, self.y)
+                local dashSpr = SingleSpriteAnimation("images/effects/playerDashShadowAnim/dash-shadow", 1000, self.x, self.y)
+                dashSpr:setZIndex(25)
                 self.dashVelocity = self.lastHorizontalDirection * DASH_SPEED
                 self.camera:wideSway()
             end

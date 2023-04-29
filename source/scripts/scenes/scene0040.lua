@@ -12,6 +12,7 @@ import "scripts/animations/animationDirector"
 import "scripts/animations/friendsDiePt1Animation"
 import "scripts/animations/friendsDiePt2Animation"
 import "scripts/animations/CursedNeuronAnimation"
+import "scripts/scenes/scene0050"
 
 
 --[[
@@ -69,7 +70,8 @@ function Scene0040:initialize(sceneManager)
     end)
 
     table.insert(segments, function()
-        self.cursedNeuron = CursedNeuronAnimation()
+        self.camera:wideSway()
+        self.cursedNeuron = CursedNeuronAnimation(self.camera)
         return AnimationSegment({self.cursedNeuron})
     end)
 
@@ -78,16 +80,18 @@ function Scene0040:initialize(sceneManager)
     end)
 
     table.insert(segments, function()
-        self.cursedNeuron = CursedNeuronAnimation()
+        self.cursedNeuron:startNodeAnimation()
         return AnimationSegment({self.cursedNeuron})
     end)
 
-
+    table.insert(segments, function()
+        return DialogueSegment("scene0040/cursedNeuronIntros2.txt", player, self.camera)
+    end)
 
     Scene0040.super.initialize(self, segments, sceneManager)
 end
 
 function Scene0040:completeScene()
-    --self.sceneManager:switchScene(Scene0040())
+    self.sceneManager:switchScene(Scene0050())
 end
 

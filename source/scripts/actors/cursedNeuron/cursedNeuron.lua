@@ -105,7 +105,7 @@ function CursedNeuron:init(playerInst, cameraInst, bossBarInst)
     self.rightNode = NeuronNode(playerInst, cameraInst)
 
     self.shieldSprite = gfx.sprite.new(gfx.image.new("images/bosses/cursedNeuron/shield"))
-    self.shieldSprite:setZIndex(24)
+    self.shieldSprite:setZIndex(23)
     self.shieldSprite:add()
 
     self.leftConnector = SpriteAnimation("images/bosses/cursedNeuron/connectorAnim/horizontal", 200, self.x, self.y, false, false)
@@ -161,10 +161,12 @@ function CursedNeuron:init(playerInst, cameraInst, bossBarInst)
 end
 
 function CursedNeuron:update()
-    self:_updatePosition()
+
+    
     self:_moveAllSprites()
-    self:_updateShieldState()
     self:_checkCollisions()
+    self:_updatePosition()
+    self:_updateShieldState()
     self:_updatePhase()
 
     CursedNeuron.super.update(self)

@@ -18,8 +18,9 @@ local STATE = {
     NODES_FLY_IN = 2,
 }
 
-function CursedNeuronAnimation:init()
+function CursedNeuronAnimation:init(cameraInst)
 
+    self.camera = cameraInst
     self.animationComplete = false
     self.state = STATE.APPEAR_ONSCREEN
 
@@ -28,7 +29,7 @@ function CursedNeuronAnimation:init()
     self:moveTo(200, -100)
     -- parts
 
-    self.animator = gfx.animator.new(3000, -100, 80, playdate.easingFunctions.outBack)
+    self.animator = gfx.animator.new(3000, -100, 40, playdate.easingFunctions.outBack)
 
     -- the 'eye' / nucleus thing
     self.eyeSprite = SpriteAnimation("images/bosses/cursedNeuron/eyeAnim/idle", 1000, self.x, self.y)
@@ -135,10 +136,8 @@ end
 
 function CursedNeuronAnimation:update()
     self:_moveAllSprites()
-    if (self.state == STATE.APPEAR_ONSCREEN) then
-        self:moveTo(self.x, self.animator:currentValue())
-    end
-
+    self:moveTo(self.x, self.animator:currentValue())
+    
     if (self.state == STATE.NODES_FLY_IN) then
         self:_upateNodesAnimation()
     end
@@ -147,20 +146,29 @@ end
 function CursedNeuronAnimation:startNodeAnimation()
     self.state = STATE.NODES_FLY_IN
     -- using the animator as a timer here because it has more of the method i need lol 
-    self.animator = gfx.animator.new(5000, self.y,50)
+    self.animator = gfx.animator.new(3000, self.y,50)
 end
 
 function CursedNeuronAnimation:_upateNodesAnimation()
     local percent = self.animator:progress()
 
-    if (percent > 0.75) then
+    if (percent > 0.95) then
+        if (not self.rightNode:isVisible()) then
+            self.camera:smallShake()
+        end
         self.shieldSprite:setVisible(true)
         self.rightNode:setVisible(true)
         self.rightConnector:setVisible(true)
     elseif (percent > 0.5) then
+        if (not self.bottomNode:isVisible()) then
+            self.camera:smallShake()
+        end
         self.bottomNode:setVisible(true)
         self.bottomConnector:setVisible(true)
-    elseif (percent > 0.25) then 
+    elseif (percent > 0.1) then 
+        if (not self.leftNode:isVisible()) then
+            self.camera:smallShake()
+        end
         self.leftNode:setVisible(true)
         self.leftConnector:setVisible(true)
     end
@@ -203,9 +211,6 @@ function CursedNeuronAnimation:_moveAllSprites()
 end
 
 function CursedNeuronAnimation:isCompleted()
-    if (self.state == STATE.APPEAR_ONSCREEN) then
-        return self.animator:ended()
-    end 
-    return false
+    return self.animator:ended()
 end
 

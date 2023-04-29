@@ -7,7 +7,7 @@ import "scripts/actors/cursedNeuron/neuronNodeLaserBlast"
 --[[ 
     There are four neuron nodes that protect the cursed neuron
 ]] 
-class("NeuronNode").extends(Animation)
+class("NeuronNode").extends(Actor)
 
 local STATE <const> = {
     ALIVE = 0,
@@ -20,6 +20,9 @@ function NeuronNode:init(playerInst, cameraInst)
     self.camera = cameraInst
     self.player = playerInst
 
+    self.preActiveCycleCounter = 0
+    self.preActiveCycles = 150
+    
     self.state = STATE.ALIVE
 
     self.maxHealth = 3
@@ -42,7 +45,7 @@ function NeuronNode:init(playerInst, cameraInst)
 
     self:setGroups({COLLISION_LAYER.ENEMY})
     self:setCollidesWithGroups({COLLISION_LAYER.PLAYER_PROJECTILE})
-    self:setZIndex(25)
+    self:setZIndex(23)
     self:setImage(self.idleImage)
     self:setCollideRect(0,0,self:getSize())
     self:add()
@@ -76,6 +79,11 @@ end
 
 function NeuronNode:physicsUpdate()
     NeuronNode.super.physicsUpdate(self)
+
+    if (self.preActiveCycleCounter < self.preActiveCycles) then
+        self.preActiveCycleCounter += 1
+        return
+    end
 
     if (self.state == STATE.ALIVE) then
         self:_shootAtPlayer()
@@ -118,8 +126,6 @@ function NeuronNode:isAlive()
 end
 
 function NeuronNode:_shootAtPlayer()
-
-
     -- first wait for shoot cycles
     if (self.shootCycleCounter < self.shootCycles) then
         self.shootCycleCounter += 1

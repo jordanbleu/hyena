@@ -85,7 +85,9 @@ end
 
 21-30 - Actors
 
-25 - Player
+30 - Player - black screen
+
+31 - Player
 
 50 - effects
 
