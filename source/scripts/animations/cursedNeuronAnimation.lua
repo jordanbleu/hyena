@@ -16,6 +16,7 @@ local STATE = {
     APPEAR_ONSCREEN = 1,
     -- after some dialogue, the nodes / shield appear 
     NODES_FLY_IN = 2,
+    DEATH = 3
 }
 
 function CursedNeuronAnimation:init(cameraInst)
@@ -129,6 +130,9 @@ function CursedNeuronAnimation:init(cameraInst)
     self.bottomConnector:setRepeats(-1)
     self.bottomConnector:setVisible(false)
 
+    self.deathCycleCounter = 0
+    self.deathCycles = 150
+
     self.timer = nil
     self:_moveAllSprites()
     self:add()
@@ -136,10 +140,29 @@ end
 
 function CursedNeuronAnimation:update()
     self:_moveAllSprites()
-    self:moveTo(self.x, self.animator:currentValue())
+
+    if(not self.state == STATE.DEATH) then
+        self:moveTo(self.x, self.animator:currentValue())
+    end
     
     if (self.state == STATE.NODES_FLY_IN) then
-        self:_upateNodesAnimation()
+        self:_updateNodesAnimation()
+        return
+    end
+
+    if (self.state == STATE.DEATH) then
+
+        self.deathCycleCounter += 1
+
+        local boomRecurrence = 10
+        if (math.fmod(self.deathCycleCounter, boomRecurrence) == 0) then
+            local eX = self.x + math.random(-32, 32)
+            local eY = self.y + math.random(-32, 32)
+            local spr = SingleSpriteAnimation('images/effects/explosionAnim/explosion', 500, eX, eY)
+            spr:setZIndex(50)
+            self.camera:bigShake()
+        end
+
     end
 end
 
@@ -149,7 +172,15 @@ function CursedNeuronAnimation:startNodeAnimation()
     self.animator = gfx.animator.new(3000, self.y,50)
 end
 
-function CursedNeuronAnimation:_upateNodesAnimation()
+function CursedNeuronAnimation:startDeathAnimation()
+    self:moveTo (self.x, 40)
+    self.leftNode:setVisible(true)
+    self.rightNode:setVisible(true)
+    self.bottomNode:setVisible(true)
+    self.state = STATE.DEATH
+end
+
+function CursedNeuronAnimation:_updateNodesAnimation()
     local percent = self.animator:progress()
 
     if (percent > 0.95) then
@@ -210,7 +241,33 @@ function CursedNeuronAnimation:_moveAllSprites()
     self.bottomConnector:moveTo(self.x, self.y+80)
 end
 
+function CursedNeuronAnimation:remove()
+    for r,row in ipairs(self.fleshSprites) do
+        for c,col in ipairs(row) do
+            self.fleshSprites[r][c]:remove()
+        end
+    end
+
+    self.leftNode:remove()
+    self.eyeSprite:remove()
+    self.rightNode:remove()
+    self.bottomNode:remove()
+    self.leftConnector:remove()
+    self.rightConnector:remove()
+    self.bottomConnector:remove()
+    self.armTopLeftSprite:remove()
+    self.armTopRightSprite:remove()
+    self.armBottomLeftSprite:remove()   
+    self.armBottomRightSprite:remove()
+
+    CursedNeuronAnimation.super.remove(self)
+end
+
+
 function CursedNeuronAnimation:isCompleted()
+    if (self.state == STATE.DEATH) then
+        return self.deathCycleCounter == self.deathCycles
+    end
     return self.animator:ended()
 end
 

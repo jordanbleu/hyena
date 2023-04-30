@@ -10,7 +10,7 @@ import "scripts/ui/bossBar"
 
 
 --[[
-    This is strictly an animation sequence.  The first boss appears and destroys the two allies.
+    Cursed Neuron Boss Battle.
 ]]
 class("Scene0050").extends(SegmentedScene)
 
