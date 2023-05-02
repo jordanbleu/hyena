@@ -7,6 +7,8 @@ import "scripts/actors/tinyGuyVertical"
 import "scripts/actors/cursedNeuron/cursedNeuron"
 import "scripts/ui/openingCredit"
 import "scripts/ui/bossBar"
+import "scripts/scenes/scene0060"
+import "scripts/segments/cursedNeuronBossBattleSegment"
 
 
 --[[
@@ -29,7 +31,7 @@ function Scene0050:initialize(sceneManager)
     
         local segments = {}
 
-        CursedNeuron(sceneItems.player, sceneItems.camera, sceneItems.bossBar)
+        local boss = CursedNeuron(sceneItems.player, sceneItems.camera, sceneItems.bossBar)
     
         table.insert(segments, function()
             ScreenFlash(1000, gfx.kColorWhite)
@@ -41,13 +43,17 @@ function Scene0050:initialize(sceneManager)
             local bossTitle = OpeningCredit("images/ui/boss-logos/cursed-neuron/logo")
             bossTitle:setOnCompleted(function() sceneItems.bossBar:show() end)
     
-            return DoNothingSegment()
+            return CursedNeuronBossBattleSegment(boss)
         
         end)
 
         Scene0050.super.initialize(self, segments, sceneManager)
 
 
+end
+
+function Scene0050:completeScene()
+    self.sceneManager:switchScene(Scene0060())
 end
 
 

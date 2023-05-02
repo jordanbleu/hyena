@@ -66,6 +66,7 @@ function CutsceneFrame:init(title, text, imagePath, effect)
 
     self.titleTextFont = gfx.font.new("fonts/big-bleu")
 
+    -- create a temp camera that gets cleaned up when the frame is done.
     self.camera = Camera()
     self.camera:removeNormalSway()
 
@@ -280,4 +281,8 @@ function CutsceneFrame:append(title, dialogue)
     dialogue = dialogue or ""
     table.insert(self.fullTexts, dialogue)
     table.insert(self.titles, title)
+end
+
+function CutsceneFrame:addCameraSway()
+    self.camera:restoreNormalSway()
 end

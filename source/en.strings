@@ -96,3 +96,56 @@
 
 "scene0010.cybersit6" = "...your life"
 
+--------------------------------------------------------------------------------------------------------
+-- scene0080
+--------------------------------------------------------------------------------------------------------
+"scene0080.earlier" = "North Galactic military launchpad."
+"scene0080.earlier1" = "Two hours ago..."
+
+-- man 
+"scene0080.viewship" = "Beautiful, isn't she?"
+"scene0080.viewship1" = "That's state of the art North Galactic technology."
+"scene0080.viewship2" = "Much more powerful than anything you're used to, I'd imagine."
+"scene0080.viewship3" = "Listen to me, Cyber..."
+"scene0080.viewship4" = "Your target is the nest of the Grimidean Vaslings."
+"scene0080.viewship5" = "We've got a lot to learn about these creatures.  Researching them has been challenging."
+"scene0080.viewship6" = "Through the study of microbial samples, we've found that they seem to have a seemingly+"
+"scene0080.viewship7" = "...telepathic means of communication."
+"scene0080.viewship8" = "We have no way to know how they will react to your presence."
+-- cyber 
+"scene0080.viewship9" = "Guess I gotta kill them quickly."
+-- man
+"scene0080.faces" = "The war with the Southern galaxies has left our army weakened."
+"scene0080.faces1" = "If the Grimidean Vaslings attacked us, we wouldn't stand a chance."
+"scene0080.faces2" = "I know you don't care about this, but by destroying the nest you're saving many lives."
+-- cyber
+"scene0080.faces3" = "Have they ever attacked before?"
+-- man
+"scene0080.faces4" = "Not yet.  That's why we're sending you."
+-- cyber
+"scene0080.faces5" = "What do you mean?"
+
+-- man (view switches back to the ship)
+"scene0080.ship" = "If the Grimidean Vaslings talk to you, they can't know we're associated with you."
+"scene0080.ship1" = "As far as they're concerned you're just another mercenary, working alone."
+"scene0080.ship2" = "Otherwise, an all-out war could break out between us."
+"scene0080.ship4" = "Your criminal infamy will prove invaluable to the Northern Galaxies."
+--cyber - i decided this should go back to the faces actually 
+"scene0080.ship5" = "So I'm just bait."
+--man
+"scene0080.ship6" = "More or less."
+--cyber
+"scene0080.ship7" = "Now I can see why you chose me to do this."
+"scene0080.ship8" = "It's a win-win for you, whether I live or die."
+
+-- cyber is climbin, man is talkin
+"scene0080.climbin" = "These are unprecedented times for mankind, Cyber."
+"scene0080.climbin1" = "I hate that we've resorted to such unsavory tactics."
+
+-- cyber sits in the cockpit
+"scene0080.cockpit1" = "Remember..."
+"scene0080.cockpit2" = "There's nothing in the entire world more important than our survival."
+"scene0080.cockpit3" = "...and even the survival of mankind"
+"scene0080.cockpit4" = "We will destroy the entire universe if it means our men, women, and children survive."
+-- cyber
+"scene0080.cockpit5" = "Yeah, well, let's just hope the universe doesn't fight back."

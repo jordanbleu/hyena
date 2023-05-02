@@ -1,5 +1,6 @@
 local gfx <const> = playdate.graphics
 
+import "scripts/scenes/scene0070"
 
 
 --[[
@@ -39,8 +40,8 @@ function Scene0060:initialize(sceneManager)
     ScreenFlash(250, gfx.kColorWhite)
 
     table.insert(segments, function()
-
-        return WaitSegment(2000)
+        ScreenFlash(1500, gfx.kColorWhite)
+        return WaitSegment(3000)
     end)
 
     table.insert(segments, function()
@@ -51,9 +52,13 @@ function Scene0060:initialize(sceneManager)
         SingleSpriteAnimation("images/bosses/cursedNeuron/deathAnim/death", 1500, self.cursedNeuron.x, self.cursedNeuron.y)
         ScreenFlash(500, gfx.kColorWhite)
         self.cursedNeuron:remove()
-        return DoNothingSegment()
+        return WaitSegment(5000)
         --return DialogueSegment("scene0040/cursedNeuronIntros2.txt", player, self.camera)
     end)
 
     Scene0060.super.initialize(self, segments, sceneManager)
+end
+
+function Scene0060:completeScene()
+    self.sceneManager:switchScene(Scene0070(), SCENE_TRANSITION.FADE_IO)
 end

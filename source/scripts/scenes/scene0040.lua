@@ -11,7 +11,7 @@ import "scripts/segments/animationSegment"
 import "scripts/animations/animationDirector"
 import "scripts/animations/friendsDiePt1Animation"
 import "scripts/animations/friendsDiePt2Animation"
-import "scripts/animations/CursedNeuronAnimation"
+import "scripts/animations/cursedNeuronAnimation"
 import "scripts/scenes/scene0050"
 
 

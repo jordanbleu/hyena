@@ -25,49 +25,48 @@ function CursedNeuronAnimation:init(cameraInst)
     self.animationComplete = false
     self.state = STATE.APPEAR_ONSCREEN
 
-    CursedNeuronAnimation.super.init(self)
-
+    
     self:moveTo(200, -100)
     -- parts
-
+    
     self.animator = gfx.animator.new(3000, -100, 40, playdate.easingFunctions.outBack)
-
+    
     -- the 'eye' / nucleus thing
     self.eyeSprite = SpriteAnimation("images/bosses/cursedNeuron/eyeAnim/idle", 1000, self.x, self.y)
     self.eyeSprite:setZIndex(23)
     self.eyeSprite:setRepeats(-1)
     
     -- outer bits, or 'flesh' or whatever you call it is really just separate independent animations
-
+    
     local centerImg = gfx.image.new("images/bosses/cursedNeuron/flesh-middle")
     local fleshAnimSpeed = 750
-
+    
     -- 2d array of the flesh sprites, first index being the row and second being the column
     self.fleshSprites = {}
-
+    
     for i=1, 4 do
         self.fleshSprites[i] = {}
     end
-
+    
     -- top left corner
     self.fleshSprites[1][1] = SpriteAnimation("images/bosses/cursedNeuron/fleshAnim/top-left", fleshAnimSpeed, self.x, self.y, false, false)
     self.fleshSprites[1][2] = SpriteAnimation("images/bosses/cursedNeuron/fleshAnim/top", fleshAnimSpeed, self.x, self.y, false, false)
     self.fleshSprites[1][3] = SpriteAnimation("images/bosses/cursedNeuron/fleshAnim/top", fleshAnimSpeed, self.x, self.y, false, false)
     self.fleshSprites[1][4] = SpriteAnimation("images/bosses/cursedNeuron/fleshAnim/top-right", fleshAnimSpeed, self.x, self.y, false, false)
     self.fleshSprites[2][1] = SpriteAnimation("images/bosses/cursedNeuron/fleshAnim/left", fleshAnimSpeed, self.x, self.y, false, false)
-
+    
     self.fleshSprites[2][2] = gfx.sprite.new(centerImg)
     self.fleshSprites[2][2]:add()
-
+    
     self.fleshSprites[2][3] = gfx.sprite.new(centerImg)
     self.fleshSprites[2][3]:add()
-
+    
     self.fleshSprites[2][4] = SpriteAnimation("images/bosses/cursedNeuron/fleshAnim/right", fleshAnimSpeed, self.x, self.y, false, false)
     self.fleshSprites[3][1] = SpriteAnimation("images/bosses/cursedNeuron/fleshAnim/left", fleshAnimSpeed, self.x, self.y, false, false)
-
+    
     self.fleshSprites[3][2] = gfx.sprite.new(centerImg)
     self.fleshSprites[3][2]:add()
-
+    
     self.fleshSprites[3][3] = gfx.sprite.new(centerImg)
     self.fleshSprites[3][3]:add()
     
@@ -76,23 +75,23 @@ function CursedNeuronAnimation:init(cameraInst)
     self.fleshSprites[4][2] = SpriteAnimation("images/bosses/cursedNeuron/fleshAnim/bottom", fleshAnimSpeed, self.x, self.y, false, false)
     self.fleshSprites[4][3] = SpriteAnimation("images/bosses/cursedNeuron/fleshAnim/bottom", fleshAnimSpeed, self.x, self.y, false, false)
     self.fleshSprites[4][4] = SpriteAnimation("images/bosses/cursedNeuron/fleshAnim/bottom-right", fleshAnimSpeed, self.x, self.y, false, false)
-
+    
     self.armTopRightSprite = SpriteAnimation("images/bosses/cursedNeuron/armAnim/topright", fleshAnimSpeed*2, self.x, self.y, false, false)
     self.armTopRightSprite:setZIndex(22)
     self.armTopRightSprite:setRepeats(-1)
-
+    
     self.armTopLeftSprite = SpriteAnimation("images/bosses/cursedNeuron/armAnim/topleft", fleshAnimSpeed*2, self.x, self.y, false, false)
     self.armTopLeftSprite:setZIndex(22)
     self.armTopLeftSprite:setRepeats(-1)
-
+    
     self.armBottomLeftSprite = SpriteAnimation("images/bosses/cursedNeuron/armAnim/bottomleft", fleshAnimSpeed*2, self.x, self.y, false, false)
     self.armBottomLeftSprite:setZIndex(22)
     self.armBottomLeftSprite:setRepeats(-1)
-
+    
     self.armBottomRightSprite = SpriteAnimation("images/bosses/cursedNeuron/armAnim/bottomright", fleshAnimSpeed*2, self.x, self.y, false, false)
     self.armBottomRightSprite:setZIndex(22)
     self.armBottomRightSprite:setRepeats(-1)
-
+    
     -- kinda lazy code below
     for r,row in ipairs(self.fleshSprites) do
         for c,col in ipairs(row) do
@@ -104,7 +103,7 @@ function CursedNeuronAnimation:init(cameraInst)
             end
         end   
     end
-
+    
     self.leftNode = gfx.sprite.new(gfx.image.new("images/bosses/cursedNeuron/node/node-idle"))
     self.leftNode:add()
     self.leftNode:setVisible(false)
@@ -114,12 +113,12 @@ function CursedNeuronAnimation:init(cameraInst)
     self.rightNode = gfx.sprite.new(gfx.image.new("images/bosses/cursedNeuron/node/node-idle"))
     self.rightNode:add()
     self.rightNode:setVisible(false)
-
+    
     self.shieldSprite = gfx.sprite.new(gfx.image.new("images/bosses/cursedNeuron/shield"))
     self.shieldSprite:setVisible(false)
     self.shieldSprite:setZIndex(24)
     self.shieldSprite:add()
-
+    
     self.leftConnector = SpriteAnimation("images/bosses/cursedNeuron/connectorAnim/horizontal", 200, self.x, self.y, false, false)
     self.leftConnector:setRepeats(-1)
     self.leftConnector:setVisible(false)
@@ -129,19 +128,20 @@ function CursedNeuronAnimation:init(cameraInst)
     self.bottomConnector = SpriteAnimation("images/bosses/cursedNeuron/connectorAnim/vertical", 200, self.x, self.y, false, false)
     self.bottomConnector:setRepeats(-1)
     self.bottomConnector:setVisible(false)
-
+    
     self.deathCycleCounter = 0
     self.deathCycles = 150
-
+    
     self.timer = nil
     self:_moveAllSprites()
     self:add()
+    CursedNeuronAnimation.super.init(self)
 end
 
 function CursedNeuronAnimation:update()
     self:_moveAllSprites()
-
-    if(not self.state == STATE.DEATH) then
+    
+    if(self.state ~= STATE.DEATH) then
         self:moveTo(self.x, self.animator:currentValue())
     end
     

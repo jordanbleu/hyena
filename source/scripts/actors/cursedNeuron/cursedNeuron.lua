@@ -18,7 +18,7 @@ class("CursedNeuron").extends(Enemy)
 
 function CursedNeuron:init(playerInst, cameraInst, bossBarInst)
     
-    CursedNeuron.super.init(self,100)
+    CursedNeuron.super.init(self,80)
 
     self.bossBar = bossBarInst
     self.camera = cameraInst
@@ -309,20 +309,24 @@ function CursedNeuron:_updatePhase()
     -- phase 2
     elseif (hp < 0.65 and self.phase == 1) then
         DiveBomb(50, -30, self.camera, self.player)
-        DiveBomb(100, -40, self.camera, self.player)
-        DiveBomb(300, -60, self.camera, self.player)
-        DiveBomb(300, -35, self.camera, self.player)
-        ScreenFlash(300, gfx.kColorWhite)
-        self.phase = 2
-        
-    -- phase 3 
-    elseif (hp < 0.3 and self.phase == 2) then
-        DiveBomb(50, -30, self.camera, self.player)
         DiveBomb(300, -35, self.camera, self.player)
         Grunt(100, -30, self.camera, self.player)
         Grunt(120, -45, self.camera, self.player)
         ScreenFlash(500, gfx.kColorWhite)
+        self.phase = 2
+        
+        -- phase 3 
+    elseif (hp < 0.3 and self.phase == 2) then
         -- set movement wait time 
+        DiveBomb(50, -30, self.camera, self.player)
+        DiveBomb(100, -40, self.camera, self.player)
+        DiveBomb(300, -60, self.camera, self.player)
+        DiveBomb(300, -35, self.camera, self.player)
+        DiveBomb(200, -45, self.camera, self.player)
+        Grunt(100, -30, self.camera, self.player)
+        ScreenFlash(300, gfx.kColorWhite)
+        -- he moves slightly more often
+        self.moveWaitCycles = 150
         self.phase = 3
 
     end

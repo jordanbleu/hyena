@@ -42,6 +42,10 @@ function Enemy:getHealthPercent()
     return self.health / self.maxHealth
 end
 
+function Enemy:isAlive()
+    return self.health > 0
+end
+
 ---Override this to change damage the enemy does to the player
 ---@return integer
 function Enemy:getDamageAmount()
