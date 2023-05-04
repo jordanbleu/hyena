@@ -18,9 +18,13 @@ function TinyShip:init(x,y, cameraInst)
     -- self:setDeathAnimation("images/enemies/tinyShipAnim/death", 500)
     
     -- todo: remove these, this is a poc 
-    self:setIdleAnimation("images/enemies/bubbleGuyAnim/idle", 250)
-    self:setDamageAnimation("images/enemies/bubbleGuyAnim/damage", 500)
-    self:setDeathAnimation("images/enemies/bubbleGuyAnim/death", 500)
+    -- self:setIdleAnimation("images/enemies/bubbleGuyAnim/idle", 250)
+    -- self:setDamageAnimation("images/enemies/bubbleGuyAnim/damage", 500)
+    -- self:setDeathAnimation("images/enemies/bubbleGuyAnim/death", 500)
+
+    self:setIdleAnimation("images/enemies/blobAnim/idle", 250)
+    self:setDamageAnimation("images/enemies/blobAnim/damage", 500)
+    self:setDeathAnimation("images/enemies/blobAnim/death", 500)
     
     self:moveTo(x,y)
     self:add()
