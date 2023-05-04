@@ -81,7 +81,7 @@ function Scene0080:initialize(sceneManager)
 
     table.insert(segments, function()
         -- the war has left us weak
-        local c = CutsceneFrameSegment(man, gfx.getString("scene0080.cockpit1"), "images/cutscene/scene0080/cyber-cockpit", CUTSCENE_FRAME_EFFECT.SINGLE_SHAKE)
+        local c = CutsceneFrameSegment(man, gfx.getString("scene0080.cockpit1"), "images/cutscene/scene0080/cyber-cockpit", CUTSCENE_FRAME_EFFECT.CONSTANT_SHAKING)
         c:append(man, gfx.getString("scene0080.cockpit2"))
         c:append(man, gfx.getString("scene0080.cockpit3"))
         c:append(man, gfx.getString("scene0080.cockpit4"))

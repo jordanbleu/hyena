@@ -38,6 +38,7 @@ function CutsceneFrame:init(title, text, imagePath, effect)
     self.dialogueFrame = gfx.sprite.new(dialogueImage)
     self.dialogueFrame:setZIndex(114)
     self.dialogueFrame:moveTo(200, 200)
+    self.dialogueFrame:setIgnoresDrawOffset(true)
     self.dialogueFrame:add()
 
     local img = gfx.image.new(imagePath)
@@ -69,6 +70,10 @@ function CutsceneFrame:init(title, text, imagePath, effect)
     -- create a temp camera that gets cleaned up when the frame is done.
     self.camera = Camera()
     self.camera:removeNormalSway()
+
+    if (effect == CUTSCENE_FRAME_EFFECT.CONSTANT_SHAKING) then
+        self.camera:setNormalSway(0.5,0.5)
+    end
 
     local w,h = img:getSize()
     
