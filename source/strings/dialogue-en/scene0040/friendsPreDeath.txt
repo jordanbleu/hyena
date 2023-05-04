@@ -1,0 +1,8 @@
+avatar_id|title|text|typeDelay|cameraShakeLevel
+# Just moments before Cyber's friends die
+tinyNeutralAnim|Tiny|Look like we got 'em, boss.
+spiderNeutralAnim|Spider|Yeah but...something doesn't seem right.
+tinyNeutralAnim|Tiny|What you talkin' about?
+spiderNeutralAnim|Spider|I'm still getting a reading on my scanners.
+cyberNeutralAnim|Cyber|Yeah, same here...
+cyberNeutralAnim|Cyber|Tiny, look out!!!|0|2

@@ -1,0 +1,6 @@
+avatar_id|title|text|typeDelay|cameraShakeLevel
+# Just moments before Cyber's friends die
+cleoNeutralAnim|Cleo|Nooo!
+cyberNeutralAnim|Cyber|Damn...|3
+cyberNeutralAnim|Cyber|I liked those guys.|1
+seraphNeutralAnim|Seraph|So much for backup...

@@ -1,20 +1,17 @@
 avatar_id|title|text
-# The game has just started, and Cyber is talking to himself. 
+# Cyber defeated all the basic enemies in the beginning, didn't see the boss up ahead yet tho
 socketNeutralAnim|Socket|Looks like that's the l-last of 'em!
 seraphNeutralAnim|Seraph|Nice work.
-cyberNeutralAnim|Cyber|So...just so we're clear...
+cyberNeutralAnim|Cyber|Just so we're clear...
 cyberNeutralAnim|Cyber|All I gotta do is blow up this giant 'nest' thing?
 seraphNeutralAnim|Seraph|Correct.
+seraphNeutralAnim|Seraph|The Grimidean Vaslings pose a potential+
+seraphNeutralAnim|Seraph|threat to the Northern Galaxies.
+seraphNeutralAnim|Seraph|We need that threat neutralized.
 cyberNeutralAnim|Cyber|Then once I come back, I'm free to go?
 seraphNeutralAnim|Seraph|That's right.  You'll be pardoned of all your crimes.
-cyberNeutralAnim|Cyber|It all seems too good to be true...
-seraphNeutralAnim|Seraph|These are desperate times, Cyber.
-seraphNeutralAnim|Seraph|Ever since the latest Civil war began, we've had to 
-seraphNeutralAnim|Seraph|resort to some unsavory tactics. 
-seraphNeutralAnim|Seraph|Long story short, your criminal infamy is a major asset to us.
-seraphNeutralAnim|Seraph|The Grimidean Vaslings could really complicate our fight 
-seraphNeutralAnim|Seraph|against the southern colonies.
-socketNeutralAnim|Socket|S-s-sorry to interrupt but I'm reading a really large
+cyberNeutralAnim|Cyber|Assuming I don't get killed out here first...
+socketNeutralAnim|Socket|S-s-sorry to interrupt but I'm reading a really large+
 socketNeutralAnim|Socket|energy signature coming up...
 seraphNeutralAnim|Seraph|Cyber, regroup with your squad up ahead.
 seraphNeutralAnim|Seraph|You've entered their territory now.

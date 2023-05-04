@@ -7,6 +7,12 @@ import "scripts/actors/tinyGuyVertical"
 import "scripts/actors/cursedNeuron/cursedNeuron"
 import "scripts/ui/openingCredit"
 import "scripts/ui/bossBar"
+import "scripts/segments/animationSegment"
+import "scripts/animations/animationDirector"
+import "scripts/animations/friendsDiePt1Animation"
+import "scripts/animations/friendsDiePt2Animation"
+import "scripts/animations/cursedNeuronAnimation"
+import "scripts/scenes/scene0050"
 
 
 --[[
@@ -16,37 +22,76 @@ class("Scene0040").extends(SegmentedScene)
 
 function Scene0040:initialize(sceneManager)
 
-    self.sceneManager = sceneManager
-
-    sceneHelper.addBlackBackground()
-    local sceneItems = sceneHelper.setupGameplayScene(sceneManager)
-    sceneItems.bossBar:setIconImage("images/ui/hud/boss-bar/icon-cursed-neuron")
-
-    local plax1 = ParallaxLayer(gfx.image.new("images/backgrounds/stars-farther"),0,1)
-    plax1:setZIndex(1)
-    local plax2 = ParallaxLayer(gfx.image.new("images/backgrounds/stars-far"),0,3)
-    plax2:setZIndex(2)
-
     local segments = {}
 
+    self.sceneManager = sceneManager
+
+    self.bgSprite = gfx.sprite.new(gfx.image.new("images/black"))
+    self.bgSprite:moveTo(200,120)
+    self.bgSprite:setZIndex(0)
+    self.bgSprite:add()
+
+    self.parallax1 = ParallaxLayer(gfx.image.new("images/backgrounds/stars-farther"),0,1)
+    self.parallax2 = ParallaxLayer(gfx.image.new("images/backgrounds/stars-far"),0,2)
+
+    self.camera = Camera()
+
+    local image = gfx.image.new("images/player")
+    self.leftActor = gfx.sprite.new(image)
+    self.leftActor:setZIndex(50)
+    self.leftActor:moveTo(100, 290)
+    self.leftActor:add()
+
+    self.centerActor = gfx.sprite.new(image)
+    self.centerActor:setZIndex(50)
+    self.centerActor:moveTo(200, 290)
+    self.centerActor:add()
+
+    self.rightActor = gfx.sprite.new(image)
+    self.rightActor:setZIndex(50)
+    self.rightActor:moveTo(300, 290)
+    self.rightActor:add()
+    self.cursedNeuron = nil
+
     table.insert(segments, function()
-        return WaitSegment(3000)
+        return AnimationSegment({FriendsDiePt1Animation(self.leftActor, self.centerActor, self.rightActor)})
     end)
 
     table.insert(segments, function()
+        return DialogueSegment("scene0040/friendsPreDeath.txt", player, self.camera)
+    end)
 
-        local bossTitle = OpeningCredit("images/ui/boss-logos/cursed-neuron/logo")
-        bossTitle:setOnCompleted(function() sceneItems.bossBar:show() end)
-    
-        CursedNeuron(sceneItems.player, sceneItems.camera, sceneItems.bossBar)
+    table.insert(segments, function()
+        return AnimationSegment({FriendsDiePt2Animation(self.leftActor, self.centerActor, self.rightActor,self.camera)})
+    end)
 
-        return DoNothingSegment()
+    table.insert(segments, function()
+        return DialogueSegment("scene0040/friendsPostDeath.txt", player, self.camera)
+    end)
+
+    table.insert(segments, function()
+        self.camera:wideSway()
+        self.cursedNeuron = CursedNeuronAnimation(self.camera)
+        return AnimationSegment({self.cursedNeuron})
+    end)
+
+    table.insert(segments, function()
+        return DialogueSegment("scene0040/cursedNeuronIntros.txt", player, self.camera)
+    end)
+
+    table.insert(segments, function()
+        self.cursedNeuron:startNodeAnimation()
+        return AnimationSegment({self.cursedNeuron})
+    end)
+
+    table.insert(segments, function()
+        return DialogueSegment("scene0040/cursedNeuronIntros2.txt", player, self.camera)
     end)
 
     Scene0040.super.initialize(self, segments, sceneManager)
 end
 
 function Scene0040:completeScene()
-    --self.sceneManager:switchScene(Scene0040())
+    self.sceneManager:switchScene(Scene0050())
 end
 

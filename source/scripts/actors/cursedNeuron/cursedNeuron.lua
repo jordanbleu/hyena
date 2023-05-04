@@ -18,7 +18,7 @@ class("CursedNeuron").extends(Enemy)
 
 function CursedNeuron:init(playerInst, cameraInst, bossBarInst)
     
-    CursedNeuron.super.init(self,100)
+    CursedNeuron.super.init(self,80)
 
     self.bossBar = bossBarInst
     self.camera = cameraInst
@@ -45,11 +45,11 @@ function CursedNeuron:init(playerInst, cameraInst, bossBarInst)
     end
 
     -- top left corner
-    self.fleshSprites[1][1] = SpriteAnimation("images/bosses/cursedNeuron/fleshAnim/top-left", fleshAnimSpeed, self.x, self.y)
-    self.fleshSprites[1][2] = SpriteAnimation("images/bosses/cursedNeuron/fleshAnim/top", fleshAnimSpeed, self.x, self.y)
-    self.fleshSprites[1][3] = SpriteAnimation("images/bosses/cursedNeuron/fleshAnim/top", fleshAnimSpeed, self.x, self.y)
-    self.fleshSprites[1][4] = SpriteAnimation("images/bosses/cursedNeuron/fleshAnim/top-right", fleshAnimSpeed, self.x, self.y)
-    self.fleshSprites[2][1] = SpriteAnimation("images/bosses/cursedNeuron/fleshAnim/left", fleshAnimSpeed, self.x, self.y)
+    self.fleshSprites[1][1] = SpriteAnimation("images/bosses/cursedNeuron/fleshAnim/top-left", fleshAnimSpeed, self.x, self.y, false, false)
+    self.fleshSprites[1][2] = SpriteAnimation("images/bosses/cursedNeuron/fleshAnim/top", fleshAnimSpeed, self.x, self.y, false, false)
+    self.fleshSprites[1][3] = SpriteAnimation("images/bosses/cursedNeuron/fleshAnim/top", fleshAnimSpeed, self.x, self.y, false, false)
+    self.fleshSprites[1][4] = SpriteAnimation("images/bosses/cursedNeuron/fleshAnim/top-right", fleshAnimSpeed, self.x, self.y, false, false)
+    self.fleshSprites[2][1] = SpriteAnimation("images/bosses/cursedNeuron/fleshAnim/left", fleshAnimSpeed, self.x, self.y, false, false)
 
     self.fleshSprites[2][2] = gfx.sprite.new(centerImg)
     self.fleshSprites[2][2]:add()
@@ -57,8 +57,8 @@ function CursedNeuron:init(playerInst, cameraInst, bossBarInst)
     self.fleshSprites[2][3] = gfx.sprite.new(centerImg)
     self.fleshSprites[2][3]:add()
 
-    self.fleshSprites[2][4] = SpriteAnimation("images/bosses/cursedNeuron/fleshAnim/right", fleshAnimSpeed, self.x, self.y)
-    self.fleshSprites[3][1] = SpriteAnimation("images/bosses/cursedNeuron/fleshAnim/left", fleshAnimSpeed, self.x, self.y)
+    self.fleshSprites[2][4] = SpriteAnimation("images/bosses/cursedNeuron/fleshAnim/right", fleshAnimSpeed, self.x, self.y, false, false)
+    self.fleshSprites[3][1] = SpriteAnimation("images/bosses/cursedNeuron/fleshAnim/left", fleshAnimSpeed, self.x, self.y, false, false)
 
     self.fleshSprites[3][2] = gfx.sprite.new(centerImg)
     self.fleshSprites[3][2]:add()
@@ -66,25 +66,25 @@ function CursedNeuron:init(playerInst, cameraInst, bossBarInst)
     self.fleshSprites[3][3] = gfx.sprite.new(centerImg)
     self.fleshSprites[3][3]:add()
     
-    self.fleshSprites[3][4] = SpriteAnimation("images/bosses/cursedNeuron/fleshAnim/right", fleshAnimSpeed, self.x, self.y)
-    self.fleshSprites[4][1] = SpriteAnimation("images/bosses/cursedNeuron/fleshAnim/bottom-left", fleshAnimSpeed, self.x, self.y)
-    self.fleshSprites[4][2] = SpriteAnimation("images/bosses/cursedNeuron/fleshAnim/bottom", fleshAnimSpeed, self.x, self.y)
-    self.fleshSprites[4][3] = SpriteAnimation("images/bosses/cursedNeuron/fleshAnim/bottom", fleshAnimSpeed, self.x, self.y)
-    self.fleshSprites[4][4] = SpriteAnimation("images/bosses/cursedNeuron/fleshAnim/bottom-right", fleshAnimSpeed, self.x, self.y)
+    self.fleshSprites[3][4] = SpriteAnimation("images/bosses/cursedNeuron/fleshAnim/right", fleshAnimSpeed, self.x, self.y, false, false)
+    self.fleshSprites[4][1] = SpriteAnimation("images/bosses/cursedNeuron/fleshAnim/bottom-left", fleshAnimSpeed, self.x, self.y, false, false)
+    self.fleshSprites[4][2] = SpriteAnimation("images/bosses/cursedNeuron/fleshAnim/bottom", fleshAnimSpeed, self.x, self.y, false, false)
+    self.fleshSprites[4][3] = SpriteAnimation("images/bosses/cursedNeuron/fleshAnim/bottom", fleshAnimSpeed, self.x, self.y, false, false)
+    self.fleshSprites[4][4] = SpriteAnimation("images/bosses/cursedNeuron/fleshAnim/bottom-right", fleshAnimSpeed, self.x, self.y, false, false)
 
-    self.armTopRightSprite = SpriteAnimation("images/bosses/cursedNeuron/armAnim/topright", fleshAnimSpeed*2, self.x, self.y)
+    self.armTopRightSprite = SpriteAnimation("images/bosses/cursedNeuron/armAnim/topright", fleshAnimSpeed*2, self.x, self.y, false, false)
     self.armTopRightSprite:setZIndex(22)
     self.armTopRightSprite:setRepeats(-1)
 
-    self.armTopLeftSprite = SpriteAnimation("images/bosses/cursedNeuron/armAnim/topleft", fleshAnimSpeed*2, self.x, self.y)
+    self.armTopLeftSprite = SpriteAnimation("images/bosses/cursedNeuron/armAnim/topleft", fleshAnimSpeed*2, self.x, self.y, false, false)
     self.armTopLeftSprite:setZIndex(22)
     self.armTopLeftSprite:setRepeats(-1)
 
-    self.armBottomLeftSprite = SpriteAnimation("images/bosses/cursedNeuron/armAnim/bottomleft", fleshAnimSpeed*2, self.x, self.y)
+    self.armBottomLeftSprite = SpriteAnimation("images/bosses/cursedNeuron/armAnim/bottomleft", fleshAnimSpeed*2, self.x, self.y, false, false)
     self.armBottomLeftSprite:setZIndex(22)
     self.armBottomLeftSprite:setRepeats(-1)
 
-    self.armBottomRightSprite = SpriteAnimation("images/bosses/cursedNeuron/armAnim/bottomright", fleshAnimSpeed*2, self.x, self.y)
+    self.armBottomRightSprite = SpriteAnimation("images/bosses/cursedNeuron/armAnim/bottomright", fleshAnimSpeed*2, self.x, self.y, false, false)
     self.armBottomRightSprite:setZIndex(22)
     self.armBottomRightSprite:setRepeats(-1)
 
@@ -105,14 +105,14 @@ function CursedNeuron:init(playerInst, cameraInst, bossBarInst)
     self.rightNode = NeuronNode(playerInst, cameraInst)
 
     self.shieldSprite = gfx.sprite.new(gfx.image.new("images/bosses/cursedNeuron/shield"))
-    self.shieldSprite:setZIndex(24)
+    self.shieldSprite:setZIndex(23)
     self.shieldSprite:add()
 
-    self.leftConnector = SpriteAnimation("images/bosses/cursedNeuron/connectorAnim/horizontal", 200, self.x, self.y)
+    self.leftConnector = SpriteAnimation("images/bosses/cursedNeuron/connectorAnim/horizontal", 200, self.x, self.y, false, false)
     self.leftConnector:setRepeats(-1)
-    self.rightConnector = SpriteAnimation("images/bosses/cursedNeuron/connectorAnim/horizontal", 200, self.x, self.y)
+    self.rightConnector = SpriteAnimation("images/bosses/cursedNeuron/connectorAnim/horizontal", 200, self.x, self.y, false, false)
     self.rightConnector:setRepeats(-1)
-    self.bottomConnector = SpriteAnimation("images/bosses/cursedNeuron/connectorAnim/vertical", 200, self.x, self.y)
+    self.bottomConnector = SpriteAnimation("images/bosses/cursedNeuron/connectorAnim/vertical", 200, self.x, self.y, false, false)
     self.bottomConnector:setRepeats(-1)
 
     --
@@ -161,10 +161,12 @@ function CursedNeuron:init(playerInst, cameraInst, bossBarInst)
 end
 
 function CursedNeuron:update()
-    self:_updatePosition()
+
+    
     self:_moveAllSprites()
-    self:_updateShieldState()
     self:_checkCollisions()
+    self:_updatePosition()
+    self:_updateShieldState()
     self:_updatePhase()
 
     CursedNeuron.super.update(self)
@@ -307,23 +309,25 @@ function CursedNeuron:_updatePhase()
     -- phase 2
     elseif (hp < 0.65 and self.phase == 1) then
         DiveBomb(50, -30, self.camera, self.player)
-        DiveBomb(100, -40, self.camera, self.player)
-        DiveBomb(300, -60, self.camera, self.player)
-        DiveBomb(300, -35, self.camera, self.player)
-        ScreenFlash(300, gfx.kColorWhite)
-        self.phase = 2
-        
-    -- phase 3 
-    elseif (hp < 0.3 and self.phase == 2) then
-        DiveBomb(50, -30, self.camera, self.player)
         DiveBomb(300, -35, self.camera, self.player)
         Grunt(100, -30, self.camera, self.player)
         Grunt(120, -45, self.camera, self.player)
         ScreenFlash(500, gfx.kColorWhite)
+        self.phase = 2
+        
+        -- phase 3 
+    elseif (hp < 0.3 and self.phase == 2) then
         -- set movement wait time 
+        DiveBomb(50, -30, self.camera, self.player)
+        DiveBomb(100, -40, self.camera, self.player)
+        DiveBomb(300, -60, self.camera, self.player)
+        DiveBomb(300, -35, self.camera, self.player)
+        DiveBomb(200, -45, self.camera, self.player)
+        Grunt(100, -30, self.camera, self.player)
+        ScreenFlash(300, gfx.kColorWhite)
+        -- he moves slightly more often
+        self.moveWaitCycles = 150
         self.phase = 3
-    
-    
-    end
 
+    end
 end

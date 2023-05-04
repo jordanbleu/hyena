@@ -47,7 +47,8 @@ CUTSCENE_FRAME_EFFECT =
     -- Image will start on the right side then scroll to the left
     PAN_RIGHT_LEFT = 3,
     PAN_DOWN_UP = 4,
-    SINGLE_SHAKE = 5
+    SINGLE_SHAKE = 5,
+    CONSTANT_SHAKING = 6,
 }
 
 -- checkpoints are a lame way to track game data without relying on a scene or something.

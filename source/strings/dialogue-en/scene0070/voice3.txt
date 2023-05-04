@@ -1,0 +1,11 @@
+avatar_id|title|text|typeDelay|cameraShakeLevel
+# Weird voice is talking to Cyber
+[N/A]|Voice|V e r y  w e l l.|2|0
+[N/A]|Voice|...and thus begins+
+[N/A]|Voice|...the next evolution+
+[N/A]|Voice|...of mankind|3|0
+cyberNeutralAnim|Cyber|What are you talking about?
+[N/A]|[N/A]|...
+cyberNeutralAnim|Cyber|Hey! I'm talking to you!
+[N/A]|[N/A]|...
+cyberNeutralAnim|Cyber|Dammit.  Whatever.

@@ -1,0 +1,9 @@
+avatar_id|title|text|typeDelay|cameraShakeLevel
+# Weird voice is talking to Cyber
+[N/A]|Voice|Cyber...
+[N/A]|Voice|Turn back. Now.
+cyberNeutralAnim|Cyber|Who the hell is that?
+[N/A]|Voice|T u r n|2|1
+[N/A]|Voice|B a c k|2|1
+[N/A]|Voice|NOW!|0|2
+cyberNeutralAnim|Cyber|Why am I hearing things...

@@ -1,6 +1,7 @@
 local gfx <const> = playdate.graphics
 
 import "scripts/sprites/spriteAnimation"
+import "scripts/actors/cursedNeuron/neuronNodeLaserBlast"
 
 
 --[[ 
@@ -15,21 +16,36 @@ local STATE <const> = {
 
 function NeuronNode:init(playerInst, cameraInst)
     NeuronNode.super.init(self)
+    
     self.camera = cameraInst
+    self.player = playerInst
+
+    self.preActiveCycleCounter = 0
+    self.preActiveCycles = 150
+    
     self.state = STATE.ALIVE
 
     self.maxHealth = 3
     self.health = self.maxHealth 
 
     self.reviveCycleCounter = 0
-    self.reviveCycles = 250
+    self.reviveCycles = 300
 
     self.idleImage = gfx.image.new("images/bosses/cursedNeuron/node/node-idle")
     self.deadImage = gfx.image.new("images/bosses/cursedNeuron/node/node-dead")
     
+    -- shooting behavior 
+    self.shootCycleCounter = 0
+    self.shootCycles = 100
+    -- how far to the left / rigth the player can be and the node shoots
+    self.shootRange = 32
+    self.shootCyclesMin = 100
+    self.shootCyclesMax = 300
+
+
     self:setGroups({COLLISION_LAYER.ENEMY})
-    self:setCollidesWithGroups({COLLISION_LAYER.PLAYER, COLLISION_LAYER.PLAYER_PROJECTILE})
-    self:setZIndex(25)
+    self:setCollidesWithGroups({COLLISION_LAYER.PLAYER_PROJECTILE})
+    self:setZIndex(23)
     self:setImage(self.idleImage)
     self:setCollideRect(0,0,self:getSize())
     self:add()
@@ -61,6 +77,19 @@ function NeuronNode:update()
 
 end
 
+function NeuronNode:physicsUpdate()
+    NeuronNode.super.physicsUpdate(self)
+
+    if (self.preActiveCycleCounter < self.preActiveCycles) then
+        self.preActiveCycleCounter += 1
+        return
+    end
+
+    if (self.state == STATE.ALIVE) then
+        self:_shootAtPlayer()
+    end
+
+end
 
 function NeuronNode:_revive()
     self.health = self.maxHealth
@@ -94,4 +123,22 @@ end
 
 function NeuronNode:isAlive()
     return (self.state == STATE.ALIVE)
+end
+
+function NeuronNode:_shootAtPlayer()
+    -- first wait for shoot cycles
+    if (self.shootCycleCounter < self.shootCycles) then
+        self.shootCycleCounter += 1
+        return
+    end
+
+    local min = self.x - self.shootRange
+    local max = self.x + self.shootRange
+
+    if (self.player.x > min and self.player.x < max) then
+        NeuronNodeLaserBlast(self.x, self.y+125)
+        self.shootCycles = math.random(self.shootCyclesMin, self.shootCyclesMax)
+        self.shootCycleCounter = 0
+    end
+
 end

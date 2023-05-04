@@ -1,0 +1,7 @@
+avatar_id|title|text|typeDelay|cameraShakeLevel
+# Cursed Neuron just appeared on screen, no shield yet
+cyberNeutralAnim|Cyber|Socket, what the hell is this thing?
+socketNeutralAnim|Socket|I'm not s-s-sure...
+socketNeutralAnim|Socket|The Grimidean energy readings are off the ch-charts!
+seraphNeutralAnim|Seraph|How can he destroy it?
+socketNeutralAnim|Socket|Well, it's b-b-body looks exposed, maybe try just...shooting it?

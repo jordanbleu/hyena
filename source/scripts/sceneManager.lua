@@ -1,5 +1,7 @@
 local gfx <const> = playdate.graphics
 
+import "scripts/globals/gameContext"
+
 --[[
     The scene manager manages the transition between different scenes.  
     A scene is just a collection of sprites along  with some logic.
@@ -23,6 +25,19 @@ local TRANSITION_DURATION = 1500
 local TRANSITION_QUALITY = 25
 
 function SceneManager:init()
+
+    -- Make self globally accesible.
+    gameContext.setSceneManager(self)
+    
+    --[[
+        The image cache is just a table of loaded images.  The image will be loaded
+        and then stored here in memory.  Frequently used images should be stored in the cache.
+
+        This cache is cleared on each scene transition.
+    ]]
+    self.imageCache = {}
+    self.imageTableCache = {}
+
     self.transitionState = TRANSITION_STATE.COMPLETE
     self.currentTransition = SCENE_TRANSITION.HARD_CUT
     self.fadedRects = {}
@@ -62,6 +77,10 @@ function SceneManager:switchScene(scene, transition)
         print ("Called SwitchScene before the the scene manager was ready.  Add a call to check for this pls")
         return
     end
+
+    -- clear the image cache
+    self.imageCache = {}
+    self.imageTableCache = {}
 
     -- immediately stops all calls to `update` on the scene itself.  
     -- I'm hoping this doesn't cause any weirdness. 
@@ -125,10 +144,6 @@ function SceneManager:_loadRequestedScene()
             spr:remove()
         end
     end
-
-    -- remove all existing sprites
-    -- gfx.sprite.removeAll()
-
 
     -- re-add the scene manager and the transition sprite
     self:add()
@@ -194,3 +209,38 @@ function SceneManager:isReady()
     return self.transitionState == TRANSITION_STATE.COMPLETE
 end
 
+---Loads an image from the cache if it exists.  Otherwise loads it into the cache.
+---@param imagePath any
+function SceneManager:getImageFromCache(imagePath)
+    local cached = self.imageCache[imagePath]
+    
+    if (cached == nil) then
+        img = gfx.image.new(imagePath)
+        self.imageCache[imagePath] = img
+        return img
+    end
+
+    return cached
+end
+
+---Evicts an image from the cache.  Use if you're sure that an image won't be needed anymore.
+---@param imagePath any
+function SceneManager:removeImageFromCache(imagePath)
+    self.imageCache[imagePath] = nil
+end
+
+function SceneManager:getImageTableFromCache(imageTablePath)
+    local cached = self.imageTableCache[imageTablePath]
+    
+    if (cached == nil) then
+        imgTable = gfx.imagetable.new(imageTablePath)
+        self.imageTableCache[imageTablePath] = imgTable
+        return imgTable
+    end
+
+    return cached
+end
+
+function SceneManager:removeImageTableFromCache(imageTablePath)
+    self.imageTableCache[imageTablePath] = nil
+end

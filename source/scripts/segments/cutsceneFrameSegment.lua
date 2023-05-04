@@ -27,3 +27,7 @@ end
 function CutsceneFrameSegment:append(title, dialogue)
     self.cutsceneFrame:append(title,dialogue)
 end
+
+function CutsceneFrameSegment:addCameraSway()
+    self.cutsceneFrame:addCameraSway()
+end

@@ -1,0 +1,13 @@
+avatar_id|title|text|typeDelay|cameraShakeLevel
+# Weird voice is talking to Cyber
+cyberNeutralAnim|Cyber|What the hell!?
+cyberNeutralAnim|Cyber|I'm gonna be sick...
+[N/A]|Voice|You cannot comprehend what awaits you!
+[N/A]|Voice|No human can!|0|1
+cyberNeutralAnim|Cyber|I don't need to comprehend you.
+cyberNeutralAnim|Cyber|I just need to kill you.
+[N/A]|Voice|Destroying the nest will solve nothing!
+cyberNeutralAnim|Cyber|It will solve my death sentence.
+cyberNeutralAnim|Cyber|That's all that matters to me.
+cyberNeutralAnim|Cyber|If I go back now, I'm dead.
+cyberNeutralAnim|Cyber|It's either you or me.

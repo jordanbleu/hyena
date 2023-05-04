@@ -15,9 +15,14 @@ class("SpriteAnimation").extends(Actor)
 ---@param animationTime integer how long the overall animation should be in ms
 ---@param x integer x coordinate
 ---@param y integer y coordinate 
-function SpriteAnimation:init(imageTablePath, animationTime, x, y, isReversed)
+function SpriteAnimation:init(imageTablePath, animationTime, x, y, isReversed, useCache)
 
     isReversed = isReversed or false 
+    local shouldUseCache = useCache
+
+    if (shouldUseCache == nil) then
+        shouldUseCache = true
+    end
 
     self.animDirection = 1
     if (isReversed) then 
@@ -26,7 +31,14 @@ function SpriteAnimation:init(imageTablePath, animationTime, x, y, isReversed)
 
     SpriteAnimation.super.init(self)
 
-    self.imageTable = gfx.imagetable.new(imageTablePath)
+    self.imageTable = nil
+
+    if (not shouldUseCache) then
+        self.imageTable = gfx.imagetable.new(imageTablePath)
+    else
+        local sm = gameContext.getSceneManager()
+        self.imageTable = sm:getImageTableFromCache(imageTablePath)
+    end
 
     -- Divide by the target framerate to go from time -> updates
     -- local animationTimeInUpdates = animationTime / GLOBAL_TARGET_FPS

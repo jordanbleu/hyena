@@ -26,6 +26,8 @@ import "scripts/extensions/graphics.lua"
 import "scripts/globals/enums"
 import "scripts/globals/globals"
 import "scripts/globals/gameData"
+import "scripts/globals/gameContext"
+
 
 -- Stuff needed everywhere
 import "scripts/data/dataManager"
@@ -36,7 +38,7 @@ import "scripts/scenes/test1Scene"
 import "scripts/scenes/demoScene"
 import "scripts/scenes/scene0020"
 import "scripts/scenes/scene0030"
-import "scripts/scenes/scene0040"
+import "scripts/scenes/scene0080"
 import "scripts/scenes/cutsceneDemo"
 import "scripts/scenes/ui/mainMenu"
 
@@ -60,7 +62,7 @@ local function setup()
     --local firstScene = MainMenu() -- Uncomment to start at main menu
     --local firstScene = Scene0020() -- Uncomment to start from the opening credits
     --local firstScene = Scene0030() -- Start from first gameplay section
-    local firstScene = Scene0040() -- boss battle
+    local firstScene = Scene0080() -- boss battle
 
     sceneMgr:switchScene(firstScene, SCENE_TRANSITION.HARD_CUT)
 end
