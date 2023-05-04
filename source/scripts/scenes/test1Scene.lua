@@ -6,6 +6,7 @@ import "scripts/sprites/parallaxLayer"
 import "scripts/actors/grunt"
 import "scripts/actors/rangedGrunt"
 import "scripts/actors/tinyGuy"
+import "scripts/actors/tinyShip"
 
 import "scripts/actors/deathStar"
 import "scripts/actors/diveBomb"
@@ -46,6 +47,7 @@ function Test1Scene:initialize(sceneManager)
 
     self.frameCounter = 0
 
+    TinyShip(200, -20, camera)
 
     -- local guy1 = TinyGuy(200,-10,nil, camera, player)
     -- local guy2 = TinyGuy(200,-10,guy1, camera, player)
@@ -70,7 +72,7 @@ function Test1Scene:initialize(sceneManager)
     --ShieldRangedGrunt(200,50, camera, player)
     --RangedGrunt(200,50, camera, player)
 
-    DeathStar(200,40, player)
+    --DeathStar(200,40, player)
 
     -- Grunt(150,-40,camera, player)
     -- Grunt(200,-30,camera, player)

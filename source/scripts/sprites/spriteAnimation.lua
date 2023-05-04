@@ -184,3 +184,8 @@ end
 function SpriteAnimation:setRemoveOnComplete(enable)
     self.removeOnComplete = enable
 end
+
+function SpriteAnimation:getSize()
+    local firstImg = self.imageTable:getImage(1)
+    return firstImg:getSize()
+end

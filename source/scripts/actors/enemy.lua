@@ -26,7 +26,7 @@ function Enemy:damage(amount)
     end
 end
 
---[[ Called internally when the enemy is dead ]]
+--[[ Called internally when the enemy is dead.  Override this in child class. ]]
 function Enemy:_onDead()
 end
 

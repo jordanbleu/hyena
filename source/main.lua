@@ -56,13 +56,13 @@ local function setup()
 
     -- long in the future, this will be set to the 'title screen scene'
     --local firstScene = DeathScreen()
-    --local firstScene = Test1Scene() 
+    local firstScene = Test1Scene() 
     --local firstScene = CutsceneDemo()
     --local firstScene = DemoScene()
     --local firstScene = MainMenu() -- Uncomment to start at main menu
     --local firstScene = Scene0020() -- Uncomment to start from the opening credits
     --local firstScene = Scene0030() -- Start from first gameplay section
-    local firstScene = Scene0080() -- boss battle
+    --local firstScene = Scene0080() -- boss battle
 
     sceneMgr:switchScene(firstScene, SCENE_TRANSITION.HARD_CUT)
 end
