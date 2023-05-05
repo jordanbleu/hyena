@@ -48,6 +48,7 @@ end
 --[[ Physics Update ]]--
 function BasicEnemy:physicsUpdate()
     BasicEnemy.super.physicsUpdate(self)
+    self:_velocityUpdate()
     self:_updateMovement()
     self:_updateDamageState()
     self:_checkCollisions()
@@ -131,10 +132,9 @@ function BasicEnemy:_updateMovement()
     local xMax = 400 + doubleW
     local xMin = 0 - doubleW
     
+    -- note that we don't check for boundaries above here
     if (self.y > yMax) then 
         newY = -doubleH
-    elseif (self.y < yMin) then
-        newY = 240 + doubleH
     end
 
     if (self.x > xMax) then
@@ -205,6 +205,15 @@ function BasicEnemy:_onDead()
     self:remove()
 end
 
+---Overridable function that is meant for implementing movement patterns.  Called on each physics update.
+function BasicEnemy:_velocityUpdate()
+end
+
 function BasicEnemy:remove()
     BasicEnemy.super.remove(self)
+end
+
+function BasicEnemy:setVelocity(xv, yv)
+    self.xVelocity = xv
+    self.yVelocity = yv
 end

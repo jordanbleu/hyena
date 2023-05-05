@@ -47,7 +47,37 @@ function Test1Scene:initialize(sceneManager)
 
     self.frameCounter = 0
 
-    TinyShip(200, -20, camera)
+    local dist = 40
+    local spd = 0.5
+    TinyShip(100, -20, camera):withHorizontalDistance(dist):withHorizontalSpeed(spd)
+    TinyShip(120, -20, camera):withHorizontalDistance(dist):withHorizontalSpeed(spd)
+    TinyShip(140, -20, camera):withHorizontalDistance(dist):withHorizontalSpeed(spd)
+    TinyShip(160, -20, camera):withHorizontalDistance(dist):withHorizontalSpeed(spd)
+    TinyShip(180, -20, camera):withHorizontalDistance(dist):withHorizontalSpeed(spd)
+    TinyShip(200, -20, camera):withHorizontalDistance(dist):withHorizontalSpeed(spd)
+    TinyShip(220, -20, camera):withHorizontalDistance(dist):withHorizontalSpeed(spd)
+    TinyShip(240, -20, camera):withHorizontalDistance(dist):withHorizontalSpeed(spd)
+
+    TinyShip(100, -40, camera):withHorizontalDistance(dist):withHorizontalSpeed(-spd)
+    TinyShip(120, -40, camera):withHorizontalDistance(dist):withHorizontalSpeed(-spd)
+    TinyShip(140, -40, camera):withHorizontalDistance(dist):withHorizontalSpeed(-spd)
+    TinyShip(160, -40, camera):withHorizontalDistance(dist):withHorizontalSpeed(-spd)
+    TinyShip(180, -40, camera):withHorizontalDistance(dist):withHorizontalSpeed(-spd)
+    TinyShip(200, -40, camera):withHorizontalDistance(dist):withHorizontalSpeed(-spd)
+    TinyShip(220, -40, camera):withHorizontalDistance(dist):withHorizontalSpeed(-spd)
+    TinyShip(240, -40, camera):withHorizontalDistance(dist):withHorizontalSpeed(-spd)
+
+    TinyShip(100, -60, camera):withHorizontalDistance(dist):withHorizontalSpeed(spd)
+    TinyShip(120, -60, camera):withHorizontalDistance(dist):withHorizontalSpeed(spd)
+    TinyShip(140, -60, camera):withHorizontalDistance(dist):withHorizontalSpeed(spd)
+    TinyShip(160, -60, camera):withHorizontalDistance(dist):withHorizontalSpeed(spd)
+    TinyShip(180, -60, camera):withHorizontalDistance(dist):withHorizontalSpeed(spd)
+    TinyShip(200, -60, camera):withHorizontalDistance(dist):withHorizontalSpeed(spd)
+    TinyShip(220, -60, camera):withHorizontalDistance(dist):withHorizontalSpeed(spd)
+    TinyShip(240, -60, camera):withHorizontalDistance(dist):withHorizontalSpeed(spd)
+
+
+
 
     -- local guy1 = TinyGuy(200,-10,nil, camera, player)
     -- local guy2 = TinyGuy(200,-10,guy1, camera, player)

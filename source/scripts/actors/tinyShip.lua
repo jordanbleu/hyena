@@ -3,7 +3,9 @@ local gfx <const> = playdate.graphics
 import "scripts/actors/basicEnemy"
 
 --[[
-    Tiny ship is a basic enemy
+    Tiny ship is a basic enemy that moves downwards but also alternates left / right 
+    
+    I'm trying a chaining pattern for some of the functions here
 ]]
 class("TinyShip").extends(BasicEnemy)
 
@@ -13,20 +15,36 @@ function TinyShip:init(x,y, cameraInst)
     y = y or 0
 
     -- load images
-    -- self:setIdleAnimation("images/enemies/tinyShipAnim/idle", 250)
-    -- self:setDamageAnimation("images/enemies/tinyShipAnim/damage", 500)
-    -- self:setDeathAnimation("images/enemies/tinyShipAnim/death", 500)
-    
-    -- todo: remove these, this is a poc 
-    -- self:setIdleAnimation("images/enemies/bubbleGuyAnim/idle", 250)
-    -- self:setDamageAnimation("images/enemies/bubbleGuyAnim/damage", 500)
-    -- self:setDeathAnimation("images/enemies/bubbleGuyAnim/death", 500)
-
-    self:setIdleAnimation("images/enemies/blobAnim/idle", 250)
-    self:setDamageAnimation("images/enemies/blobAnim/damage", 500)
-    self:setDeathAnimation("images/enemies/blobAnim/death", 500)
+    self:setIdleAnimation("images/enemies/tinyShipAnim/idle", 250)
+    self:setDamageAnimation("images/enemies/tinyShipAnim/damage", 500)
+    self:setDeathAnimation("images/enemies/tinyShipAnim/death", 500)
     
     self:moveTo(x,y)
     self:add()
+
+    self.xVelocity = 0.5
+    self.yVelocity = 1
+
+    self.moveCycleCounter = 0
+    self.moveCycles = 30
 end
 
+function TinyShip:_velocityUpdate()
+    self.moveCycleCounter += 1
+
+    if (self.moveCycleCounter > self.moveCycles) then
+        self.xVelocity = -self.xVelocity
+        self.moveCycleCounter = 0
+    end
+
+end
+
+function TinyShip:withHorizontalDistance(amount)
+    self.moveCycles = amount
+    return self
+end
+
+function TinyShip:withHorizontalSpeed(amount)
+    self.xVelocity = amount
+    return self
+end
