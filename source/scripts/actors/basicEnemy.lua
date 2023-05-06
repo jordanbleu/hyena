@@ -21,7 +21,7 @@ local STATE <const> =
 ]]
 class("BasicEnemy").extends(Enemy)
 
-function BasicEnemy:init(maxHealth, cameraInst)
+function BasicEnemy:init(maxHealth, cameraInst, playerInst)
     BasicEnemy.super.init(self, maxHealth)
 
     self.idleSpriteAnim = nil
@@ -34,6 +34,7 @@ function BasicEnemy:init(maxHealth, cameraInst)
 
     self.state = STATE.IDLE
     self.camera = cameraInst
+    self.player = playerInst
 
     self.xVelocity = 0
     self.yVelocity = 2
@@ -101,7 +102,6 @@ function BasicEnemy:_checkCollisions()
             end
         end
 
-        -- todo: check for emp
         if (tookDamage) then
             local willDie = (self:getHealth() <= 0)
 
@@ -166,6 +166,10 @@ end
 --[[ Update ]]--
 function BasicEnemy:update()
     BasicEnemy.super.update(self)
+
+    if (self.player:didUseEmp()) then
+        self:damage(3)
+    end
 end
 
 ---Sets the idle animation parameters for the enemy.  Will also automatically set up sprite rect and collision stuff.

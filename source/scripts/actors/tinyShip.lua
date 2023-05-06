@@ -9,8 +9,8 @@ import "scripts/actors/basicEnemy"
 ]]
 class("TinyShip").extends(BasicEnemy)
 
-function TinyShip:init(x,y, cameraInst)
-    TinyShip.super.init(self, 2, cameraInst)
+function TinyShip:init(x,y, cameraInst,playerInst)
+    TinyShip.super.init(self, 2, cameraInst,playerInst)
     x = x or 0
     y = y or 0
 
