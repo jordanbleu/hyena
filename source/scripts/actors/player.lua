@@ -242,6 +242,13 @@ function Player:_checkCollisions()
                 tookDamage = true
             end
 
+        elseif (col:isa(EnemyBullet)) then
+            totalDamageAmount += 5
+            tookDamage = true
+            local spr = SingleSpriteAnimation("images/effects/hardImpactAnim/hard-impact", 500, col.x, col.y)
+            spr:setZIndex(50)
+            col:destroy()
+
         elseif (col:isa(HealthPowerup)) then
             col:collect(self)
         end
@@ -257,7 +264,7 @@ function Player:_checkCollisions()
         self.health -= totalDamageAmount
 
         if (self.health > 0) then
-            self.camera:bigShake()
+            self.camera:mediumShake()
             self.iframeCounter = self.iframes
         end
 

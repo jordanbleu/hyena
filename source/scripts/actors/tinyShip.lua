@@ -27,6 +27,8 @@ function TinyShip:init(x,y, cameraInst,playerInst)
 
     self.moveCycleCounter = 0
     self.moveCycles = 30
+
+    self:setShooterBehavior(SHOOT_BEHAVIOR.RANDOM, 1001)
 end
 
 function TinyShip:_velocityUpdate()
@@ -47,4 +49,15 @@ end
 function TinyShip:withHorizontalSpeed(amount)
     self.xVelocity = amount
     return self
+end
+
+function TinyShip:withShootingDelay(amount)
+    self:setShooterBehavior(SHOOT_BEHAVIOR.RANDOM, amount)
+    return self
+end
+
+---Override this to change damage the enemy does to the player
+---@return integer
+function TinyShip:getDamageAmount()
+    return 5
 end

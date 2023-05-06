@@ -118,7 +118,7 @@ function playdate.update()
     gfx.sprite.update()
     playdate.timer.updateTimers()
     gfx.animation.blinker.updateAll()
-    --playdate.drawFPS(0,0)
+    playdate.drawFPS(0,0)
     --drawDebugText()
 end
 

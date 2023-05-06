@@ -25,10 +25,17 @@ function SingleSpriteAnimation:init(imageTablePath, duration,x, y, onComplete, u
     if (onComplete) then
         self.completedCallback = onComplete
     end
-
+    self.attachedSprite = nil
     self:moveTo(x,y)
     self.animation:moveTo(x,y)
     self.animation:setAnimationCompletedCallback(function() self:_onCompleted() end)
+end
+
+function SingleSpriteAnimation:update()
+    SingleSpriteAnimation.super.update(self)
+    if (self.attachedSprite) then
+        self:moveTo(self.attachedSprite.x, self.attachedSprite.y)
+    end
 end
 
 function SingleSpriteAnimation:getFrame()
@@ -53,6 +60,7 @@ function SingleSpriteAnimation:_onCompleted()
 end
 
 function SingleSpriteAnimation:attachTo(otherSprite)
+    self.attachedSprite = otherSprite
     self.animation:attachTo(otherSprite)
 end
 

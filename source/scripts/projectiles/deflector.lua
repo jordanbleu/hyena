@@ -23,8 +23,8 @@ function Deflector:init(playerInst)
     self:moveTo(playerInst.x,playerInst.y)
     self:setCollideRect(-24,-24,48,48)
     self:setGroups({COLLISION_LAYER.PROJECTILE_DEFLECTOR})
-    self:add()
     self:attachTo(playerInst)
+    self:add()
 
     self.player:setInvincibility(true)
 end

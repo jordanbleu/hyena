@@ -47,8 +47,6 @@ function PlayerBullet:physicsUpdate()
         self:moveTo(newX, newY)
     end
 
-
-
 end
 
 -- call when the bullet hits something.  enemyHit 

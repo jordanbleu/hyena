@@ -3,6 +3,7 @@ local gfx <const> = playdate.graphics
 import "scripts/actors/enemy"
 import "scripts/sprites/singleSpriteAnimation"
 import "scripts/projectiles/playerLaser"
+import "scripts/projectiles/enemyBullet"
 
 local STATE <const> = 
 {
@@ -42,10 +43,14 @@ function BasicEnemy:init(maxHealth, cameraInst, playerInst)
     -- Enemy doesn't move during these cycles while in damage state
     self.damageWaitCycleCounter = 0
     self.damageWaitCycles = 15
-    
+
+    -- bullet dropz
+    self.bulletDropBehavior = SHOOT_BEHAVIOR.NONE
+    self.bulletDropCycles = 500
+    self.bulletDropCounter = 0
+
     -- make x and y not nil (I hate Lua)
     self:moveTo(-100,-100)
-
 end
 
 --[[ Physics Update ]]--
@@ -55,6 +60,29 @@ function BasicEnemy:physicsUpdate()
     self:_updateMovement()
     self:_updateDamageState()
     self:_checkCollisions()
+    self:_shootAtPlayer()
+end
+
+function BasicEnemy:_shootAtPlayer()
+
+    if (self.bulletDropBehavior == SHOOT_BEHAVIOR.LINEAR) then
+        self.bulletDropCounter +=1 
+        if (self.bulletDropCounter > self.bulletDropCounter) then
+            self:_dropBullet()            
+            self.bulletDropCounter = 0
+        end
+    elseif (self.bulletDropBehavior == SHOOT_BEHAVIOR.RANDOM) then
+        local rando = math.random(self.bulletDropCycles)
+        local winner = math.floor(self.bulletDropCycles/2)
+        if (rando == winner) then
+            self:_dropBullet()
+        end
+    end
+
+end
+
+function BasicEnemy:_dropBullet()
+    EnemyBullet(self.x, self.y)
 end
 
 function BasicEnemy:_checkCollisions()
@@ -173,7 +201,6 @@ function BasicEnemy:update()
 end
 
 ---Sets the idle animation parameters for the enemy.  Will also automatically set up sprite rect and collision stuff.
----@param spriteAnim any a SpriteAnimation object
 function BasicEnemy:setIdleAnimation(imageTablePath, duration)
     self.idleSpriteAnim = spriteAnim
     self.idleSpriteAnim = SpriteAnimation(imageTablePath, duration, self.x, self.y)
@@ -223,4 +250,12 @@ end
 function BasicEnemy:setVelocity(xv, yv)
     self.xVelocity = xv
     self.yVelocity = yv
+end
+
+---Set up the shooting behvaior for this enemy
+---@param behavior any Use the SHOOT_BEHAVIOR enum.  Determines what pattern to follow for shooting.
+---@param cycles any Meaning kinda depends on behavior, but basically higher number = less shooting.
+function BasicEnemy:setShooterBehavior(behavior, cycles)
+    self.bulletDropBehavior = behavior
+    self.bulletDropCycles = cycles
 end
