@@ -1,6 +1,8 @@
 local gfx <const> = playdate.graphics
 
 import "scripts/actors/enemy"
+import "scripts/sprites/singleSpriteAnimation"
+import "scripts/projectiles/playerLaser"
 
 local STATE <const> = 
 {
@@ -73,8 +75,8 @@ function BasicEnemy:_checkCollisions()
             end
 
         elseif (col:isa(PlayerLaser)) then
-            tookDamage= true
             if (col.isDamageEnabled) then
+                tookDamage= true
                 self:damage(5)
             end
 
@@ -99,11 +101,12 @@ function BasicEnemy:_checkCollisions()
             end
         end
 
+        -- todo: check for emp
         if (tookDamage) then
             local willDie = (self:getHealth() <= 0)
 
             if (not willDie) then
-                local spr = SingleSpriteAnimation(self.damageSpriteAnimParameters.imageTablePath, self.damageSpriteAnimParameters.duration, col.x, col.y)
+                local spr = SingleSpriteAnimation(self.damageSpriteAnimParameters.imageTablePath, self.damageSpriteAnimParameters.duration, col.x or self.x, col.y or self.y)
                 spr:setZIndex(self:getZIndex() + 1)
                 spr:attachTo(self)
             end

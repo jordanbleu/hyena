@@ -6,14 +6,15 @@ import 'scripts/sprites/singleSpriteAnimation'
 class("PlayerLaser").extends(SingleSpriteAnimation)
 
 function PlayerLaser:init(x,y,cameraInst)
+    PlayerLaser.super.init(self, 'images/projectiles/playerLaserAnim/playerLaser', 1000, x, y)
     self.camera = cameraInst
     
     self.didDamage = false
     self.isDamageEnabled = false
     
-    self:setCollideRect(x-2,y-120,4,240)
     self:setGroups({COLLISION_LAYER.PLAYER_PROJECTILE})
-    PlayerLaser.super.init(self, 'images/projectiles/playerLaserAnim/playerLaser', 1000, x, y)
+    local w,h = self:getSize()
+    self:setCollideRect(-(w/2),-(h/2),w,h)
     self:add()
 end
 
