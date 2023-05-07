@@ -5,9 +5,9 @@ import 'scripts/actors/actor'
 --[[ Bullet that damages any enemies. ]]
 class("PlayerBullet").extends(Actor)
 
-function PlayerBullet:init(x,y)
+function PlayerBullet:init(x,y, playerInst)
     PlayerBullet.super.init(self)
-    
+    self.player = playerInst
     self.yVelocity = -16
     self.xVelocity = 0
 
@@ -28,11 +28,11 @@ function PlayerBullet:update()
     PlayerBullet.super.update(self)
 
     if (self.y < -40) then
-        self:destroy()
+        self:remove()
     end
 
     if (self.y > 250) then
-        self:destroy()
+        self:remove()
     end
 
 end
@@ -49,7 +49,15 @@ function PlayerBullet:physicsUpdate()
 
 end
 
-function PlayerBullet:destroy()
+-- call when the bullet hits something.  enemyHit 
+function PlayerBullet:destroy(isEnvironmentalObject)
+    isEnvironmentalObject = isEnvironmentalObject or false
+    -- if an enemy was hit
+    if (not isEnvironmentalObject) then
+        DATA.GAME.Statistics.TotalHits+=1
+        self.player:addEnergy()
+        
+    end
     self.isActive = false
     self:remove()
 end

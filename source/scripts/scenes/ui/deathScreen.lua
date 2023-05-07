@@ -14,13 +14,23 @@ function DeathScreen:initialize(sceneManager)
     blackSprite:moveTo(200,120)
     blackSprite:add()
 
+    -- todo: nah don't like this.
+
+    --local plax = ParallaxLayer(gfx.image.new("images/backgrounds/patterns/creepy"),0,5)
+
+    local vig = gfx.sprite.new(gfx.image.new("images/ui/display-frame"))
+    vig:moveTo(200,120)
+    vig:setIgnoresDrawOffset(true)
+    vig:setZIndex(100)
+    vig:add()
+
     local retryText = gfx.getString("deathscreen.menuitems.retry")
     local quitText = gfx.getString("deathscreen.menuitems.quit")
 
     local menu = Menu(retryText, quitText)
     menu:setCallbackForItemIndex(1, function() self:_retry(sceneManager) end)
     menu:setCallbackForItemIndex(2, function() self:_quitToMenu(sceneManager) end)
-    --todo: add a kickass background
+    
     
 end
 

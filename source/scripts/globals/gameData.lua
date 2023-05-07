@@ -16,7 +16,14 @@ DATA = {
         HasExtendedEnergyRegen  = false,
         HasHealthRegen = false,
         HasDoubleBullets = false,
-        HasExtraDodges = false
+        HasExtraDodges = false,
+        Statistics = {
+            ---Total shots fired in the entire lifetime of the save file.  Persists after death.
+            TotalShotsFired = 0,
+            ---Total enemies hit in the entire lifetime of the save file. Persists after death.
+            TotalHits = 0
+
+        }
     },
     GLOBAL = {
         Version = 1

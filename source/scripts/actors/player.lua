@@ -53,7 +53,11 @@ function Player:init(cameraInst, sceneManagerInst)
     self.maxHealth = 100
     self.health = self.maxHealth
     self.maxEnergy = 100
-    self.energy = self.maxEnergy
+    self.energy = self.maxEnergy/2
+
+    -- big mode is what i'm calling the full energy mode
+    self.bigModeCycleCounter = 0
+    self.bigModeCycles = 150
 
     self.dashVelocity = 0
     self.lastHorizontalDirection = 1
@@ -62,7 +66,7 @@ function Player:init(cameraInst, sceneManagerInst)
 
     self.selectedWeapon = WEAPON.NONE
 
-    self.energyRefillTimer = PhysicsTimer(50, function() self:_refillEnergy() end)
+    self.energyRefillTimer = PhysicsTimer(150, function() self:_refillEnergy() end)
     self.xVelocity = 0
     self.yVelocity = 0
     self:setImage(gfx.image.new("images/player"))
@@ -136,8 +140,8 @@ function Player:update()
             self.health += 5
         end
 
-        if (self.energy < self.maxEnergy) then
-            self.energy += 5
+        if (self.energy < self.maxEnergy/2) then
+            self.energy += 1
         end
 
     end
@@ -153,6 +157,15 @@ function Player:physicsUpdate()
         
         self:_handleMovement()
         self:_decelerate()
+        self:_updateBigMode()
+        
+    end
+end
+
+function Player:_updateBigMode()
+
+    if (self.bigModeCycleCounter > 0) then
+        self.bigModeCycleCounter -= 1
     end
 end
 
@@ -229,6 +242,13 @@ function Player:_checkCollisions()
                 tookDamage = true
             end
 
+        elseif (col:isa(EnemyBullet)) then
+            totalDamageAmount += 5
+            tookDamage = true
+            local spr = SingleSpriteAnimation("images/effects/hardImpactAnim/hard-impact", 500, col.x, col.y)
+            spr:setZIndex(50)
+            col:destroy()
+
         elseif (col:isa(HealthPowerup)) then
             col:collect(self)
         end
@@ -244,7 +264,7 @@ function Player:_checkCollisions()
         self.health -= totalDamageAmount
 
         if (self.health > 0) then
-            self.camera:bigShake()
+            self.camera:mediumShake()
             self.iframeCounter = self.iframes
         end
 
@@ -290,7 +310,7 @@ function Player:_handlePlayerInput()
     if (playdate.buttonJustReleased(playdate.kButtonA)) then
         if (self.holdACycles < HOLD_A_CYCLES_TO_WAIT) then
             if (self.allowAttacks) then
-                PlayerBullet(self.x, self.y)
+                PlayerBullet(self.x, self.y, self)
             end
         end
         self.holdACycles =0 
@@ -303,27 +323,27 @@ function Player:_handlePlayerInput()
         
         if(self.allowAttacks) then
             if (self.selectedWeapon == WEAPON.LASER) then
-                if (self.energy > 33) then
-                    self.energy -= 33
+                if (self.energy > 25) then
+                    self.energy -= 25
                     PlayerLaser(self.x, self.y - 130, self.camera)  
                 end
 
             elseif (self.selectedWeapon == WEAPON.MISSILE) then
-                if (self.energy > 25) then 
-                    self.energy -= 25
+                if (self.energy > 50) then 
+                    self.energy -= 50
                     PlayerMissile(self.camera, self.x, self.y)
                                     
                 end
 
             elseif (self.selectedWeapon == WEAPON.MINE) then 
-                if (self.energy > 50) then
-                    self.energy -= 50
+                if (self.energy > 25) then
+                    self.energy -= 25
                     PlayerMine(self.camera, self.x, self.y)
                 end
 
             elseif (self.selectedWeapon == WEAPON.SHIELD) then
-                if (self.energy > 33) then
-                    self.energy -= 33
+                if (self.energy > 25) then
+                    self.energy -= 25
                     Deflector(self)
                 end
             
@@ -340,8 +360,14 @@ function Player:_handlePlayerInput()
 end
 
 function Player:_refillEnergy()
-    if (self.energy < self.maxEnergy) then
+    local halfMaxEnergy = self.maxEnergy/2
+
+    -- energy normalizes back to half way
+    if (self.energy < halfMaxEnergy) then
         self.energy += 1
+    elseif (self.bigModeCycleCounter <= 0) then
+        -- if the player is in big mode, then keep energy filled
+        self.energy -= 0.75
     end
 end
 
@@ -384,7 +410,6 @@ function Player:_handleMovement()
         nextYPosition = 240
     end
 
-    
     self:moveTo(nextXPosition, nextYPosition)
 end
 
@@ -468,4 +493,23 @@ end
 
 function Player:setInvincibility(enable) 
     self.invincible = enable
+end
+
+function Player:addEnergy()
+
+    if (self.bigModeCycleCounter > 0) then
+        return 
+    end
+
+    self.energy+=2.5
+
+    if (self.energy >= self.maxEnergy) then
+        self.energy = self.maxEnergy
+        self.bigModeCycleCounter = self.bigModeCycles
+    end
+
+end
+
+function Player:isBigMode()
+    return self.bigModeCycleCounter > 0
 end

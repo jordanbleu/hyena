@@ -6,6 +6,7 @@ import "scripts/sprites/parallaxLayer"
 import "scripts/actors/grunt"
 import "scripts/actors/rangedGrunt"
 import "scripts/actors/tinyGuy"
+import "scripts/actors/tinyShip"
 
 import "scripts/actors/deathStar"
 import "scripts/actors/diveBomb"
@@ -46,6 +47,37 @@ function Test1Scene:initialize(sceneManager)
 
     self.frameCounter = 0
 
+    local dist = 40
+    local spd = 0.5
+    TinyShip(100, -20, camera, player):withHorizontalDistance(dist):withHorizontalSpeed(spd)
+    TinyShip(120, -20, camera, player):withHorizontalDistance(dist):withHorizontalSpeed(spd)
+    TinyShip(140, -20, camera, player):withHorizontalDistance(dist):withHorizontalSpeed(spd)
+    TinyShip(160, -20, camera, player):withHorizontalDistance(dist):withHorizontalSpeed(spd)
+    TinyShip(180, -20, camera, player):withHorizontalDistance(dist):withHorizontalSpeed(spd)
+    TinyShip(200, -20, camera, player):withHorizontalDistance(dist):withHorizontalSpeed(spd)
+    TinyShip(220, -20, camera, player):withHorizontalDistance(dist):withHorizontalSpeed(spd)
+    TinyShip(240, -20, camera, player):withHorizontalDistance(dist):withHorizontalSpeed(spd)
+
+    TinyShip(100, -40, camera, player):withHorizontalDistance(dist):withHorizontalSpeed(-spd)
+    TinyShip(120, -40, camera, player):withHorizontalDistance(dist):withHorizontalSpeed(-spd)
+    TinyShip(140, -40, camera, player):withHorizontalDistance(dist):withHorizontalSpeed(-spd)
+    TinyShip(160, -40, camera, player):withHorizontalDistance(dist):withHorizontalSpeed(-spd)
+    TinyShip(180, -40, camera, player):withHorizontalDistance(dist):withHorizontalSpeed(-spd)
+    TinyShip(200, -40, camera, player):withHorizontalDistance(dist):withHorizontalSpeed(-spd)
+    TinyShip(220, -40, camera, player):withHorizontalDistance(dist):withHorizontalSpeed(-spd)
+    TinyShip(240, -40, camera, player):withHorizontalDistance(dist):withHorizontalSpeed(-spd)
+    
+    TinyShip(100, -60, camera, player):withHorizontalDistance(dist):withHorizontalSpeed(spd)
+    TinyShip(120, -60, camera, player):withHorizontalDistance(dist):withHorizontalSpeed(spd)
+    TinyShip(140, -60, camera, player):withHorizontalDistance(dist):withHorizontalSpeed(spd)
+    TinyShip(160, -60, camera, player):withHorizontalDistance(dist):withHorizontalSpeed(spd)
+    TinyShip(180, -60, camera, player):withHorizontalDistance(dist):withHorizontalSpeed(spd)
+    TinyShip(200, -60, camera, player):withHorizontalDistance(dist):withHorizontalSpeed(spd)
+    TinyShip(220, -60, camera, player):withHorizontalDistance(dist):withHorizontalSpeed(spd)
+    TinyShip(240, -60, camera, player):withHorizontalDistance(dist):withHorizontalSpeed(spd)
+
+
+
 
     -- local guy1 = TinyGuy(200,-10,nil, camera, player)
     -- local guy2 = TinyGuy(200,-10,guy1, camera, player)
@@ -70,7 +102,7 @@ function Test1Scene:initialize(sceneManager)
     --ShieldRangedGrunt(200,50, camera, player)
     --RangedGrunt(200,50, camera, player)
 
-    DeathStar(200,40, player)
+    --DeathStar(200,40, player)
 
     -- Grunt(150,-40,camera, player)
     -- Grunt(200,-30,camera, player)

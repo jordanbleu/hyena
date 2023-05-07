@@ -16,13 +16,26 @@ class("SingleSpriteAnimation").extends(Actor)
 ---@param y integer y position
 function SingleSpriteAnimation:init(imageTablePath, duration,x, y, onComplete, useCache)
     SingleSpriteAnimation.super.init(self)
+
+    x = x or 0
+    y = y or 0
+
     self.animation = SpriteAnimation(imageTablePath, duration, x,y, false, useCache)
 
     if (onComplete) then
         self.completedCallback = onComplete
     end
-
+    self.attachedSprite = nil
+    self:moveTo(x,y)
+    self.animation:moveTo(x,y)
     self.animation:setAnimationCompletedCallback(function() self:_onCompleted() end)
+end
+
+function SingleSpriteAnimation:update()
+    SingleSpriteAnimation.super.update(self)
+    if (self.attachedSprite) then
+        self:moveTo(self.attachedSprite.x, self.attachedSprite.y)
+    end
 end
 
 function SingleSpriteAnimation:getFrame()
@@ -47,6 +60,7 @@ function SingleSpriteAnimation:_onCompleted()
 end
 
 function SingleSpriteAnimation:attachTo(otherSprite)
+    self.attachedSprite = otherSprite
     self.animation:attachTo(otherSprite)
 end
 
@@ -62,3 +76,6 @@ function SingleSpriteAnimation:setIgnoresDrawOffset(ignore)
     self.animation:setIgnoresDrawOffset(ignore)
 end
 
+function SingleSpriteAnimation:getSize()
+    return self.animation:getSize()
+end

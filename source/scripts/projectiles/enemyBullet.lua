@@ -8,14 +8,14 @@ class("EnemyBullet").extends(Actor)
 function EnemyBullet:init(x,y)
     EnemyBullet.super.init(self)
     
-    self.yVelocity = 8
+    self.yVelocity = 6
     self.xVelocity = 0
 
     self.isActive = true
     self:setImage(gfx.image.new("images/projectiles/enemy-bullet"))
     self:moveTo(x,y)
     self:setCollideRect(0,0,self:getSize())
-    self:setGroups({COLLISION_LAYER.ENEMY_PROJECTILE})
+    self:setGroups({COLLISION_LAYER.ENEMY})
     self:setCollidesWithGroups({COLLISION_LAYER.PROJECTILE_DEFLECTOR})
 
     self.didRicochet = false

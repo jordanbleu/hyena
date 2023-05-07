@@ -72,6 +72,12 @@ function Hud:init(playerInst)
     self.energyBarSprite:setIgnoresDrawOffset(true)
     self.energyBarSprite:add()
 
+    self.energyBarBadgeAnimation = SpriteAnimation("images/ui/hud/energyBarBadgeAnim/badge", 500, 200+badgeGap,hudHeight+1)
+    self.energyBarBadgeAnimation:setZIndex(101)
+    self.energyBarBadgeAnimation:setIgnoresDrawOffset(true)
+    self.energyBarBadgeAnimation:setRepeats(-1)
+    self.energyBarBadgeAnimation:hide()
+
     -- these are the values that are currently displayed 
     -- they are not necessarily up to date
     self.presentedHealth = 0
@@ -87,6 +93,8 @@ function Hud:update()
     self:_updateWeaponSprite()
     self:_updateHealthBar()
     self:_updateEnergyBar()
+    self:_setFlashingEnergyIcon(self.player:isBigMode())
+
 end
 
 function Hud:_updateWeaponSprite()
@@ -118,4 +126,12 @@ function Hud:_updateEnergyBar()
         gfx.setColor(gfx.kColorWhite)
         gfx.fillRect(46-(46*percent), 0, 46, 2)
     gfx.popContext()
+end
+
+function Hud:_setFlashingEnergyIcon(isEnabled)
+    if (isEnabled) then
+        self.energyBarBadgeAnimation:show()
+    else
+        self.energyBarBadgeAnimation:hide()
+    end
 end

@@ -58,3 +58,14 @@ CHECKPOINT = {
     START = 0,
     TEST = 1
 }
+
+---Used by enemies to determine what pattern they should use to shoot
+SHOOT_BEHAVIOR =
+{
+    -- no bullets
+    NONE = 0,
+    -- enemy will pick a number up to the specified bullet drop delay and decide to shoot
+    RANDOM = 1,
+    -- enemy will count up to bullet delay then shoot on a linear schedule.
+    LINEAR = 2
+}
