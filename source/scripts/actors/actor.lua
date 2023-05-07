@@ -8,22 +8,33 @@ local gfx <const> = playdate.graphics
 class("Actor").extends(gfx.sprite)
 
 function Actor:init()
-    self.updateTimer = playdate.timer.performAfterDelay(GLOBAL_TIME_DELAY,function() self:physicsUpdate() end)
-    self.updateTimer.repeats = true
+    --self.updateTimer = playdate.timer.performAfterDelay(GLOBAL_TIME_DELAY,function() self:physicsUpdate() end)
+    --self.updateTimer.repeats = true
 end
 
 function Actor:update()
-    if (self.updateTimer.duration ~= GLOBAL_TIME_DELAY) then
-        self.updateTimer.duration = GLOBAL_TIME_DELAY
-        self.updateTimer:reset()
+    if (GLOBAL_PHYSICS_ENABLED) then
+        self:physicsUpdate()
     end
 end
 
---[[ Called each frame but is affected by the current timeScaler ]]
+--[[ 
+    Called each frame but only if physics are enabled.
+
+    Things that should be in physicsUpdate:
+    * Movement logic
+    * Drawing stuff
+    * Timers 
+
+    Things that should NOT be in physicsUpdate
+    * collision detection
+    * UI stuff
+    * things that have to always run
+ ]]
 function Actor:physicsUpdate()
 end
 
 function Actor:remove()
-    self.updateTimer:remove()
+    --self.updateTimer:remove()
     Actor.super.remove(self)
 end

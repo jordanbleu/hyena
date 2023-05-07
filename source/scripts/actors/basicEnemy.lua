@@ -25,9 +25,9 @@ class("BasicEnemy").extends(Enemy)
 function BasicEnemy:init(maxHealth, cameraInst, playerInst)
     BasicEnemy.super.init(self, maxHealth)
 
-    self.idleSpriteAnim = nil
-    self.w = 0
-    self.h = 0
+    self.idleSprite = nil
+    self.doubleW = 0
+    self.doubleH = 0
     -- should be set to the single sprite animation params for the damage anim
     self.damageSpriteAnimParameters = nil
     -- should be set to the single sprite animation params for the death anim
@@ -90,7 +90,9 @@ function BasicEnemy:_checkCollisions()
     
     local tookDamage = false
 
-    for i,col in ipairs(collisions) do
+    if (#collisions > 0) then
+        local col = collisions[1]
+
         if (col:isa(PlayerBullet)) then
             tookDamage= true
             -- create a new explosion object at the bullets position
@@ -140,38 +142,34 @@ function BasicEnemy:_checkCollisions()
             end
         end
     end
+    
 
 end
 
 -- Basic movement logic using x / y velocity as well as boundary checks
 function BasicEnemy:_updateMovement()
+    local newX = self.x
+    local newY = self.y
     if (self.state == STATE.IDLE) then
-        local newX = self.x + self.xVelocity
-        local newY = self.y + self.yVelocity
-        self:moveTo(newX, newY)
+        newX = self.x + self.xVelocity
+        newY = self.y + self.yVelocity
     end
 
     -- boundary logic.  If actor goes outside boundaries, he loops around the other side
-    local newX = self.x
-    local newY = self.y
-
-    local doubleW = self.w*2
-    local doubleH = self.h*2
-
-    local yMax = 240 + doubleH
-    local yMin = 0 - doubleH
-    local xMax = 400 + doubleW
-    local xMin = 0 - doubleW
+    local yMax = 240 + self.doubleH
+    local yMin = 0 - self.doubleH
+    local xMax = 400 + self.doubleW
+    local xMin = 0 - self.doubleW
     
-    -- note that we don't check for boundaries above here
+    -- note that we don't check for boundaries above the top of the screen
     if (self.y > yMax) then 
-        newY = -doubleH
+        newY = -self.doubleH
     end
 
     if (self.x > xMax) then
-        newX = -doubleW
+        newX = -self.doubleW
     elseif (self.x < xMin) then
-        newX = 400 + doubleW
+        newX = 400 + self.doubleW
     end
     self:moveTo(newX, newY)
 
@@ -180,6 +178,7 @@ end
 
 -- waits for damage state to end and swaps states
 function BasicEnemy:_updateDamageState()
+
     if (self.state ~= STATE.DAMAGE) then
         return 
     end
@@ -194,28 +193,44 @@ end
 --[[ Update ]]--
 function BasicEnemy:update()
     BasicEnemy.super.update(self)
-
+    self.idleSprite:moveTo(self.x,self.y)
     if (self.player:didUseEmp()) then
         self:damage(3)
     end
 end
 
----Sets the idle animation parameters for the enemy.  Will also automatically set up sprite rect and collision stuff.
-function BasicEnemy:setIdleAnimation(imageTablePath, duration)
-    self.idleSpriteAnim = spriteAnim
-    self.idleSpriteAnim = SpriteAnimation(imageTablePath, duration, self.x, self.y)
+function BasicEnemy:setIdleSprite(imagePath)
+    local sm = gameContext.getSceneManager()
+
+    self.idleSprite = gfx.sprite.new(sm:getImageFromCache(imagePath))
+    self.idleSprite:setZIndex(self:getZIndex())
+    self.idleSprite:add()
+    local w,h = self.idleSprite:getSize()
     
-    self.idleSpriteAnim:setRepeats(-1)
-    local w,h = self.idleSpriteAnim:getSize()
-    self.w = w
-    self.h = h
-    self.idleSpriteAnim:attachTo(self)
+    self.doubleW = w*2
+    self.doubleH = h*2
 
     self:setCollideRect(-w/2,-h/2,w,h)
     self:setGroups({COLLISION_LAYER.ENEMY})
     self:setCollidesWithGroups({COLLISION_LAYER.PLAYER, COLLISION_LAYER.PLAYER_PROJECTILE})
-    
+
 end
+
+---Sets the idle animation parameters for the enemy.  Will also automatically set up sprite rect and collision stuff.
+-- function BasicEnemy:setIdleAnimation(imageTablePath, duration)
+--     self.idleSpriteAnim = spriteAnim
+--     self.idleSpriteAnim = SpriteAnimation(imageTablePath, duration, self.x, self.y)
+    
+--     self.idleSpriteAnim:setRepeats(-1)
+--     local w,h = self.idleSpriteAnim:getSize()
+--     self.doubleW = w*2
+--     self.doubleH = h*2
+
+--     self:setCollideRect(-w/2,-h/2,w,h)
+--     self:setGroups({COLLISION_LAYER.ENEMY})
+--     self:setCollidesWithGroups({COLLISION_LAYER.PLAYER, COLLISION_LAYER.PLAYER_PROJECTILE})
+    
+-- end
 
 ---Sets the death animation parameters for the enemy.  Idle sprite gets removed 
 function BasicEnemy:setDeathAnimation(imageTablePath, duration)
@@ -234,7 +249,7 @@ function BasicEnemy:setDamageAnimation(imageTablePath, duration)
 end
 
 function BasicEnemy:_onDead()
-    self.idleSpriteAnim:remove()
+    self.idleSprite:remove()
     SingleSpriteAnimation(self.deathSpriteAnimParameters.imageTablePath, self.deathSpriteAnimParameters.duration, self.x, self.y)
     self:remove()
 end

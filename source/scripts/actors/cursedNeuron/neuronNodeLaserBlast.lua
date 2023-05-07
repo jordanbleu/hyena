@@ -3,7 +3,7 @@ local gfx <const> = playdate.graphics
 import "scripts/projectiles/enemyProjectileSprite"
 
 --[[ 
-    There are four neuron nodes that protect the cursed neuron
+    Laser blast that comes from the Cursed Neuron nodes
 ]] 
 class("NeuronNodeLaserBlast").extends(EnemyProjectileSprite) 
 
@@ -15,11 +15,14 @@ function NeuronNodeLaserBlast:init(x, y, cameraInst, playerInst)
     self.didDamage = false
     self.isDamageEnabled = false
 
-    self:setCollideRect(x-2,y-120,4,240)
+    PlayerLaser.super.init(self, 'images/projectiles/playerLaserAnim/playerLaser', 1500, x, y)
+    
     self:setGroups({COLLISION_LAYER.ENEMY})
+    local w,h = self:getSize()
+    self:setCollideRect(-(w/2),-(h/2),w,h)
+
     self:setCollidesWithGroups({COLLISION_LAYER.PLAYER, COLLISION_LAYER.PLAYER_PROJECTILE})
     self:add()
-    PlayerLaser.super.init(self, 'images/projectiles/playerLaserAnim/playerLaser', 1500, x, y)
 end
 
 function NeuronNodeLaserBlast:update()

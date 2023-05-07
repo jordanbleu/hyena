@@ -15,7 +15,7 @@ function TinyShip:init(x,y, cameraInst,playerInst)
     y = y or 0
 
     -- load images
-    self:setIdleAnimation("images/enemies/tinyShipAnim/idle", 250)
+    self:setIdleSprite("images/enemies/tinyShip")
     self:setDamageAnimation("images/enemies/tinyShipAnim/damage", 500)
     self:setDeathAnimation("images/enemies/tinyShipAnim/death", 500)
     

@@ -38,7 +38,7 @@ import "scripts/scenes/test1Scene"
 import "scripts/scenes/demoScene"
 import "scripts/scenes/scene0020"
 import "scripts/scenes/scene0030"
-import "scripts/scenes/scene0080"
+import "scripts/scenes/scene0050"
 import "scripts/scenes/cutsceneDemo"
 import "scripts/scenes/ui/mainMenu"
 
@@ -56,13 +56,13 @@ local function setup()
 
     -- long in the future, this will be set to the 'title screen scene'
     --local firstScene = DeathScreen()
-    local firstScene = Test1Scene() 
+    --local firstScene = Test1Scene() 
     --local firstScene = CutsceneDemo()
     --local firstScene = DemoScene()
     --local firstScene = MainMenu() -- Uncomment to start at main menu
     --local firstScene = Scene0020() -- Uncomment to start from the opening credits
     --local firstScene = Scene0030() -- Start from first gameplay section
-    --local firstScene = Scene0080() -- boss battle
+    local firstScene = Scene0050() -- boss battle
 
     sceneMgr:switchScene(firstScene, SCENE_TRANSITION.HARD_CUT)
 end
@@ -107,8 +107,6 @@ local function drawDebugText()
     gfx.drawTextWhite("Scenes: " .. tostring(scenes), 10, 50)
     gfx.drawTextWhite("Timers: " .. tostring(timers), 10, 60)
     gfx.drawTextWhite("Sprites: " .. tostring(#sprites), 10, 70)
-
-
 end
 
 setup()
@@ -122,19 +120,6 @@ function playdate.update()
     --drawDebugText()
 end
 
--- ** this should be disabled for the final build **
-function playdate.keyReleased(key)
-    local k = string.lower(key)
-
-    -- press T to toggle time scale 
-    if (k == "t") then
-        if (GLOBAL_TIME_DELAY == 0) then
-            GLOBAL_TIME_DELAY = 250
-        else 
-            GLOBAL_TIME_DELAY = 0
-        end
-    end
-end
 
 
 

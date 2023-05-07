@@ -113,3 +113,7 @@ end
   * It doesn't work
   * For some reason this mades the debug button work again lol
 
+### Performance Notes
+
+* The max amount of `basicEnemy` instances that should be on screen at a time seems to be about 16 (16 will give mild frame drops though).  This is for a 16x16 image, with very little movement logic
+* For collision logic, instead of iterating over every collision, it seems to be better to just respond to the first collision each frame

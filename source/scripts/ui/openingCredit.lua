@@ -23,7 +23,7 @@ function OpeningCredit:init(imageTablePath)
     -- the opening credit fade in animator itself (will animate forwards, then backwards)
     self.sprite = SpriteAnimation(imageTablePath, 1000, 200, 120)
     self.sprite:setIgnoresDrawOffset(true)
-    self.sprite:setZIndex(999)
+    self.sprite:setZIndex(100)
     self.sprite:setAnimationCompletedCallback(function() self:_animCompleted() end)
     self.sprite:setRemoveOnComplete(false)
 
