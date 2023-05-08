@@ -70,7 +70,7 @@ function LivesIndicator:init(lives)
 
     self.cycleCounter = 0
     -- how long to display the lives indicators before removing one
-    self.preWaitCycles = 50
+    self.preWaitCycles = 10
     -- how long to display the lives indicators before animating out 
     self.postWaitCycles = 20
 

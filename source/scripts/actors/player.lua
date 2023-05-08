@@ -235,25 +235,26 @@ function Player:_checkCollisions()
     local totalDamageAmount = 0
     local collisions = self:overlappingSprites()
 
-    for i,col in ipairs(collisions) do
+    if (#collisions > 0) then
+        local col = collisions[1]
         if (col:isa(Enemy) or col:isa(EnemyProjectileSprite)) then
             if (col:damageEnabled()) then
                 totalDamageAmount += col:getDamageAmount()
                 tookDamage = true
             end
-
+    
         elseif (col:isa(EnemyBullet)) then
             totalDamageAmount += 5
             tookDamage = true
             local spr = SingleSpriteAnimation("images/effects/hardImpactAnim/hard-impact", 500, col.x, col.y)
             spr:setZIndex(50)
             col:destroy()
-
+    
         elseif (col:isa(HealthPowerup)) then
             col:collect(self)
         end
-    end
-
+    end 
+    
     -- player is inviisble 
     if (self.iframeCounter > 0 or self.invincible) then 
         tookDamage = false

@@ -16,7 +16,7 @@ function ScreenFlash:init(durationMs, bgColor)
 
     self.fadedRects = {}
 
-    if (bgColor == playdate.kColorBlack or playdate.getReduceFlashing()) then
+    if (bgColor == gfx.kColorBlack or playdate.getReduceFlashing()) then
         self.fadedRects = SCREEN_EFFECT_CACHE.Black
     else 
         self.fadedRects = SCREEN_EFFECT_CACHE.White

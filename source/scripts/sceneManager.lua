@@ -151,7 +151,6 @@ function SceneManager:_handleFade()
                 self.animator = gfx.animator.new(TRANSITION_DURATION/2, 0, 100)
                 self.transitionState = TRANSITION_STATE.WAITING
 
-            
             elseif (self.transitionState == TRANSITION_STATE.FADING_IN) then 
                 self.animator = nil
                 self.transitionState = TRANSITION_STATE.COMPLETE
