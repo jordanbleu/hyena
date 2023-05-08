@@ -41,6 +41,8 @@ import "scripts/scenes/scene0030"
 import "scripts/scenes/scene0050"
 import "scripts/scenes/cutsceneDemo"
 import "scripts/scenes/ui/mainMenu"
+import "scripts/globals/globalCache"
+
 
 local gfx <const> = playdate.graphics
 
@@ -50,21 +52,22 @@ local function setup()
 
     playdate.display.setRefreshRate(GLOBAL_TARGET_FPS)
     gfx.setImageDrawMode(gfx.kDrawModeCopy)
- 
+    globalCache.preComputeScreenEffects()
+
     local sceneMgr = SceneManager()
     sceneMgr:add()
 
     -- long in the future, this will be set to the 'title screen scene'
     --local firstScene = DeathScreen()
-    --local firstScene = Test1Scene() 
+    local firstScene = Test1Scene() 
     --local firstScene = CutsceneDemo()
     --local firstScene = DemoScene()
     --local firstScene = MainMenu() -- Uncomment to start at main menu
     --local firstScene = Scene0020() -- Uncomment to start from the opening credits
     --local firstScene = Scene0030() -- Start from first gameplay section
-    local firstScene = Scene0050() -- boss battle
+    --local firstScene = Scene0050() -- boss battle
 
-    sceneMgr:switchScene(firstScene, SCENE_TRANSITION.HARD_CUT)
+    sceneMgr:switchScene(firstScene, SCENE_TRANSITION.FADE_IO)
 end
 
 
