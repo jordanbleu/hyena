@@ -7,8 +7,8 @@ class("Hud").extends(gfx.sprite)
 function Hud:init(playerInst)
 
     local hudHeight = 12
-    local healthBarGap = 50
-    local badgeGap = 80
+    local healthBarGap = 100
+    local badgeGap = 160
     self.player = playerInst
 
     -- load images for each weapon type into memory for big speed.
@@ -42,7 +42,7 @@ function Hud:init(playerInst)
     self.healthBarBadge:add()
 
     -- draw the rect for the health bar
-    self.healthBarRect = gfx.image.new(46, 2)
+    self.healthBarRect = gfx.image.new(92, 6)
     self.healthBarSprite = gfx.sprite.new(self.healthBarRect)
     self.healthBarSprite:moveTo(200-healthBarGap, hudHeight-1)
     self.healthBarSprite:setZIndex(100)
@@ -64,8 +64,7 @@ function Hud:init(playerInst)
     self.energyBarBadge:add()
     
     -- draw the rect for the energy bar
-    self.energyBarRect = gfx.image.new(46, 2)
-    self.energyBarRect = gfx.image.new(46, 2)
+    self.energyBarRect = gfx.image.new(92, 6)
     self.energyBarSprite = gfx.sprite.new(self.energyBarRect)
     self.energyBarSprite:moveTo(200+healthBarGap, hudHeight-1)
     self.energyBarSprite:setZIndex(100)
@@ -114,7 +113,7 @@ function Hud:_updateHealthBar()
     gfx.pushContext(self.healthBarRect)
         gfx.clear(gfx.kColorClear)
         gfx.setColor(gfx.kColorWhite)
-        gfx.fillRect(0, 0, percent * 46, 2)
+        gfx.fillRect(0, 0, percent * 92, 4)
     gfx.popContext()
 end
 
@@ -124,7 +123,7 @@ function Hud:_updateEnergyBar()
     gfx.pushContext(self.energyBarRect)
         gfx.clear(gfx.kColorClear)
         gfx.setColor(gfx.kColorWhite)
-        gfx.fillRect(46-(46*percent), 0, 46, 2)
+        gfx.fillRect(92-(92*percent), 0, 92, 4)
     gfx.popContext()
 end
 

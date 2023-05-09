@@ -55,9 +55,3 @@ function TinyShip:withShootingDelay(amount)
     self:setShooterBehavior(SHOOT_BEHAVIOR.RANDOM, amount)
     return self
 end
-
----Override this to change damage the enemy does to the player
----@return integer
-function TinyShip:getDamageAmount()
-    return 5
-end

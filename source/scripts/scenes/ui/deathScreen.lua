@@ -16,13 +16,13 @@ function DeathScreen:initialize(sceneManager)
 
     -- todo: nah don't like this.
 
-    --local plax = ParallaxLayer(gfx.image.new("images/backgrounds/patterns/creepy"),0,5)
+    
+    local plax = ParallaxLayer(gfx.image.new("images/ui/death-screen/death-screen-bg-far"),0,8)
+    plax:setZIndex(100)
 
-    local vig = gfx.sprite.new(gfx.image.new("images/ui/display-frame"))
-    vig:moveTo(200,120)
-    vig:setIgnoresDrawOffset(true)
-    vig:setZIndex(100)
-    vig:add()
+    local plax2 = ParallaxLayer(gfx.image.new("images/ui/death-screen/death-screen-bg-close"),0,12)
+    plax2:setZIndex(101)
+
 
     local retryText = gfx.getString("deathscreen.menuitems.retry")
     local quitText = gfx.getString("deathscreen.menuitems.quit")

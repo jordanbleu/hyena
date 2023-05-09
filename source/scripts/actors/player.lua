@@ -140,7 +140,7 @@ function Player:update()
             self.health += 5
         end
 
-        if (self.energy < self.maxEnergy/2) then
+        if (self.energy < self.maxEnergy) then -- todo: should be maxenergy / 2
             self.energy += 1
         end
 
@@ -244,7 +244,7 @@ function Player:_checkCollisions()
             end
     
         elseif (col:isa(EnemyBullet)) then
-            totalDamageAmount += 5
+            totalDamageAmount += 10
             tookDamage = true
             local spr = SingleSpriteAnimation("images/effects/hardImpactAnim/hard-impact", 500, col.x, col.y)
             spr:setZIndex(50)
@@ -502,7 +502,7 @@ function Player:addEnergy()
         return 
     end
 
-    self.energy+=2.5
+    self.energy+=7
 
     if (self.energy >= self.maxEnergy) then
         self.energy = self.maxEnergy
