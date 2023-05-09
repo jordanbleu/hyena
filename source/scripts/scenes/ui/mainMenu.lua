@@ -3,6 +3,7 @@ local gfx <const> = playdate.graphics
 import "scripts/ui/menu"
 import "scripts/ui/pressButtonToBegin"
 import "scripts/scenes/scene0010"
+import "scripts/ui/tutorial"
 
 class("MainMenu").extends(Scene)
 
@@ -15,6 +16,9 @@ function MainMenu:initialize(sceneManager)
     blackGround:moveTo(200,120)
     blackGround:setZIndex(0)
     blackGround:add()
+
+    self.camera = Camera()
+    self.camera:removeNormalSway()
 
     self.plax1 = ParallaxLayer(gfx.image.new("images/backgrounds/stars-dense-farther"),-0.5,0)
     self.plax2 = ParallaxLayer(gfx.image.new("images/backgrounds/stars-dense-far"),-1,0)
@@ -61,6 +65,12 @@ function MainMenu:_createMenu()
     self.planetAnimator = gfx.animator.new(4000, self.planet.y, 165, playdate.easingFunctions.outCubic)
     self.logoAnimator = gfx.animator.new(2000, self.logo.y, -100, playdate.easingFunctions.inBack)
 
+    self:_openMenu()
+    
+end
+
+function MainMenu:_openMenu()
+
     local playText = gfx.getString("mainmenu.menuitems.play")
     local endlessText = gfx.getString("mainmenu.menuitems.endless")
     local optionsText = gfx.getString("mainmenu.menuitems.settings")
@@ -68,16 +78,22 @@ function MainMenu:_createMenu()
     
     local menu = Menu(playText, endlessText, optionsText, extrasText)
     menu:setCallbackForItemIndex(1, function() self:_play() end)
-    menu:setCallbackForItemIndex(2, function() print("endless") end)
-    menu:setCallbackForItemIndex(3, function() print("options") end)
-    menu:setCallbackForItemIndex(4, function() print("extras") end)
+    menu:setCallbackForItemIndex(2, function() self:_notAvailableForDemo() end)
+    menu:setCallbackForItemIndex(3, function() self:_notAvailableForDemo() end)
+    menu:setCallbackForItemIndex(4, function() self:_notAvailableForDemo() end)
     menu:setCallbackForGoBack(function() self:_goBack() end)
-
 end
+
 
 function MainMenu:_play()
     -- eventually this will open the save selector but not today
     self.sceneManager:switchScene(Scene0010(), SCENE_TRANSITION.FADE_IO)
+end
+
+function MainMenu:_notAvailableForDemo()
+    self.camera:smallShake()
+    Tutorial(gfx.getString("mainmenu.notfordemo"), 30)
+    self:_openMenu()
 end
 
 function MainMenu:_goBack()

@@ -12,10 +12,11 @@
 
 -- Main menu
 "mainmenu.pressbuttontobegin" = "Press ~ to begin"
-"mainmenu.menuitems.play" = "Play Game"
+"mainmenu.menuitems.play" = "Begin Demo"
 "mainmenu.menuitems.endless" = "Endless Mode"
 "mainmenu.menuitems.settings" = "Settings"
 "mainmenu.menuitems.extras" = "Extras"
+"mainmenu.notfordemo" = "Unavailable for demo"
 
 -- tutorial screens 
 "tutorial.move" = "_ Steer ship"
