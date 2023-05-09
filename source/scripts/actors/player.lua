@@ -140,7 +140,7 @@ function Player:update()
             self.health += 5
         end
 
-        if (self.energy < self.maxEnergy) then -- todo: should be maxenergy / 2
+        if (self.energy < self.maxEnergy/2) then
             self.energy += 1
         end
 
@@ -461,7 +461,8 @@ function Player:addHealth(amount)
     end
 end
 
-function Player:depleteHealth(amount) 
+function Player:depleteHealth(amount)
+    
     self.health -= amount
     if (self.health < 0) then
         self.health = 0
