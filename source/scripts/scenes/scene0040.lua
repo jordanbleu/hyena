@@ -3,7 +3,6 @@ local gfx <const> = playdate.graphics
 import "scripts/helpers/sceneHelper"
 import "scripts/effects/screenFlash"
 import "scripts/ui/tutorial"
-import "scripts/actors/tinyGuyVertical"
 import "scripts/actors/cursedNeuron/cursedNeuron"
 import "scripts/ui/openingCredit"
 import "scripts/ui/bossBar"

@@ -14,13 +14,11 @@ function DeathScreen:initialize(sceneManager)
     blackSprite:moveTo(200,120)
     blackSprite:add()
 
-    -- todo: nah don't like this.
-
     
-    local plax = ParallaxLayer(gfx.image.new("images/ui/death-screen/death-screen-bg-far"),0,8)
+    local plax = ParallaxLayer(gfx.image.new("images/ui/death-screen/death-screen-bg-far"),0,-4)
     plax:setZIndex(100)
 
-    local plax2 = ParallaxLayer(gfx.image.new("images/ui/death-screen/death-screen-bg-close"),0,12)
+    local plax2 = ParallaxLayer(gfx.image.new("images/ui/death-screen/death-screen-bg-close"),0,-8)
     plax2:setZIndex(101)
 
 

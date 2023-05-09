@@ -13,25 +13,27 @@ import "scripts/projectiles/playerMineExplosion"
     it will follow behind that leader.  If not, it becomes the leader.
 
     The leader must be another TinyGuy.
+
+    UPDATE - Tiny Guys are not so tiny anymore lol
 ]]
 class("TinyGuy").extends(Enemy)
 
 local DISTANCE_FROM_LEADER <const> = 16
 
 function TinyGuy:init(x,y,leader, cameraInst, playerInst)
-    TinyGuy.super.init(self, 1)
+    TinyGuy.super.init(self, 2)
     
     self.player = playerInst
     self.camera = cameraInst
     self.leader = leader
     self:moveTo(x,y)
 
-    -- idle image animation
-    self.animator = SpriteAnimation("images/enemies/tinyGuyAnim/idle", 1000, self.x, self.y)
-    self.animator:setRepeats(-1)
-    self.animator:attachTo(self)
+    -- idle image
+    local sm = gameContext.getSceneManager()
 
-    self:setCollideRect(-5,-5,10,10)
+    self:setImage(sm:getImageFromCache("images/enemies/bubble-guy"))
+
+    self:setCollideRect(0,0,16,16)
     self:setGroups({COLLISION_LAYER.ENEMY})
     self:setCollidesWithGroups({COLLISION_LAYER.PLAYER, COLLISION_LAYER.PLAYER_PROJECTILE})
     self:add()
@@ -43,7 +45,7 @@ function TinyGuy:init(x,y,leader, cameraInst, playerInst)
     self.yVelocity = self.ySpeed
 
     -- behavior stuff - follower
-    self.followerUpdateCycles = 6
+    self.followerUpdateCycles = 8
     self.followerUpdateCycleCounter = math.random(1,self.followerUpdateCycles)
     self.followerXDestination = 0
     self.followerYDestination = 0
@@ -72,38 +74,56 @@ end
 function TinyGuy:_checkCollisions()
     local collisions = self:overlappingSprites()
     
-    for i,col in ipairs(collisions) do
-        if (col:isa(PlayerBullet)) then
-            SingleSpriteAnimation("images/effects/playerBulletExplosionAnim/player-bullet-explosion", 500,col.x, col.y)
-            col:destroy()
-            self:damage(1)
+    if (#collisions < 1) then
+        return
+    end
 
-            if (self.camera) then
-                self.camera:smallShake()
-            end
+    local col = collisions[1]
+    local tookDamage = false 
 
-        elseif (col:isa(PlayerLaser)) then
-            if (col.isDamageEnabled) then
-                self:damage(5)
-            end
-
-        elseif (col:isa(PlayerMissile)) then
-            col:explode()
-
-        elseif (col:isa(PlayerMissileExplosion)) then
-            if (col.isDamageEnabled) then
-                self:damage(15)
-            end
+    if (col:isa(PlayerBullet)) then
+        SingleSpriteAnimation("images/effects/playerBulletExplosionAnim/player-bullet-explosion", 500,col.x, col.y)
+        col:destroy()
+        self:damage(1)
+        tookDamage=true
         
-        elseif (col:isa(PlayerMine)) then
-            col:explode()
-
-        elseif (col:isa(PlayerMineExplosion)) then
-            if (col.isDamageEnabled) then
-                self:damage(10)
-            end
+    elseif (col:isa(PlayerLaser)) then
+        if (col.isDamageEnabled) then
+            self:damage(5)
+            tookDamage=true
+        end
+        
+    elseif (col:isa(PlayerMissile)) then
+        col:explode()
+        
+    elseif (col:isa(PlayerMissileExplosion)) then
+        if (col.isDamageEnabled) then
+            self:damage(15)
+            tookDamage=true
+        end
+        
+    elseif (col:isa(PlayerMine)) then
+        col:explode()
+        
+    elseif (col:isa(PlayerMineExplosion)) then
+        if (col.isDamageEnabled) then
+            self:damage(10)
+            tookDamage=true
         end
     end
+    
+    if (tookDamage) then
+        if (self:getHealth() >0) then
+            local spr = SingleSpriteAnimation("images/enemies/bubbleGuyAnim/damage", 750,col.x, col.y)
+            spr:setZIndex(self:getZIndex()+1)
+            spr:attachTo(self)
+        end
+
+        if (self.camera) then
+            self.camera:smallShake()
+        end
+    end
+    
 end
 
 function TinyGuy:physicsUpdate()
@@ -178,12 +198,12 @@ end
 
 function TinyGuy:_onDead()
     self.dead = true
-    SingleSpriteAnimation("images/enemies/tinyGuyAnim/death", 500, self.x, self.y)
+    self:setVisible(false)
+    SingleSpriteAnimation("images/enemies/bubbleGuyAnim/death", 750, self.x, self.y)
     self:remove()
 end
 
 function TinyGuy:remove()
-    self.animator:remove()
     Grunt.super.remove(self)
 end
 

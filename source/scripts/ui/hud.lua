@@ -11,6 +11,11 @@ function Hud:init(playerInst)
     local badgeGap = 160
     self.player = playerInst
 
+    -- since redrawing is taxing, defer it.
+    self.redrawCycles = 10
+    self.redrawCycleCounter = 0
+    self.lastSelectedWeapon = self.player:getSelectedWeaponId()
+
     -- load images for each weapon type into memory for big speed.
     self.weaponImages = {}
     self.weaponImages[WEAPON.MINE] = gfx.image.new("images/ui/hud/mine-main")
@@ -89,9 +94,18 @@ end
 function Hud:update()
     Hud.super.update(self)
     
-    self:_updateWeaponSprite()
-    self:_updateHealthBar()
-    self:_updateEnergyBar()
+    local currentWeaponId = self.player:getSelectedWeaponId()
+    if (self.lastSelectedWeapon ~= currentWeaponId) then
+        self:_updateWeaponSprite()
+        self.lastSelectedWeapon = currentWeaponId
+    end
+    
+    self.redrawCycleCounter += 1
+    if (self.redrawCycleCounter > self.redrawCycles) then
+        self:_updateHealthBar()
+        self:_updateEnergyBar()
+        self.redrawCycleCounter = 0
+    end
     self:_setFlashingEnergyIcon(self.player:isBigMode())
 
 end

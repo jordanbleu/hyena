@@ -364,6 +364,10 @@ function Player:_refillEnergy()
     local halfMaxEnergy = self.maxEnergy/2
 
     -- energy normalizes back to half way
+    if (math.isWithin(self.energy, 1, halfMaxEnergy)) then
+        return
+    end
+
     if (self.energy < halfMaxEnergy) then
         self.energy += 1
     elseif (self.bigModeCycleCounter <= 0) then
