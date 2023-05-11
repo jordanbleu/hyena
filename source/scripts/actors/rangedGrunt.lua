@@ -17,7 +17,7 @@ class("RangedGrunt").extends(Enemy)
 
 function RangedGrunt:init(x,y, cameraInst, playerInst) 
     
-    RangedGrunt.super.init(self, 3)
+    RangedGrunt.super.init(self, 8)
     
     -- this is the general y position for ranged enemies
     self.standardYPosition = 60
@@ -49,7 +49,9 @@ function RangedGrunt:init(x,y, cameraInst, playerInst)
 
     -- how long before enemy can shoot 
     self.coolDownCycleCounter = 0
-    self.coolDownCycles = math.random(100,300)
+    self.cooldownMin = 25
+    self.cooldownMax = 100
+    self.coolDownCycles = math.random(25,100)
 
     self:add()
     
@@ -71,7 +73,7 @@ function RangedGrunt:update()
 
         if (math.isWithin(self.player.x, 3, self.x)) then
             EnemyBullet(self.x, self.y)
-            self.coolDownCycles = math.random(30,200)
+            self.coolDownCycles = math.random(self.cooldownMin,self.cooldownMax)
             self.coolDownCycleCounter = 0
         end
         
@@ -175,4 +177,11 @@ function RangedGrunt:_checkCollisions()
             dmgSprite:attachTo(self)
         end
     end
+end
+
+function RangedGrunt:withCooldownRangeBetween(min, max)
+    self.cooldownMin = min
+    self.cooldownMax = max
+    self.coolDownCycles = math.random(self.cooldownMin,self.cooldownMax)    
+    return self
 end

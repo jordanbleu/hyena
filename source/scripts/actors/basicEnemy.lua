@@ -5,7 +5,7 @@ import "scripts/sprites/singleSpriteAnimation"
 import "scripts/projectiles/playerLaser"
 import "scripts/projectiles/enemyBullet"
 
-local STATE <const> = 
+local INTERNAL_STATE <const> = 
 {
     -- Enemy is moving towwards the player 
     IDLE = 0,
@@ -33,7 +33,7 @@ function BasicEnemy:init(maxHealth, cameraInst, playerInst)
     -- should be set to the single sprite animation params for the death anim
     self.deathSpriteAnimParameters = nil
 
-    self.state = STATE.IDLE
+    self.internalState = INTERNAL_STATE.IDLE
     self.camera = cameraInst
     self.player = playerInst
 
@@ -48,6 +48,8 @@ function BasicEnemy:init(maxHealth, cameraInst, playerInst)
     self.bulletDropBehavior = SHOOT_BEHAVIOR.NONE
     self.bulletDropCycles = 500
     self.bulletDropCounter = 0
+
+    self.resetOnOutOfBounds = true
 
     -- make x and y not nil (I hate Lua)
     self:moveTo(-100,-100)
@@ -136,7 +138,7 @@ function BasicEnemy:_checkCollisions()
             local willDie = (self:getHealth() <= 0)
 
             if (not willDie) then
-                local spr = SingleSpriteAnimation(self.damageSpriteAnimParameters.imageTablePath, self.damageSpriteAnimParameters.duration, col.x or self.x, col.y or self.y)
+                local spr = SingleSpriteAnimation(self.damageSpriteAnimParameters.imageTablePath, self.damageSpriteAnimParameters.duration, self.x, self.y)
                 spr:setZIndex(self:getZIndex() + 1)
                 spr:attachTo(self)
             end
@@ -150,42 +152,43 @@ end
 function BasicEnemy:_updateMovement()
     local newX = self.x
     local newY = self.y
-    if (self.state == STATE.IDLE) then
+    if (self.internalState == INTERNAL_STATE.IDLE) then
         newX = self.x + self.xVelocity
         newY = self.y + self.yVelocity
     end
 
-    -- boundary logic.  If actor goes outside boundaries, he loops around the other side
-    local yMax = 240 + self.doubleH
-    local yMin = 0 - self.doubleH
-    local xMax = 400 + self.doubleW
-    local xMin = 0 - self.doubleW
-    
-    -- note that we don't check for boundaries above the top of the screen
-    if (self.y > yMax) then 
-        newY = -self.doubleH
-    end
+    if (self.resetOnOutOfBounds) then
+        -- boundary logic.  If actor goes outside boundaries, he loops around the other side
+        local yMax = 240 + self.doubleH
+        local yMin = 0 - self.doubleH
+        local xMax = 400 + self.doubleW
+        local xMin = 0 - self.doubleW
+        
+        -- note that we don't check for boundaries above the top of the screen
+        if (self.y > yMax) then 
+            newY = -self.doubleH
+        end
 
-    if (self.x > xMax) then
-        newX = -self.doubleW
-    elseif (self.x < xMin) then
-        newX = 400 + self.doubleW
+        if (self.x > xMax) then
+            newX = -self.doubleW
+        elseif (self.x < xMin) then
+            newX = 400 + self.doubleW
+        end
+        self:moveTo(newX, newY)
     end
-    self:moveTo(newX, newY)
-
 end
 
 
 -- waits for damage state to end and swaps states
 function BasicEnemy:_updateDamageState()
 
-    if (self.state ~= STATE.DAMAGE) then
+    if (self.internalState ~= INTERNAL_STATE.DAMAGE) then
         return 
     end
 
     self.damageWaitCycleCounter += 1
     if (self.damageWaitCycleCounter > self.damageWaitCycles) then
-        self.state = STATE.IDLE
+        self.internalState = INTERNAL_STATE.IDLE
         self.damageWaitCycleCounter = 0
     end
 end
@@ -262,10 +265,10 @@ function BasicEnemy:remove()
     BasicEnemy.super.remove(self)
 end
 
-function BasicEnemy:setVelocity(xv, yv)
-    self.xVelocity = xv
-    self.yVelocity = yv
-end
+-- function BasicEnemy:setVelocity(xv, yv)
+--     self.xVelocity = xv
+--     self.yVelocity = yv
+-- end
 
 ---Set up the shooting behvaior for this enemy
 ---@param behavior any Use the SHOOT_BEHAVIOR enum.  Determines what pattern to follow for shooting.
