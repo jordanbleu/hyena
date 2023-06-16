@@ -64,10 +64,10 @@ function Scene0080:initialize(sceneManager)
 
     table.insert(segments, function()
         -- if they talk to u, they can't know you're with us
-        local c = CutsceneFrameSegment(man, gfx.getString("scene0080.ship5"), "images/cutscene/scene0080/talk-to-each-other", CUTSCENE_FRAME_EFFECT.PAN_DOWN_UP)
+        local c = CutsceneFrameSegment(cyber, gfx.getString("scene0080.ship5"), "images/cutscene/scene0080/talk-to-each-other", CUTSCENE_FRAME_EFFECT.PAN_DOWN_UP)
         c:append(man, gfx.getString("scene0080.ship6"))
-        c:append(man, gfx.getString("scene0080.ship7"))
-        c:append(man, gfx.getString("scene0080.ship8"))
+        c:append(cyber, gfx.getString("scene0080.ship7"))
+        c:append(cyber, gfx.getString("scene0080.ship8"))
 
         return c
     end)

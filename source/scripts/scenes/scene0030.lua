@@ -225,6 +225,9 @@ function Scene0030:initialize(sceneManager)
         return HordeSegment(enemies)
     end)
 
+    table.insert(segments, function()
+        return WaitSegment(6000)
+    end)
  
     table.insert(segments, function()
         return DialogueSegment("scene0030/introductions.txt", player)

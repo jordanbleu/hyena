@@ -69,3 +69,12 @@ SHOOT_BEHAVIOR =
     -- enemy will count up to bullet delay then shoot on a linear schedule.
     LINEAR = 2
 }
+
+---Used by flybysprite to determine which direction the object should go
+FLYBY_DIRECTION = 
+{
+    TOP_2_BOTTOM = 1,
+    BOTTOM_2_TOP = 2,
+    LEFT_2_RIGHT = 3,
+    RIGHT_2_LEFT = 4
+}
