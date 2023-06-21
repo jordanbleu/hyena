@@ -3,12 +3,10 @@ local gfx <const> = playdate.graphics
 import "scripts/scenes/base/segmentedScene"
 import "scripts/scenes/scene0020"
 import "scripts/helpers/sceneHelper"
+
 --[[
-    Intro cutscene
-    Cyber is in prison and he gets his mission. Shit gets real mysterious.
+    
 ]]
-
-
 class("Scene0010").extends(SegmentedScene)
 
 function Scene0010:initialize(sceneManager)
