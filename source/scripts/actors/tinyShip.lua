@@ -1,6 +1,7 @@
 local gfx <const> = playdate.graphics
 
 import "scripts/actors/basicEnemy"
+import "scripts/effects/particle"
 
 --[[
     Tiny ship is a basic enemy that moves downwards but also alternates left / right 
@@ -54,4 +55,9 @@ end
 function TinyShip:withShootingDelay(amount)
     self:setShooterBehavior(SHOOT_BEHAVIOR.RANDOM, amount)
     return self
+end
+
+function TinyShip:_onDead()
+    self.camera:bigShake()
+    TinyShip.super._onDead(self)
 end
