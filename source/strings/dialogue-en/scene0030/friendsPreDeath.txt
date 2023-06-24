@@ -1,0 +1,9 @@
+avatar_id|title|text|typeDelay|cameraShakeLevel
+# Just moments before Cyber's friends die
+spiderNeutralAnim|Spider|Something doesn't seem right.
+tinyNeutralAnim|Tiny|What you talkin' about?
+spiderNeutralAnim|Spider|This reading on our scanners, it's huge.
+spiderNeutralAnim|Spider|Way bigger than the others...
+cyberNeutralAnim|Cyber|Yeah, I'm seeing it too.
+cyberNeutralAnim|Cyber|Wait!
+cyberNeutralAnim|Cyber|Guys, look out!!!|0|2

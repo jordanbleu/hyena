@@ -17,7 +17,7 @@ class("RangedGrunt").extends(Enemy)
 
 function RangedGrunt:init(x,y, cameraInst, playerInst) 
     
-    RangedGrunt.super.init(self, 8)
+    RangedGrunt.super.init(self, 12)
     
     -- this is the general y position for ranged enemies
     self.standardYPosition = 60

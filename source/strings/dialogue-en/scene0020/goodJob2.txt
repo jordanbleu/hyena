@@ -1,0 +1,7 @@
+avatar_id|title|text
+# Random quip 2
+tinyNeutralAnim|Tiny|Feels good to be working with Cyber again.
+tinyNeutralAnim|Tiny|It's just like before we...
+spiderNeutralAnim|Spider|Stop.  I don't want to talk about it.
+spiderNeutralAnim|Spider|Let's just keep pushing forward.
+tinyNeutralAnim|Tiny|You're right, sorry about that.

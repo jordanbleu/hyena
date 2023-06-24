@@ -310,8 +310,9 @@ function Player:_handlePlayerInput()
     -- if player releases A, reset the counter or shoot normal bullet
     if (playdate.buttonJustReleased(playdate.kButtonA)) then
         if (self.holdACycles < HOLD_A_CYCLES_TO_WAIT) then
-            if (self.allowAttacks) then
+            if (self.allowAttacks and self.energy > 3) then
                 PlayerBullet(self.x, self.y, self)
+                self.energy -= 3
             end
         end
         self.holdACycles =0 

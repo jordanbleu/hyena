@@ -1,6 +1,0 @@
-avatar_id|title|text
-# The two boys are talking to Cyber when suddenly they notice a big scary thing appearing
-cyberNeutralAnim|Cyber|Back in the cockpit again...
-cyberNeutralAnim|Cyber|Hope I'm not too rusty.
-
-

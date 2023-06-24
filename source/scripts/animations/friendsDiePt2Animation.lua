@@ -30,6 +30,7 @@ function FriendsDiePt2Animation:update()
         if (not self.leftExploded) then
             -- put explode soudn here
             self.leftActor:remove()
+            ScreenFlash(250,gfx.kColorWhite)
             SingleSpriteAnimation("images/playerAnim/death", 500, self.leftActor.x, self.leftActor.y, function() self:_startRightDeath() end)
             self.camera:smallShake()
         end
@@ -38,6 +39,7 @@ function FriendsDiePt2Animation:update()
     if (self.rightLaser ~= nil and self.rightLaser:getFrame() == 5) then
         if (not self.rightExploded) then
             -- put explode soudn here
+            ScreenFlash(250,gfx.kColorWhite)
             self.rightActor:remove()
             SingleSpriteAnimation("images/playerAnim/death", 500, self.rightActor.x, self.rightActor.y, function() self.ended = true end)
             self.camera:smallShake()

@@ -55,3 +55,14 @@ function TinyGuy:_leaderUpdate()
     
     self:moveTo(newX, newY)
 end
+
+function TinyGuy:withXVelocity(xv)
+    self.xVelocity = xv
+    return self
+end
+
+function TinyGuy:withYVelocity(yv)
+    self.yVelocity = yv
+    return self
+end
+

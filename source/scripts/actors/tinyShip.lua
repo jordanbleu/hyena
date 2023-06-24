@@ -58,6 +58,6 @@ function TinyShip:withShootingDelay(amount)
 end
 
 function TinyShip:_onDead()
-    self.camera:bigShake()
+    self.camera:mediumShake()
     TinyShip.super._onDead(self)
 end

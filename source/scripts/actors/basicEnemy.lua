@@ -69,13 +69,14 @@ function BasicEnemy:_shootAtPlayer()
 
     if (self.bulletDropBehavior == SHOOT_BEHAVIOR.LINEAR) then
         self.bulletDropCounter +=1 
-        if (self.bulletDropCounter > self.bulletDropCounter) then
+        if (self.bulletDropCounter > self.bulletDropCycles) then
             self:_dropBullet()            
             self.bulletDropCounter = 0
         end
     elseif (self.bulletDropBehavior == SHOOT_BEHAVIOR.RANDOM) then
         local rando = math.random(self.bulletDropCycles)
         local winner = math.floor(self.bulletDropCycles/2)
+        
         if (rando == winner) then
             self:_dropBullet()
         end
@@ -103,7 +104,7 @@ function BasicEnemy:_checkCollisions()
             col:destroy()
             self:damage(1)
 
-            if (self.camera) then
+            if (self.camera and self:isAlive()) then
                 self.camera:smallShake()
             end
 
@@ -196,7 +197,11 @@ end
 --[[ Update ]]--
 function BasicEnemy:update()
     BasicEnemy.super.update(self)
-    self.idleSprite:moveTo(self.x,self.y)
+
+     if (self.idleSprite ~= nil) then
+        self.idleSprite:moveTo(self.x,self.y)
+     end
+
     if (self.player:didUseEmp()) then
         self:damage(3)
     end
@@ -220,20 +225,21 @@ function BasicEnemy:setIdleSprite(imagePath)
 end
 
 ---Sets the idle animation parameters for the enemy.  Will also automatically set up sprite rect and collision stuff.
--- function BasicEnemy:setIdleAnimation(imageTablePath, duration)
---     self.idleSpriteAnim = spriteAnim
---     self.idleSpriteAnim = SpriteAnimation(imageTablePath, duration, self.x, self.y)
-    
---     self.idleSpriteAnim:setRepeats(-1)
---     local w,h = self.idleSpriteAnim:getSize()
---     self.doubleW = w*2
---     self.doubleH = h*2
+function BasicEnemy:setIdleAnimation(imageTablePath, duration)
+    self.idleSpriteAnim = spriteAnim
+    self.idleSpriteAnim = SpriteAnimation(imageTablePath, duration, self.x, self.y)
+    self.idleSpriteAnim:attachTo(self)
 
---     self:setCollideRect(-w/2,-h/2,w,h)
---     self:setGroups({COLLISION_LAYER.ENEMY})
---     self:setCollidesWithGroups({COLLISION_LAYER.PLAYER, COLLISION_LAYER.PLAYER_PROJECTILE})
+    self.idleSpriteAnim:setRepeats(-1)
+    local w,h = self.idleSpriteAnim:getSize()
+    self.doubleW = w*2
+    self.doubleH = h*2
+
+    self:setCollideRect(-w/2,-h/2,w,h)
+    self:setGroups({COLLISION_LAYER.ENEMY})
+    self:setCollidesWithGroups({COLLISION_LAYER.PLAYER, COLLISION_LAYER.PLAYER_PROJECTILE})
     
--- end
+end
 
 ---Sets the death animation parameters for the enemy.  Idle sprite gets removed 
 function BasicEnemy:setDeathAnimation(imageTablePath, duration)
@@ -252,7 +258,13 @@ function BasicEnemy:setDamageAnimation(imageTablePath, duration)
 end
 
 function BasicEnemy:_onDead()
-    self.idleSprite:remove()
+    
+    if (self.idleSprite ~= nil) then
+        self.idleSprite:remove()
+    elseif (self.idleSpriteAnim ~= nil) then
+        self.idleSpriteAnim:remove()
+    end
+
     SingleSpriteAnimation(self.deathSpriteAnimParameters.imageTablePath, self.deathSpriteAnimParameters.duration, self.x, self.y)
     self:remove()
 end

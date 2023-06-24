@@ -1,0 +1,3 @@
+avatar_id|title|text
+# Random quips from friends
+tinyNeutralAnim|Tiny|Heh, nice shootin' Boss.

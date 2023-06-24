@@ -28,7 +28,7 @@ local STATE <const> =
 
 
 function Saucer:init(x,y,cameraInst, playerInst)
-    Saucer.super.init(self, 4, cameraInst, playerInst)
+    Saucer.super.init(self, 8, cameraInst, playerInst)
 
     self:moveTo(x,y)
 
