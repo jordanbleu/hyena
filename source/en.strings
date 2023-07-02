@@ -19,9 +19,10 @@
 "mainmenu.notfordemo" = "Unavailable for demo"
 
 -- tutorial screens 
-"tutorial.move" = "_ Steer ship"
-"tutorial.shoot" = "~ Fire main cannons"
-"tutorial.dash" = "^ Dash left/right"
+"tutorial.move" = "_ pilot ship"
+"tutorial.shoot" = "~ fire main cannons"
+"tutorial.dash" = "^ dash left/right"
+"tutorial.weapon" = "Hold ~ to use selected weapon"
  
 --------------------------------------------------------------------------------------------------------
 -- General

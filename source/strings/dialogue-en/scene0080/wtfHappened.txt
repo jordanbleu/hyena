@@ -1,0 +1,44 @@
+avatar_id|title|text|typeDelay|cameraShakeLevel
+# Cyber is full on hallucinating, he's about to get his first powerup
+cleoNeutralAnim|Cleo|Cyber?  Are you there??
+cleoNeutralAnim|Cleo|Cyber!?
+cyberNeutralAnim|Cyber|I'm here...
+cleoNeutralAnim|Cleo|We lost communication with you for a sec.
+cyberNeutralAnim|Cyber|I don't know what happened.  It's like I was seeing things...
+seraphNeutralAnim|Seraph|If you are psychologically unfit for this mission+
+seraphNeutralAnim|Seraph|we will abort immediately.
+cyberNeutralAnim|Cyber|Then what happens?
+seraphNeutralAnim|Seraph|You'll be dropped right back into your cell.
+seraphNeutralAnim|Seraph|Your execution will be then be rescheduled.
+cyberNeutralAnim|Cyber|Yeah.  Thought so.
+socketNeutralAnim|Socket|Cyber, it looks like y-y-your ship got an upgrade!
+cyberNeutralAnim|Cyber|Huh?
+socketNeutralAnim|Socket|Your ship is designed to absorb Grimidean energy.
+socketNeutralAnim|Socket|It then p-processes it and uses it to enable+
+socketNeutralAnim|Socket|additional weapons.
+# cyberNeutralAnim|Cyber|How does that work?
+# socketNeutralAnim|Socket|Honestly...we don't know.
+# socketNeutralAnim|Socket|There hasn't been much research into Grimidean energy.
+# socketNeutralAnim|Socket|From our observations it seems to defy the laws of physics. 
+# socketNeutralAnim|Socket|It doesn't create or destroy.  It's like it has a mind of its own.
+# cyberNeutralAnim|Cyber|So for all you guys know, once I reach the nest+
+# cyberNeutralAnim|Cyber|I could be cooked alive or something.
+# socketNeutralAnim|Socket|We're p-pretty sure that w-w-won't happen.
+# socketNeutralAnim|Socket|But, the closer you get to the n-n-nest, the higher the energy+
+# socketNeutralAnim|Socket|concentration will b-be.
+# socketNeutralAnim|Socket|More weapons will c-c-c-c-continue to activate on your ship.
+cyberNeutralAnim|Cyber|Interesting. Also...
+cyberNeutralAnim|Cyber|Does Grimidean energy cause hallucinations in humans?
+socketNeutralAnim|Socket|Not from what we've seen.
+seraphNeutralAnim|Seraph|Cyber, there's more Grimidean Vaslings coming your way.
+seraphNeutralAnim|Seraph|You're on your own this time.
+socketNeutralAnim|Socket|Try out your new weapon by pressing and holding ~.
+socketNeutralAnim|Socket|The m-meter in the top right of your HUD shows+
+socketNeutralAnim|Socket|Grimidean energy levels.
+socketNeutralAnim|Socket|Using weapons and dashing costs energy.
+socketNeutralAnim|Socket|But attacking the Vaslings releases energy, which is+
+socketNeutralAnim|Socket|absorbed by your ship.
+socketNeutralAnim|Socket|Over time, your ship's Grimidean energy levels will adjust+
+socketNeutralAnim|Socket|back to a neutral level.
+cyberNeutralAnim|Cyber|Got it.  So I gotta make every shot count.
+socketNeutralAnim|Socket|Exactly!  Otherwise you c-could run out of energy.

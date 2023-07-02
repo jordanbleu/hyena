@@ -1,99 +1,144 @@
 local gfx <const> = playdate.graphics
 
-import "scripts/scenes/scene0070"
-
-
+import "scripts/effects/playerSplotcher"
+import "scripts/scenes/scene0080"
+import "scripts/segments/customSegment"
+import "scripts/powerups/laserPowerup"
 --[[
-    Cutscene - Cyber learns more about Grimideans
+    Second gameplay scene, cyber unlocks the laser
 ]]
 class("Scene0080").extends(SegmentedScene)
 
 function Scene0080:initialize(sceneManager)
-
-    local man = gfx.getString("character.man")
-    local cyber = gfx.getString("character.cyber")
-
-    sceneHelper.addBlackBackground()
+    self.sceneManager = sceneManager
 
     local segments = {}
+    local blackBg = sceneHelper.addBlackBackground()
+
+    local sceneItems = sceneHelper.setupGameplayScene(sceneManager)
+    local camera = sceneItems.camera
+    local player = sceneItems.player
+
+    player:moveTo(200,200)
+    
+    local segments = {}
+    
+    local plax1 = ParallaxLayer(gfx.image.new("images/backgrounds/stars-farther"),0,4)
+    plax1:setZIndex(1)
+    local plax2 = ParallaxLayer(gfx.image.new("images/backgrounds/stars-far"),0,6)
+    plax2:setZIndex(2)
+
+    -- table.insert(segments, function()
+    --     return WaitSegment(7000)
+    -- end)
+
+    -- -- Things start getting weird 
+    -- table.insert(segments, function()
+    --     ScreenFlash(250, gfx.kColorBlack)
+    --     plax1:remove()
+    --     plax2:setScrollY(-0.5)
+    --     return WaitSegment(3000)
+    -- end)
+
+    -- table.insert(segments, function()
+    --     return DialogueSegment("scene0080/feelingStrange.txt", player, camera)
+    -- end)
+
+    -- -- screen harshly cuts to black
+    -- table.insert(segments, function()
+    --     HardCutBlack(3000)
+    --     return WaitSegment(3000)
+    -- end)
+
+    -- local plax3 = nil
+    -- local splotcher = nil
+
+    -- -- ok now things are really trippy
+    -- table.insert(segments, function()
+    --     plax2:remove()
+    
+    --     blackBg:remove()
+    --     ScreenFlash(250, gfx.kColorWhite)
+    --     splotcher = PlayerSplotcher(player)
+    --     plax3 = ParallaxLayer(gfx.image.new("images/backgrounds/patterns/abstract"),0,-2)
+    --     camera:setNormalSway(6, 0.20)
+    --     return DialogueSegment("scene0080/freakingOut.txt", player, camera)
+    -- end)
+
+    -- -- Create a powerup to enable the laser and wait for the player to pick it up
+    -- table.insert(segments, function()
+    --     local pup = LaserPowerup(200, -40)
+
+    --     return CustomSegment(function ()
+    --         return pup ~= nil and pup:isCollected()
+    --     end)
+    -- end)
+
+    -- -- Collected the powerup, now wait a bit
+    -- table.insert(segments, function()
+    --     return WaitSegment(3000)
+    -- end)
+
+    -- -- screen harshly cuts to black again
+    -- table.insert(segments, function()
+    --     HardCutBlack(1500)
+    --     return WaitSegment(1500)
+    -- end)
+    
+    -- table.insert(segments, function()
+    --     local plax1 = ParallaxLayer(gfx.image.new("images/backgrounds/stars-farther"),0,4)
+    --     plax1:setZIndex(1)
+    --     local plax2 = ParallaxLayer(gfx.image.new("images/backgrounds/stars-far"),0,6)
+    --     plax2:setZIndex(2)
+
+    --     plax1:setScrollY(4)
+    --     plax2:setScrollY(6)
+    --     blackBg:add()
+
+    --     plax3:remove()
+    --     splotcher:remove()
+
+    --     return WaitSegment(2000)
+    -- end)
+
+    -- table.insert(segments, function()
+    --     return DialogueSegment("scene0080/wtfHappened.txt", player, camera)
+    -- end)
+
+    -- table.insert(segments, function()
+    --     local enemies = {}
+    --     Tutorial(gfx.getString("tutorial.weapon"))
+
+    --     enemies[1] = TinyShip(100, -20, camera, player):withHorizontalDistance(20):withHorizontalSpeed(0.5)
+    --     enemies[2] = TinyShip(100, -40, camera, player):withHorizontalDistance(20):withHorizontalSpeed(0.5)
+    --     enemies[3] = TinyShip(100, -60, camera, player):withHorizontalDistance(20):withHorizontalSpeed(0.5)
+    --     enemies[4] = TinyShip(100, -80, camera, player):withHorizontalDistance(20):withHorizontalSpeed(0.5)
+
+    --     enemies[5] = TinyShip(200, -80, camera, player):withHorizontalDistance(40):withHorizontalSpeed(1)
+    --     enemies[6] = TinyShip(200, -100, camera, player):withHorizontalDistance(40):withHorizontalSpeed(1)
+    --     enemies[7] = TinyShip(200, -120, camera, player):withHorizontalDistance(40):withHorizontalSpeed(1)
+    --     enemies[8] = TinyShip(200, -140, camera, player):withHorizontalDistance(40):withHorizontalSpeed(1)
+
+    --     enemies[9] =  TinyShip(300, -60, camera, player):withHorizontalDistance(30):withHorizontalSpeed(0.5)
+    --     enemies[10] = TinyShip(300, -80, camera, player):withHorizontalDistance(30):withHorizontalSpeed(0.5)
+    --     enemies[11] = TinyShip(300, -100, camera, player):withHorizontalDistance(30):withHorizontalSpeed(0.5)
+    --     enemies[12] = TinyShip(300, -120, camera, player):withHorizontalDistance(30):withHorizontalSpeed(0.5)
+
+    --     return HordeSegment(enemies)
+    -- end)
 
     table.insert(segments, function()
-        local c = CutsceneFrameSegment("", gfx.getString("scene0080.earlier"), "images/black")
-        c:append("", gfx.getString("scene0080.earlier1"))
-        return c
+        local enemies = {}
+        
+        enemies[1] = ShieldRangedGrunt(200,-50, camera, player)
+        enemies[2] = DiveBomb(100, -10, camera, player)
+        enemies[3] = DiveBomb(305, -10, camera, player)
+        return HordeSegment(enemies)
     end)
-
-    table.insert(segments, function()
-        local c = CutsceneFrameSegment(man, gfx.getString("scene0080.viewship"), "images/cutscene/scene0080/look-at-ship-middle", CUTSCENE_FRAME_EFFECT.PAN_UP_DOWN)
-        c:append(man, gfx.getString("scene0080.viewship1"))
-        c:append(man, gfx.getString("scene0080.viewship2"))
-        return c
-    end)
-
-    table.insert(segments, function()
-        -- beaufiful, isn't she?
-        local c = CutsceneFrameSegment(man, gfx.getString("scene0080.viewship3"), "images/cutscene/scene0080/look-at-ship-bottom", CUTSCENE_FRAME_EFFECT.PAN_UP_DOWN)
-        c:append(man, gfx.getString("scene0080.viewship4"))
-        c:append(man, gfx.getString("scene0080.viewship5"))
-        c:append(man, gfx.getString("scene0080.viewship6"))
-        c:append(man, gfx.getString("scene0080.viewship7"))
-        c:append(man, gfx.getString("scene0080.viewship8"))
-        c:append(cyber, gfx.getString("scene0080.viewship9"))
-        return c
-    end)
-
-    table.insert(segments, function()
-        -- the war has left us weak
-        local c = CutsceneFrameSegment(man, gfx.getString("scene0080.faces"), "images/cutscene/scene0080/talk-to-each-other")
-        c:append(man, gfx.getString("scene0080.faces1"))
-        c:append(man, gfx.getString("scene0080.faces2"))
-        c:append(cyber, gfx.getString("scene0080.faces3"))
-        c:append(man, gfx.getString("scene0080.faces4"))
-        c:append(cyber, gfx.getString("scene0080.faces5"))
-        return c
-    end)
-
-    table.insert(segments, function()
-        -- if they talk to u, they can't know you're with us
-        local c = CutsceneFrameSegment(man, gfx.getString("scene0080.ship"), "images/cutscene/scene0080/look-at-ship-middle", CUTSCENE_FRAME_EFFECT.PAN_DOWN_UP)
-        c:append(man, gfx.getString("scene0080.ship1"))
-        c:append(man, gfx.getString("scene0080.ship2"))
-        c:append(man, gfx.getString("scene0080.ship4"))
-        return c
-    end)
-
-    table.insert(segments, function()
-        -- if they talk to u, they can't know you're with us
-        local c = CutsceneFrameSegment(cyber, gfx.getString("scene0080.ship5"), "images/cutscene/scene0080/talk-to-each-other", CUTSCENE_FRAME_EFFECT.PAN_DOWN_UP)
-        c:append(man, gfx.getString("scene0080.ship6"))
-        c:append(cyber, gfx.getString("scene0080.ship7"))
-        c:append(cyber, gfx.getString("scene0080.ship8"))
-
-        return c
-    end)
-
-    table.insert(segments, function()
-        -- the war has left us weak
-        local c = CutsceneFrameSegment(man, gfx.getString("scene0080.climbin"), "images/cutscene/scene0080/climb", CUTSCENE_FRAME_EFFECT.PAN_DOWN_UP)
-        c:append(man, gfx.getString("scene0080.climbin1"))
-        return c
-    end)
-
-    table.insert(segments, function()
-        -- the war has left us weak
-        local c = CutsceneFrameSegment(man, gfx.getString("scene0080.cockpit1"), "images/cutscene/scene0080/cyber-cockpit", CUTSCENE_FRAME_EFFECT.CONSTANT_SHAKING)
-        c:append(man, gfx.getString("scene0080.cockpit2"))
-        c:append(man, gfx.getString("scene0080.cockpit3"))
-        c:append(man, gfx.getString("scene0080.cockpit4"))
-        c:append(cyber, gfx.getString("scene0080.cockpit5"))
-        return c
-    end)
-
+    
     Scene0080.super.initialize(self, segments, sceneManager)
-
 end
 
-
 function Scene0080:completeScene()
-    self.sceneManager:switchScene(Scene0090(), SCENE_TRANSITION.FADE_IO)
+    self.sceneManager:switchScene(Scene0080(), SCENE_TRANSITION.FADE_IO)
 end

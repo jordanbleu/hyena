@@ -250,7 +250,7 @@ function Player:_checkCollisions()
             spr:setZIndex(50)
             col:destroy()
     
-        elseif (col:isa(HealthPowerup)) then
+        elseif (col:isa(Powerup)) then
             col:collect(self)
         end
     end 

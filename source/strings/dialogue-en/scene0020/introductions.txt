@@ -38,5 +38,5 @@ cyberNeutralAnim|Cyber|We'll be alright.
 tinyNeutralAnim|Tiny|Boss, we're seein' a whole bunch of them out here.
 spiderNeutralAnim|Spider|Heh, looks like the welcome party has arrived!
 seraphNeutralAnim|Seraph|Cyber, you'll need to eliminate the Vaslings ahead.
-socketNeutralAnim|Socket|Remember to use your ship's dash function (^) if you get cornered!
+socketNeutralAnim|Socket|Remember to use your ship's dash function ^ if you get cornered!
 cleoNeutralAnim|Cleo|Good luck, Cyber.
