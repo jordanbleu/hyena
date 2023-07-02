@@ -104,6 +104,8 @@ function Player:init(cameraInst, sceneManagerInst)
 
     self.usedEmp = false
 
+    self.godMode = false
+
     self.invincible = false
 end
 
@@ -261,7 +263,7 @@ function Player:_checkCollisions()
     end
 
 
-    if (tookDamage) then
+    if (tookDamage and not self.godMode) then
         self.health -= totalDamageAmount
 
         if (self.health > 0) then
@@ -467,7 +469,10 @@ function Player:addHealth(amount)
 end
 
 function Player:depleteHealth(amount)
-    
+    if (self.godMode) then
+        return
+    end
+
     self.health -= amount
     if (self.health < 0) then
         self.health = 0
@@ -519,4 +524,8 @@ end
 
 function Player:isBigMode()
     return self.bigModeCycleCounter > 0
+end
+
+function Player:enableGodMode()
+    self.godMode = true
 end
