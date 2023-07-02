@@ -41,7 +41,7 @@ function BenchmarkScene:initialize(sceneManager)
 
     self.sprites = {}
 
-    local cnt = 1
+    local cnt = 30
 
     -- sprites test
     -- for i = 0, cnt do
@@ -54,7 +54,6 @@ function BenchmarkScene:initialize(sceneManager)
     -- enemies test
     for i = 0, cnt do
         local spr = Grunt(150,-40,camera, player)
-        spr:add()
         table.insert(self.sprites, spr)
     end
 
