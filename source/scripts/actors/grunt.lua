@@ -40,13 +40,17 @@ function Grunt:init(x,y, cameraInst, playerInst)
     self.state = STATES.IDLE
 
     -- idle image animation
-    self.animator = SpriteAnimation("images/enemies/grimideanGruntAnim/idle", 1000, self.x, self.y)
-    self.animator:setRepeats(-1)
+    -- self.animator = SpriteAnimation("images/enemies/grimideanGruntAnim/idle", 1000, self.x, self.y)
+    -- self.animator:setRepeats(-1)
+
+    local sm = gameContext.getSceneManager()
+    self:setImage(sm:getImageFromCache("images/testingSprite"))
 
     self:setCollideRect(-8,-8,16,16)
     self:setGroups({COLLISION_LAYER.ENEMY})
     self:setCollidesWithGroups({COLLISION_LAYER.PLAYER, COLLISION_LAYER.PLAYER_PROJECTILE})
     
+
     ---
     -- idle state variables
     ---
@@ -85,7 +89,7 @@ function Grunt:update()
         self:damage(3)
     end
     
-    self.animator:moveTo(self.x, self.y)
+    --self.animator:moveTo(self.x, self.y)
     self:_checkCollisions()
 
 end
@@ -95,7 +99,7 @@ function Grunt:physicsUpdate()
     Grunt.super.physicsUpdate(self)
     
     if (self.state == STATES.IDLE) then
-        self:_move()
+        --self:_move()
 
     elseif (self.state == STATES.DAMAGE) then
         self.damageWaitCycleCounter += 1
@@ -196,6 +200,6 @@ function Grunt:_onDead()
 end
 
 function Grunt:remove()
-    self.animator:remove()
+    --self.animator:remove()
     Grunt.super.remove(self)
 end

@@ -53,7 +53,7 @@ function BenchmarkScene:initialize(sceneManager)
 
     -- enemies test
     for i = 0, cnt do
-        local spr = Grunt(150,-40,camera, player)
+        local spr = Grunt(math.random(0,400), math.random(0,240), camera, player)
         table.insert(self.sprites, spr)
     end
 
@@ -63,7 +63,7 @@ end
 function BenchmarkScene:update()
     
     for i, s in ipairs(self.sprites) do
-        s:moveTo(math.random(0,400), math.random(0,240))
+        --s:moveTo(math.random(0,400), math.random(0,240))
     end
 end
 
