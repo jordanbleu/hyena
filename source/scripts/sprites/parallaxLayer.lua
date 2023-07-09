@@ -1,43 +1,36 @@
 local gfx <const> = playdate.graphics
 
+import "scripts/sprites/fastSprite"
 
 --[[ Single scrolling background layer. ]]
-class("ParallaxLayer").extends(Actor)
+class("ParallaxLayer").extends(FastSprite)
 
 function ParallaxLayer:init(image, scrollX, scrollY)
+    ParallaxLayer.super.init(self, image)
 
-    ParallaxLayer.super.init(self)
     scrollX = scrollX or 0
     scrollY = scrollY or 0
 
-    self:setImage(image)
-    
     self:setCenter(0,0)
     self:moveTo(0,0)
 
-    self.upperImage = gfx.sprite.new(image)
+    self.upperImage = FastSprite(image)
     self.upperImage:setCenter(0,0)
-    if (scrollY ~= 0) then 
-        self.upperImage:add()
-     end 
-    
-    self.lowerImage = gfx.sprite.new(image)
+    self.upperImage:add()
+
+    self.lowerImage = FastSprite(image)
     self.lowerImage:setCenter(0,0)
-    if (scrollY ~= 0) then 
-        self.lowerImage:add() 
-    end 
+    self.lowerImage:add() 
+    
 
-    self.leftImage = gfx.sprite.new(image)
+    self.leftImage = FastSprite(image)
     self.leftImage:setCenter(0,0)
-    if (scrollX ~= 0) then 
-        self.leftImage:add() 
-    end
-
-    self.rightImage = gfx.sprite.new(image)
+    self.leftImage:add() 
+    
+    self.rightImage = FastSprite(image)
     self.rightImage:setCenter(0,0)
-    if (scrollX ~= 0) then 
-        self.rightImage:add() 
-    end
+    self.rightImage:add() 
+    
 
     self.scrollY = scrollY
     self.scrollX = scrollX
@@ -50,9 +43,9 @@ function ParallaxLayer:init(image, scrollX, scrollY)
 
 end
 
-function ParallaxLayer:physicsUpdate()
+function ParallaxLayer:update()
 
-    ParallaxLayer.super.physicsUpdate(self)
+    ParallaxLayer.super.update(self)
 
     self:moveTo(self.x + self.scrollX, self.y + self.scrollY)
 

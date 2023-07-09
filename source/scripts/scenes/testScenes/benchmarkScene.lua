@@ -27,8 +27,8 @@ function BenchmarkScene:initialize(sceneManager)
     BenchmarkScene.super.initialize(self, sceneManager)
     
     local blackground = sceneHelper.addBlackBackground()
-    -- local pLayer1 = ParallaxLayer(gfx.image.new("images/backgrounds/stars-farther"),0,1)
-    -- local pLayer2 = ParallaxLayer(gfx.image.new("images/backgrounds/stars-far"),0,3)
+    local pLayer1 = ParallaxLayer(gfx.image.new("images/backgrounds/stars-farther"),0,1)
+    --local pLayer2 = ParallaxLayer(gfx.image.new("images/backgrounds/stars-far"),0,3)
 
     local camera = Camera()
 
@@ -63,7 +63,7 @@ end
 function BenchmarkScene:update()
     
     for i, s in ipairs(self.sprites) do
-        --s:moveTo(math.random(0,400), math.random(0,240))
+        s:moveTo(math.random(0,400), math.random(0,240))
     end
 end
 

@@ -8,49 +8,14 @@
     SquidGod video that explains his file structure: https://www.youtube.com/watch?v=PZD1Ba15nnM    
 ]]
 
--- Core libraries for PLayDate
-import "CoreLibs/object"
-import "CoreLibs/graphics"
-import "CoreLibs/sprites"
-import "CoreLibs/timer"
-import 'CoreLibs/animator'
-import 'CoreLibs/animation'
-
--- Extensions
-import "scripts/Extensions/math"
-import "scripts/Extensions/playdate"
-import "scripts/extensions/string.lua"
-import "scripts/extensions/graphics.lua"
-
--- Globals
-import "scripts/globals/enums"
-import "scripts/globals/globals"
-import "scripts/globals/gameData"
-import "scripts/globals/gameContext"
-
-
--- Stuff needed everywhere
-import "scripts/data/dataManager"
-
-import "scripts/sceneManager"
-import "scripts/scenes/ui/deathScreen" -- todo :remove 
-import "scripts/scenes/test1Scene"
-import "scripts/scenes/demoScene"
-import "scripts/scenes/scene0020"
-import "scripts/scenes/scene0030"
-import "scripts/scenes/scene0050"
-import "scripts/scenes/scene0080"
-import "scripts/scenes/testScenes/benchmarkScene"
-
-import "scripts/scenes/cutsceneDemo"
-import "scripts/scenes/ui/mainMenu"
-import "scripts/globals/globalCache"
-
+import "scripts/imports"
 
 local gfx <const> = playdate.graphics
 
 -- Runs on first on game launch
 local function setup()
+    --gfx.sprite.setAlwaysRedraw(true)
+
     math.randomseed(playdate.getSecondsSinceEpoch())
 
     playdate.display.setRefreshRate(GLOBAL_TARGET_FPS)
@@ -121,6 +86,7 @@ setup()
 
 ---@diagnostic disable-next-line: duplicate-set-field
 function playdate.update()
+    FastSprite.updateAll()
     gfx.sprite.update()
     playdate.timer.updateTimers()
     gfx.animation.blinker.updateAll()

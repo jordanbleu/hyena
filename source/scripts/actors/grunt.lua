@@ -99,7 +99,7 @@ function Grunt:physicsUpdate()
     Grunt.super.physicsUpdate(self)
     
     if (self.state == STATES.IDLE) then
-        --self:_move()
+        self:_move()
 
     elseif (self.state == STATES.DAMAGE) then
         self.damageWaitCycleCounter += 1
