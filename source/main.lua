@@ -8,6 +8,35 @@
     SquidGod video that explains his file structure: https://www.youtube.com/watch?v=PZD1Ba15nnM    
 ]]
 
+import 'CoreLibs/animation' 
+import 'CoreLibs/animator'
+import "CoreLibs/graphics"
+import "CoreLibs/object"
+import "CoreLibs/sprites"
+import "CoreLibs/timer"
+import "scripts/data/dataManager"
+import "scripts/extensions/graphics.lua"
+import "scripts/extensions/math"
+import "scripts/extensions/playdate"
+import "scripts/extensions/string.lua"
+import "scripts/globals/enums"
+import "scripts/globals/gameContext"
+import "scripts/globals/gameData"
+import "scripts/globals/globalCache"
+import "scripts/globals/globals"
+import "scripts/sceneManager"
+import "scripts/scenes/cutsceneDemo"
+import "scripts/scenes/demoScene"
+import "scripts/scenes/scene0020"
+import "scripts/scenes/scene0030"
+import "scripts/scenes/scene0050"
+import "scripts/scenes/scene0080"
+import "scripts/scenes/test1Scene"
+import "scripts/scenes/testScenes/benchmarkScene"
+import "scripts/scenes/ui/deathScreen"
+import "scripts/scenes/ui/mainMenu"
+import "scripts/sprites/fastSprite"
+import "scripts/objects/gameObject"
 import "scripts/imports"
 
 local gfx <const> = playdate.graphics
@@ -86,12 +115,13 @@ setup()
 
 ---@diagnostic disable-next-line: duplicate-set-field
 function playdate.update()
-    FastSprite.updateAll()
+    --FastSprite.updateAll()
     gfx.sprite.update()
     playdate.timer.updateTimers()
     gfx.animation.blinker.updateAll()
-    playdate.drawFPS(0,0)
+    GameObject.updateAll()
     drawDebugText()
+    playdate.drawFPS(0,0)
 end
 
 

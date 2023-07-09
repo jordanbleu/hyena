@@ -27,8 +27,9 @@ function BenchmarkScene:initialize(sceneManager)
     BenchmarkScene.super.initialize(self, sceneManager)
     
     local blackground = sceneHelper.addBlackBackground()
+
     local pLayer1 = ParallaxLayer(gfx.image.new("images/backgrounds/stars-farther"),0,1)
-    --local pLayer2 = ParallaxLayer(gfx.image.new("images/backgrounds/stars-far"),0,3)
+    local pLayer2 = ParallaxLayer(gfx.image.new("images/backgrounds/stars-far"),0,3)
 
     local camera = Camera()
 
