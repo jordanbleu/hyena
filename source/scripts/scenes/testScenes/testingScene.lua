@@ -17,6 +17,8 @@ import "scripts/ui/weaponSelector"
 import "scripts/ui/gameplayDialogue"
 
 import "scripts/ai/squidGrunt"
+import "scripts/ai/millipede"
+
 
 import "scripts/ui/typer"
 
@@ -36,7 +38,8 @@ function TestingScene:initialize(sceneManager)
     local player = sceneItems.player
     player:moveTo(200,player.y)
 
-    SquidGrunt(200,50, player, sceneItems.camera)
+    --SquidGrunt(200,50, player, sceneItems.camera)
+    Millipede(200,50, player, sceneItems.camera)
 
 
 end

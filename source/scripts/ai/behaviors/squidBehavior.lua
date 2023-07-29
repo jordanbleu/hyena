@@ -38,9 +38,9 @@ function SquidBehavior:init(idleImageTablePath, animationTime, x, y, maxHealth, 
     self.drag = 0.1
 
     -- speed of vertical burst towards bottom of screen
-    self.ySpeed = math.random(2,3)
+    self.ySpeed = 3
     -- speed of horizontal burst towards player 
-    self.xSpeed = math.random(1,2)
+    self.xSpeed = 2
 
     ----
     -- Override the below in child classes, aniamtions will play automatically.
@@ -113,7 +113,8 @@ function SquidBehavior:_onTakeDamage(amount, willDie)
     if (willDie) then return end
 
     if (self.damageAnimationImagePath ~= nil) then
-        SingleSpriteAnimation(self.damageAnimationImagePath, self.damageAnimationTime, self.x, self.y)
+        local spr = SingleSpriteAnimation(self.damageAnimationImagePath, self.damageAnimationTime, self.x, self.y)
+        spr:attachTo(self)
     end
 
     self.state = STATES.DAMAGE
@@ -124,7 +125,8 @@ function SquidBehavior:_onDead()
     self.state = STATES.DYING
 
     if (self.deathAnimationImagePath ~= nil) then
-        SingleSpriteAnimation(self.deathAnimationImagePath, self.deathAnimationTime, self.x, self.y)
+        local spr = SingleSpriteAnimation(self.deathAnimationImagePath, self.deathAnimationTime, self.x, self.y)
+        spr:attachTo(self)
     end
 
     self:remove()
@@ -152,5 +154,11 @@ end
 
 function SquidBehavior:withBurstDelay(time)
     self.waitCycles = time
+    return self
+end
+
+function SquidBehavior:withDamageDelay(dly)
+    self.damageWaitCycles = dly
+    self.damageWaitCycleCounter = 0
     return self
 end
