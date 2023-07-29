@@ -10,6 +10,7 @@ import "scripts/effects/screenFlash"
 import "scripts/ui/livesIndicator"
 import "scripts/scenes/ui/deathScreen"
 import "scripts/powerups/powerup"
+import "scripts/ai/behaviors/enemyBase"
 
 -- How much speed increases per frame when accelerating 
 local MOVE_SPEED <const> = 1
@@ -239,7 +240,7 @@ function Player:_checkCollisions()
 
     if (#collisions > 0) then
         local col = collisions[1]
-        if (col:isa(Enemy) or col:isa(EnemyProjectileSprite)) then
+        if (col:isa(EnemyBase) or col:isa(Enemy) or col:isa(EnemyProjectileSprite)) then
             if (col:damageEnabled()) then
                 totalDamageAmount += col:getDamageAmount()
                 tookDamage = true

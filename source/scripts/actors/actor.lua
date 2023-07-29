@@ -33,8 +33,3 @@ end
  ]]
 function Actor:physicsUpdate()
 end
-
-function Actor:remove()
-    --self.updateTimer:remove()
-    Actor.super.remove(self)
-end

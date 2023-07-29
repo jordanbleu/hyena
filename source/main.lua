@@ -31,13 +31,14 @@ import "scripts/scenes/scene0020"
 import "scripts/scenes/scene0030"
 import "scripts/scenes/scene0050"
 import "scripts/scenes/scene0080"
+import "scripts/scenes/testScenes/testingScene"
 import "scripts/scenes/test1Scene"
 import "scripts/scenes/testScenes/benchmarkScene"
 import "scripts/scenes/ui/deathScreen"
 import "scripts/scenes/ui/mainMenu"
 import "scripts/sprites/fastSprite"
 import "scripts/objects/gameObject"
-import "scripts/imports"
+
 
 local gfx <const> = playdate.graphics
 
@@ -60,12 +61,12 @@ local function setup()
     --local firstScene = CutsceneDemo()
     --local firstScene = DemoScene()
     --local firstScene = Scene0080() -- Uncomment to start at main menu
-    local firstScene = BenchmarkScene() -- Uncomment to start at main menu
+    --local firstScene = BenchmarkScene() -- Uncomment to start at main menu
 
     --local firstScene = Scene0060() -- Uncomment to start from the opening credits
     --local firstScene = Scene0020() -- Start from first gameplay section
-    --local firstScene = Scene0050() -- boss battle
-
+    local firstScene = TestingScene()
+    --local firstScene = MainMenu() 
     sceneMgr:switchScene(firstScene, SCENE_TRANSITION.HARD_CUT)
 end
 
@@ -120,8 +121,8 @@ function playdate.update()
     playdate.timer.updateTimers()
     gfx.animation.blinker.updateAll()
     GameObject.updateAll()
-    drawDebugText()
-    playdate.drawFPS(0,0)
+    --drawDebugText()
+    --playdate.drawFPS(0,0)
 end
 
 

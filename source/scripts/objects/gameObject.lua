@@ -43,7 +43,7 @@ end
 
 ---Removes the object from the update batch.
 function GameObject:remove()
-    table.remove(gameObjects, self.objectId)
+    table.remove(self.objectId, gameObjects)
 end
 
 ---Called to remove every gameObject.
