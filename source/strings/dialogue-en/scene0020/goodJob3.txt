@@ -1,0 +1,8 @@
+avatar_id|title|text
+# Random Quip 3
+tinyNeutralAnim|Tiny|I just noticed the cup holders in these ships.
+tinyNeutralAnim|Tiny|This thing could hold an extra large, easy...
+spiderNeutralAnim|Spider|Tiny, stop acting like a moron.
+spiderNeutralAnim|Spider|You just let more of those centipede things slip past us.
+spiderNeutralAnim|Spider|Now the boss has to deal with them.
+tinyNeutralAnim|Tiny|Oh uh, sorry Boss...

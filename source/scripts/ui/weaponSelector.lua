@@ -129,16 +129,17 @@ function WeaponSelector:_waitForHoldButton()
 
     if (playdate.buttonIsPressed(playdate.kButtonB)) then
 
-
         self.holdBCycleCount = self.holdBCycleCount + 1
 
         if (self.holdBCycleCount > self.holdBCyclesToWait) then
 
+            --<< Weapon selector has begun opening >>-- 
+            
             -- disallow attacks while the menu is open.
             self.player:setAllowAttacks(false)
 
-            -- Set's the game time to slow motion.
-            GLOBAL_TIME_DELAY = 50
+            -- Freeze physics objects while the game is paused
+            GLOBAL_PHYSICS_ENABLED = false
 
             self.animator = gfx.animator.new(ANIMATION_DURATION, 0, 1,  playdate.easingFunctions.outCubic)
             self.state = STATE.ANIMATING_IN
@@ -218,8 +219,6 @@ function WeaponSelector:_updateUI()
         self.arrowSprite:setVisible(false)
     end
 
-    -- Make sure nobody else modifies the time delay but us 
-    GLOBAL_TIME_DELAY = 300
 
 end
 
@@ -229,11 +228,11 @@ function WeaponSelector:_waitForAnimateOut()
 
     if (self.animator:ended()) then
 
+        --<< Weapon selector has finished closing >>-- 
+        GLOBAL_PHYSICS_ENABLED = true
+
         -- re-allow attacks.
         self.player:setAllowAttacks(true)
-
-        -- Restore the game time back to zero.
-        GLOBAL_TIME_DELAY = 0
 
         -- arrows sprite is removed prior to this 
         self.blurSprite:remove()

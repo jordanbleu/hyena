@@ -165,11 +165,15 @@ function CursedNeuron:update()
     
     self:_moveAllSprites()
     self:_checkCollisions()
-    self:_updatePosition()
     self:_updateShieldState()
     self:_updatePhase()
-
+    
     CursedNeuron.super.update(self)
+end
+
+function CursedNeuron:physicsUpdate()
+    self:_updatePosition()
+    CursedNeuron.super.physicsUpdate(self)
 end
 
 function CursedNeuron:_updateShieldState()

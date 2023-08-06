@@ -1,0 +1,13 @@
+avatar_id|title|text|typeDelay|cameraShakeLevel
+# Cyber begins feeling a bit weird...
+cyberNeutralAnim|Cyber|Huh.
+cyberNeutralAnim|Cyber|I'm not feeling well...
+cleoNeutralAnim|Cleo|What do you mean by that?
+cleoNeutralAnim|Cleo|Is everything ok?
+cyberNeutralAnim|Cyber|Yeah, it's just...my head is swimming
+cleoNeutralAnim|Cleo|Take deep breaths, Cyber.
+cleoNeutralAnim|Cleo|Breath in...
+cleoNeutralAnim|Cleo|and out...|1|0
+cleoNeutralAnim|Cleo|in...|2|0
+cleoNeutralAnim|Cleo|out...|4|0
+cleoNeutralAnim|Cleo|in...|8|0

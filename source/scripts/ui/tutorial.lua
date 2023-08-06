@@ -19,7 +19,9 @@ local STATE = {
 -- how long transition in / out takes (in ms)
 local TRANSITION_DURATION = 750
 
-function Tutorial:init(message)
+-- Shows a little popup on the top fo the screen.  Doesn't really have to be a tutorial. 
+-- Note that the tutorial message will always be on top of every other item on screen, including other UI elements.
+function Tutorial:init(message, durationCycles)
 
     self.text = message
     
@@ -32,7 +34,7 @@ function Tutorial:init(message)
     self.frameImage = gfx.image.new("images/ui/dialogue/tutorial-frame")
     self.frameSprite = gfx.sprite.new(self.frameImage)
     self.frameSprite:setIgnoresDrawOffset(true)
-    self.frameSprite:setZIndex(108)
+    self.frameSprite:setZIndex(998)
     self.frameSprite:moveTo(200,-20)
     self.frameSprite:add()
 
@@ -55,7 +57,7 @@ function Tutorial:init(message)
     self.textSprite:setZIndex(999)
     self.textSprite:add()
 
-    self.showCycles = 150
+    self.showCycles = durationCycles or 150
     self.cycleCounter = 0
 
     self.isFullyCompleted = false

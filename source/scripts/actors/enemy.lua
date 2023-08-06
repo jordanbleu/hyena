@@ -49,7 +49,7 @@ end
 ---Override this to change damage the enemy does to the player
 ---@return integer
 function Enemy:getDamageAmount()
-    return 10
+    return 20
 end
 
 ---Defaults to true.  If true will damage the player, if false will not.

@@ -1,0 +1,7 @@
+avatar_id|title|text|typeDelay|cameraShakeLevel
+# Cursed Neuron triggers its shield
+cyberNeutralAnim|Cyber|It's got a shield now.
+seraphNeutralAnim|Seraph|Of course it does...
+seraphNeutralAnim|Seraph|You'll have to figure something out.
+socketNeutralAnim|Socket|There's gotta be a weakness s-s-s-somewhere!
+cyberNeutralAnim|Cyber|Ugh. You guys are useless.

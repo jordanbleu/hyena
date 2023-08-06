@@ -53,7 +53,6 @@ function Scene0060:initialize(sceneManager)
         ScreenFlash(500, gfx.kColorWhite)
         self.cursedNeuron:remove()
         return WaitSegment(5000)
-        --return DialogueSegment("scene0040/cursedNeuronIntros2.txt", player, self.camera)
     end)
 
     Scene0060.super.initialize(self, segments, sceneManager)

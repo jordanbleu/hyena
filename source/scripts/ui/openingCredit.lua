@@ -23,7 +23,7 @@ function OpeningCredit:init(imageTablePath)
     -- the opening credit fade in animator itself (will animate forwards, then backwards)
     self.sprite = SpriteAnimation(imageTablePath, 1000, 200, 120)
     self.sprite:setIgnoresDrawOffset(true)
-    self.sprite:setZIndex(999)
+    self.sprite:setZIndex(100)
     self.sprite:setAnimationCompletedCallback(function() self:_animCompleted() end)
     self.sprite:setRemoveOnComplete(false)
 
@@ -31,6 +31,7 @@ function OpeningCredit:init(imageTablePath)
     self.waitCycles = 150
 
     self.onCompleted = nil
+    self.onFadeInCompleted = nil
     self:add()
 end
 
@@ -61,6 +62,9 @@ end
 function OpeningCredit:_animCompleted()
 
     if (self.state == STATE.ANIMATING_IN) then
+        if (self.onFadeInCompleted ~= nil) then
+            self.onFadeInCompleted()
+        end
         self.sprite:setFrame(15)
         self.sprite:pause()
         self.state = STATE.WAITING
@@ -75,4 +79,8 @@ end
 
 function OpeningCredit:setOnCompleted(fn)
     self.onCompleted = fn
+end
+
+function OpeningCredit:setOnFadeInCompleted(fn)
+    self.onFadeInCompleted = fn
 end

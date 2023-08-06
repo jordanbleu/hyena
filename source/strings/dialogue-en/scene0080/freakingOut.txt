@@ -1,0 +1,6 @@
+avatar_id|title|text|typeDelay|cameraShakeLevel
+# Cyber is full on hallucinating, he's about to get his first powerup
+cyberNeutralAnim|Cyber|Gahhh!!!
+cyberNeutralAnim|Cyber|This...can't be good
+
+

@@ -101,15 +101,17 @@ function SpriteAnimation:physicsUpdate()
                     if (self.animDirection == -1) then
                         self.frame = self.imageTable:getLength()
                     end
-
-                end
-                
+                end 
             end
+            self:_refresh()
         end
 
-        local image = self.imageTable:getImage(self.frame)
-        self:setImage(image)
     end
+end
+
+function SpriteAnimation:_refresh()
+    local image = self.imageTable:getImage(self.frame)
+    self:setImage(image)
 end
 
 function SpriteAnimation:pause()

@@ -1,6 +1,7 @@
 local gfx <const> = playdate.graphics
 
 import "scripts/actors/basicEnemy"
+import "scripts/effects/particle"
 
 --[[
     Tiny ship is a basic enemy that moves downwards but also alternates left / right 
@@ -15,7 +16,7 @@ function TinyShip:init(x,y, cameraInst,playerInst)
     y = y or 0
 
     -- load images
-    self:setIdleAnimation("images/enemies/tinyShipAnim/idle", 250)
+    self:setIdleSprite("images/enemies/tinyShip")
     self:setDamageAnimation("images/enemies/tinyShipAnim/damage", 500)
     self:setDeathAnimation("images/enemies/tinyShipAnim/death", 500)
     
@@ -56,8 +57,7 @@ function TinyShip:withShootingDelay(amount)
     return self
 end
 
----Override this to change damage the enemy does to the player
----@return integer
-function TinyShip:getDamageAmount()
-    return 5
+function TinyShip:_onDead()
+    self.camera:mediumShake()
+    TinyShip.super._onDead(self)
 end

@@ -5,7 +5,7 @@ import "scripts/sprites/singleSpriteAnimation"
 import "scripts/projectiles/playerLaser"
 import "scripts/projectiles/enemyBullet"
 
-local STATE <const> = 
+local INTERNAL_STATE <const> = 
 {
     -- Enemy is moving towwards the player 
     IDLE = 0,
@@ -25,15 +25,15 @@ class("BasicEnemy").extends(Enemy)
 function BasicEnemy:init(maxHealth, cameraInst, playerInst)
     BasicEnemy.super.init(self, maxHealth)
 
-    self.idleSpriteAnim = nil
-    self.w = 0
-    self.h = 0
+    self.idleSprite = nil
+    self.doubleW = 0
+    self.doubleH = 0
     -- should be set to the single sprite animation params for the damage anim
     self.damageSpriteAnimParameters = nil
     -- should be set to the single sprite animation params for the death anim
     self.deathSpriteAnimParameters = nil
 
-    self.state = STATE.IDLE
+    self.internalState = INTERNAL_STATE.IDLE
     self.camera = cameraInst
     self.player = playerInst
 
@@ -48,6 +48,8 @@ function BasicEnemy:init(maxHealth, cameraInst, playerInst)
     self.bulletDropBehavior = SHOOT_BEHAVIOR.NONE
     self.bulletDropCycles = 500
     self.bulletDropCounter = 0
+
+    self.resetOnOutOfBounds = true
 
     -- make x and y not nil (I hate Lua)
     self:moveTo(-100,-100)
@@ -67,13 +69,14 @@ function BasicEnemy:_shootAtPlayer()
 
     if (self.bulletDropBehavior == SHOOT_BEHAVIOR.LINEAR) then
         self.bulletDropCounter +=1 
-        if (self.bulletDropCounter > self.bulletDropCounter) then
+        if (self.bulletDropCounter > self.bulletDropCycles) then
             self:_dropBullet()            
             self.bulletDropCounter = 0
         end
     elseif (self.bulletDropBehavior == SHOOT_BEHAVIOR.RANDOM) then
         local rando = math.random(self.bulletDropCycles)
         local winner = math.floor(self.bulletDropCycles/2)
+        
         if (rando == winner) then
             self:_dropBullet()
         end
@@ -90,7 +93,9 @@ function BasicEnemy:_checkCollisions()
     
     local tookDamage = false
 
-    for i,col in ipairs(collisions) do
+    if (#collisions > 0) then
+        local col = collisions[1]
+
         if (col:isa(PlayerBullet)) then
             tookDamage= true
             -- create a new explosion object at the bullets position
@@ -99,7 +104,7 @@ function BasicEnemy:_checkCollisions()
             col:destroy()
             self:damage(1)
 
-            if (self.camera) then
+            if (self.camera and self:isAlive()) then
                 self.camera:smallShake()
             end
 
@@ -134,59 +139,57 @@ function BasicEnemy:_checkCollisions()
             local willDie = (self:getHealth() <= 0)
 
             if (not willDie) then
-                local spr = SingleSpriteAnimation(self.damageSpriteAnimParameters.imageTablePath, self.damageSpriteAnimParameters.duration, col.x or self.x, col.y or self.y)
+                local spr = SingleSpriteAnimation(self.damageSpriteAnimParameters.imageTablePath, self.damageSpriteAnimParameters.duration, self.x, self.y)
                 spr:setZIndex(self:getZIndex() + 1)
                 spr:attachTo(self)
             end
         end
     end
+    
 
 end
 
 -- Basic movement logic using x / y velocity as well as boundary checks
 function BasicEnemy:_updateMovement()
-    if (self.state == STATE.IDLE) then
-        local newX = self.x + self.xVelocity
-        local newY = self.y + self.yVelocity
-        self:moveTo(newX, newY)
-    end
-
-    -- boundary logic.  If actor goes outside boundaries, he loops around the other side
     local newX = self.x
     local newY = self.y
-
-    local doubleW = self.w*2
-    local doubleH = self.h*2
-
-    local yMax = 240 + doubleH
-    local yMin = 0 - doubleH
-    local xMax = 400 + doubleW
-    local xMin = 0 - doubleW
-    
-    -- note that we don't check for boundaries above here
-    if (self.y > yMax) then 
-        newY = -doubleH
+    if (self.internalState == INTERNAL_STATE.IDLE) then
+        newX = self.x + self.xVelocity
+        newY = self.y + self.yVelocity
     end
 
-    if (self.x > xMax) then
-        newX = -doubleW
-    elseif (self.x < xMin) then
-        newX = 400 + doubleW
-    end
-    self:moveTo(newX, newY)
+    if (self.resetOnOutOfBounds) then
+        -- boundary logic.  If actor goes outside boundaries, he loops around the other side
+        local yMax = 240 + self.doubleH
+        local yMin = 0 - self.doubleH
+        local xMax = 400 + self.doubleW
+        local xMin = 0 - self.doubleW
+        
+        -- note that we don't check for boundaries above the top of the screen
+        if (self.y > yMax) then 
+            newY = -self.doubleH
+        end
 
+        if (self.x > xMax) then
+            newX = -self.doubleW
+        elseif (self.x < xMin) then
+            newX = 400 + self.doubleW
+        end
+        self:moveTo(newX, newY)
+    end
 end
 
 
 -- waits for damage state to end and swaps states
 function BasicEnemy:_updateDamageState()
-    if (self.state ~= STATE.DAMAGE) then
+
+    if (self.internalState ~= INTERNAL_STATE.DAMAGE) then
         return 
     end
 
     self.damageWaitCycleCounter += 1
     if (self.damageWaitCycleCounter > self.damageWaitCycles) then
-        self.state = STATE.IDLE
+        self.internalState = INTERNAL_STATE.IDLE
         self.damageWaitCycleCounter = 0
     end
 end
@@ -195,21 +198,42 @@ end
 function BasicEnemy:update()
     BasicEnemy.super.update(self)
 
+     if (self.idleSprite ~= nil) then
+        self.idleSprite:moveTo(self.x,self.y)
+     end
+
     if (self.player:didUseEmp()) then
         self:damage(3)
     end
+end
+
+function BasicEnemy:setIdleSprite(imagePath)
+    local sm = gameContext.getSceneManager()
+
+    self.idleSprite = gfx.sprite.new(sm:getImageFromCache(imagePath))
+    self.idleSprite:setZIndex(self:getZIndex())
+    self.idleSprite:add()
+    local w,h = self.idleSprite:getSize()
+    
+    self.doubleW = w*2
+    self.doubleH = h*2
+
+    self:setCollideRect(-w/2,-h/2,w,h)
+    self:setGroups({COLLISION_LAYER.ENEMY})
+    self:setCollidesWithGroups({COLLISION_LAYER.PLAYER, COLLISION_LAYER.PLAYER_PROJECTILE})
+
 end
 
 ---Sets the idle animation parameters for the enemy.  Will also automatically set up sprite rect and collision stuff.
 function BasicEnemy:setIdleAnimation(imageTablePath, duration)
     self.idleSpriteAnim = spriteAnim
     self.idleSpriteAnim = SpriteAnimation(imageTablePath, duration, self.x, self.y)
-    
+    self.idleSpriteAnim:attachTo(self)
+
     self.idleSpriteAnim:setRepeats(-1)
     local w,h = self.idleSpriteAnim:getSize()
-    self.w = w
-    self.h = h
-    self.idleSpriteAnim:attachTo(self)
+    self.doubleW = w*2
+    self.doubleH = h*2
 
     self:setCollideRect(-w/2,-h/2,w,h)
     self:setGroups({COLLISION_LAYER.ENEMY})
@@ -234,7 +258,13 @@ function BasicEnemy:setDamageAnimation(imageTablePath, duration)
 end
 
 function BasicEnemy:_onDead()
-    self.idleSpriteAnim:remove()
+    
+    if (self.idleSprite ~= nil) then
+        self.idleSprite:remove()
+    elseif (self.idleSpriteAnim ~= nil) then
+        self.idleSpriteAnim:remove()
+    end
+
     SingleSpriteAnimation(self.deathSpriteAnimParameters.imageTablePath, self.deathSpriteAnimParameters.duration, self.x, self.y)
     self:remove()
 end
@@ -247,10 +277,10 @@ function BasicEnemy:remove()
     BasicEnemy.super.remove(self)
 end
 
-function BasicEnemy:setVelocity(xv, yv)
-    self.xVelocity = xv
-    self.yVelocity = yv
-end
+-- function BasicEnemy:setVelocity(xv, yv)
+--     self.xVelocity = xv
+--     self.yVelocity = yv
+-- end
 
 ---Set up the shooting behvaior for this enemy
 ---@param behavior any Use the SHOOT_BEHAVIOR enum.  Determines what pattern to follow for shooting.

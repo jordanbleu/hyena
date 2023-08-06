@@ -1,0 +1,42 @@
+avatar_id|title|text
+# The game has just started, and Cyber is talking to himself. 
+socketNeutralAnim|???|Cyber? Can you read me?
+cyberNeutralAnim|Cyber|Yeah, who the hell are you?
+socketNeutralAnim|???|Uh..s-s-sorry. We're not supposed to share our real names.
+socketNeutralAnim|???|You can call me "Socket".
+socketNeutralAnim|Socket|I am the t-t-technical supervisor for+
+socketNeutralAnim|Socket|this operation.
+socketNeutralAnim|Socket|I wrote the OS for your sh-ship, so if you have any qu-qu..
+socketNeutralAnim|Socket|q..q...uhh issues with your equipment, let me know!
+cyberNeutralAnim|Cyber|What's with the stutter?
+socketNeutralAnim|Socket|Oh, um...s-s-sorry if it bothers you, I was born with it!
+cyberNeutralAnim|Cyber|Right...
+socketNeutralAnim|Socket|Anyway, I'm going to have the rest of the team introduce themselves+
+socketNeutralAnim|Socket|to test out the comm system.
+seraphNeutralAnim|???|Hello Cyber. My name is Seraph. I'm the commanding officer for this+
+seraphNeutralAnim|???|mission.
+cyberNeutralAnim|Cyber|I've never had a commanding officer before. 
+cyberNeutralAnim|Cyber|They always this cute?
+seraphNeutralAnim|Seraph|Enough. I won't tolerate inappropriate comments.
+cyberNeutralAnim|Cyber|Heh, fair enough.
+seraphNeutralAnim|Seraph|By the way, we managed to convince some of your old crew+
+seraphNeutralAnim|Seraph|to assist with your objectives.
+spiderNeutralAnim|Spider|Hey there, boss.
+tinyNeutralAnim|Tiny|It's an honor to work with you again, boss.
+cyberNeutralAnim|Cyber|Nice, just like old times.
+socketNeutralAnim|Socket|There's one m-more person.  I'll connect her now...
+cleoNeutralAnim|???|Hey Cyber. My name is Cleo. 
+cleoNeutralAnim|Cleo|I'll be your psychological specialist. 
+cyberNeutralAnim|Cyber|Psycho-what?
+cleoNeutralAnim|Cleo|I'm here to make sure you remain in the right state of mind.
+cleoNeutralAnim|Cleo|A lot of things could go wrong while invading the nest.
+cyberNeutralAnim|Cyber|Sure, whatever.
+seraphNeutralAnim|Seraph|The Grimidean Vaslings shouldn't be underestimated. 
+seraphNeutralAnim|Seraph|They don't behave like humans, so they'll be hard to predict. 
+seraphNeutralAnim|Seraph|The ones closer to the nest will likely be stronger, and tougher.
+cyberNeutralAnim|Cyber|We'll be alright.
+tinyNeutralAnim|Tiny|Boss, we're seein' a whole bunch of them out here.
+spiderNeutralAnim|Spider|Heh, looks like the welcome party has arrived!
+seraphNeutralAnim|Seraph|Cyber, you'll need to eliminate the Vaslings ahead.
+socketNeutralAnim|Socket|Remember to use your ship's dash function ^ if you get cornered!
+cleoNeutralAnim|Cleo|Good luck, Cyber.

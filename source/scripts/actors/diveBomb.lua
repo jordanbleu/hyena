@@ -87,6 +87,11 @@ function DiveBomb:_checkCollisions()
     end
 end
 
+function DiveBomb:withDiveSpeed(spd)
+    self.ySpeed = spd
+    return self
+end
+
 function DiveBomb:_onDead()
     SingleSpriteAnimation("images/enemies/celluloidAnim/death", 500, self.x, self.y)
     self:remove()

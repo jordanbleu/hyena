@@ -21,8 +21,6 @@ local TRANSITION_STATE =
 
 -- How long the fade duration should be 
 local TRANSITION_DURATION = 1500
--- tweak this for more frames / worse performance (max is 100)
-local TRANSITION_QUALITY = 25
 
 function SceneManager:init()
 
@@ -42,24 +40,8 @@ function SceneManager:init()
     self.currentTransition = SCENE_TRANSITION.HARD_CUT
     self.fadedRects = {}
     self.previousScene = nil
-    local fadedImage
 
-    -- pre-compute all frames for the fade in effect.
-    for i=0, TRANSITION_QUALITY, 1 do
-
-        local alpha = i/TRANSITION_QUALITY
-
-        fadedImage = gfx.image.new(400,240)
-
-        -- we are now drawing onto the faded image directly
-        gfx.pushContext(fadedImage)
-            local filledRect = gfx.image.new(400,240, gfx.kColorBlack)
-            filledRect:drawFaded(0, 0, alpha, gfx.image.kDitherTypeBayer8x8)
-        gfx.popContext()
-
-        self.fadedRects[i] = fadedImage
-
-    end
+    self.fadedRects = SCREEN_EFFECT_CACHE.Black
 end
 
 --[[
@@ -74,7 +56,6 @@ end
 function SceneManager:switchScene(scene, transition)
 
     if (not self:isReady()) then
-        print ("Called SwitchScene before the the scene manager was ready.  Add a call to check for this pls")
         return
     end
 
@@ -170,7 +151,6 @@ function SceneManager:_handleFade()
                 self.animator = gfx.animator.new(TRANSITION_DURATION/2, 0, 100)
                 self.transitionState = TRANSITION_STATE.WAITING
 
-            
             elseif (self.transitionState == TRANSITION_STATE.FADING_IN) then 
                 self.animator = nil
                 self.transitionState = TRANSITION_STATE.COMPLETE
@@ -181,7 +161,7 @@ function SceneManager:_handleFade()
 
         local currentTimerValue = self.animator:currentValue()
         local currentTimerPercent = currentTimerValue / 100
-        local frameIndex = math.ceil(TRANSITION_QUALITY * currentTimerPercent)
+        local frameIndex = math.ceil(GLOBAL_TRANSITION_QUALITY * currentTimerPercent)
 
         -- retrieve the cached faded frame based on the progress of the animator
         local currentFrame = self.fadedRects[frameIndex]

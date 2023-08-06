@@ -10,6 +10,7 @@ import "scripts/effects/screenFlash"
 import "scripts/ui/livesIndicator"
 import "scripts/scenes/ui/deathScreen"
 import "scripts/powerups/powerup"
+import "scripts/ai/behaviors/enemyBase"
 
 -- How much speed increases per frame when accelerating 
 local MOVE_SPEED <const> = 1
@@ -103,6 +104,8 @@ function Player:init(cameraInst, sceneManagerInst)
     self.preDeathWaitCycles = 50
 
     self.usedEmp = false
+
+    self.godMode = false
 
     self.invincible = false
 end
@@ -235,32 +238,33 @@ function Player:_checkCollisions()
     local totalDamageAmount = 0
     local collisions = self:overlappingSprites()
 
-    for i,col in ipairs(collisions) do
-        if (col:isa(Enemy) or col:isa(EnemyProjectileSprite)) then
+    if (#collisions > 0) then
+        local col = collisions[1]
+        if (col:isa(EnemyBase) or col:isa(Enemy) or col:isa(EnemyProjectileSprite)) then
             if (col:damageEnabled()) then
                 totalDamageAmount += col:getDamageAmount()
                 tookDamage = true
             end
-
+    
         elseif (col:isa(EnemyBullet)) then
-            totalDamageAmount += 5
+            totalDamageAmount += 10
             tookDamage = true
             local spr = SingleSpriteAnimation("images/effects/hardImpactAnim/hard-impact", 500, col.x, col.y)
             spr:setZIndex(50)
             col:destroy()
-
-        elseif (col:isa(HealthPowerup)) then
+    
+        elseif (col:isa(Powerup)) then
             col:collect(self)
         end
-    end
-
+    end 
+    
     -- player is inviisble 
     if (self.iframeCounter > 0 or self.invincible) then 
         tookDamage = false
     end
 
 
-    if (tookDamage) then
+    if (tookDamage and not self.godMode) then
         self.health -= totalDamageAmount
 
         if (self.health > 0) then
@@ -309,8 +313,9 @@ function Player:_handlePlayerInput()
     -- if player releases A, reset the counter or shoot normal bullet
     if (playdate.buttonJustReleased(playdate.kButtonA)) then
         if (self.holdACycles < HOLD_A_CYCLES_TO_WAIT) then
-            if (self.allowAttacks) then
+            if (self.allowAttacks and self.energy > 3) then
                 PlayerBullet(self.x, self.y, self)
+                self.energy -= 3
             end
         end
         self.holdACycles =0 
@@ -363,6 +368,10 @@ function Player:_refillEnergy()
     local halfMaxEnergy = self.maxEnergy/2
 
     -- energy normalizes back to half way
+    if (math.isWithin(self.energy, 1, halfMaxEnergy)) then
+        return
+    end
+
     if (self.energy < halfMaxEnergy) then
         self.energy += 1
     elseif (self.bigModeCycleCounter <= 0) then
@@ -460,7 +469,11 @@ function Player:addHealth(amount)
     end
 end
 
-function Player:depleteHealth(amount) 
+function Player:depleteHealth(amount)
+    if (self.godMode) then
+        return
+    end
+
     self.health -= amount
     if (self.health < 0) then
         self.health = 0
@@ -501,7 +514,7 @@ function Player:addEnergy()
         return 
     end
 
-    self.energy+=2.5
+    self.energy+=7
 
     if (self.energy >= self.maxEnergy) then
         self.energy = self.maxEnergy
@@ -512,4 +525,8 @@ end
 
 function Player:isBigMode()
     return self.bigModeCycleCounter > 0
+end
+
+function Player:enableGodMode()
+    self.godMode = true
 end
