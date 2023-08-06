@@ -58,6 +58,14 @@ function TestingScene:initialize(sceneManager)
     Millipede(80, 150, player, sceneItems.camera)
     Millipede(100,150, player, sceneItems.camera)
 
+    Millipede(50, 250, player, sceneItems.camera)
+    Millipede(80, 250, player, sceneItems.camera)
+    Millipede(100,250, player, sceneItems.camera)
+
+    Millipede(50, 250, player, sceneItems.camera)
+    Millipede(80, 250, player, sceneItems.camera)
+    Millipede(100,250, player, sceneItems.camera)
+
 end
 
 function TestingScene:update()
