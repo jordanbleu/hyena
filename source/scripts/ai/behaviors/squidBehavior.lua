@@ -32,7 +32,7 @@ function SquidBehavior:init(idleImageTablePath, animationTime, x, y, maxHealth, 
 
     -- how long he wait between bursts
     self.waitCycleCounter = 0
-    self.waitCycles = math.random(20,50)
+    self.waitCycles = 30
 
     -- how fast he slow down
     self.drag = 0.1
@@ -94,20 +94,25 @@ function SquidBehavior:_move()
         end
     end
 
-    local newX = self.x + self.xVelocity 
-    local newY = self.y + self.yVelocity 
+    local newX = self.x + self.xVelocity
+    local newY = self.y + self.yVelocity
     self:moveTo(newX, newY)
 end
 
 function SquidBehavior:_checkBounds()
-    if (self.y > 240) then
-        self:moveTo(self.x, -(self.h*2))
+    local bound = (240+(self.h*2))
+    if (self.y > bound) then
+        self:_onOutOfBounds()
     end
 end
 
 -------------------
 -- Overrides     --
 -------------------
+
+function SquidBehavior:_onOutOfBounds()
+    self:moveTo(self.x, -(self.h*2))
+end
 
 function SquidBehavior:_onTakeDamage(amount, willDie) 
     if (willDie) then return end
@@ -121,6 +126,8 @@ function SquidBehavior:_onTakeDamage(amount, willDie)
 end
 
 function SquidBehavior:_onDead()
+    self.camera:bigShake()
+
     self.collisionsEnabled = false
     self.state = STATES.DYING
 

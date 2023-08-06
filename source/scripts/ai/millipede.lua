@@ -24,7 +24,16 @@ function Millipede:init(x,y, playerInst, cameraInst)
     -- millipede doesn't give a damn about your bullets
     self:withDamageDelay(0)
 
-    self:withVerticalBurstSpeed(2)
+    self:withVerticalBurstSpeed(3)
+    self:withBurstDelay(30)
+    self:withDrag(0.3)
+
+    --self:withShootingBehavior(SHOOT_BEHAVIOR.RANDOM, 60)
+end
 
 
+-- Overrides --------------------------------
+
+function Millipede:_onOutOfBounds()
+    self:moveTo(self.player.x, -(self.h*2))
 end

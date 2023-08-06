@@ -29,6 +29,10 @@ class("TestingScene").extends(Scene)
 function TestingScene:initialize(sceneManager)
     TestingScene.super.initialize(self, sceneManager)
     
+
+    local audioTest = playdate.sound.fileplayer.new("sounds/music/test3")
+    audioTest:play(0)
+
     local blackground = sceneHelper.addBlackBackground()
 
     local pLayer1 = ParallaxLayer(gfx.image.new("images/backgrounds/stars-farther"),0,1)
@@ -41,6 +45,18 @@ function TestingScene:initialize(sceneManager)
     --SquidGrunt(200,50, player, sceneItems.camera)
     Millipede(200,50, player, sceneItems.camera)
 
+    Millipede(50,50, player, sceneItems.camera)
+    Millipede(80,50, player, sceneItems.camera)
+    Millipede(100,50, player, sceneItems.camera)
+    Millipede(120,50, player, sceneItems.camera)
+    Millipede(160,50, player, sceneItems.camera)
+    Millipede(180,50, player, sceneItems.camera)
+    Millipede(200,50, player, sceneItems.camera)
+    Millipede(220,50, player, sceneItems.camera)
+
+    Millipede(50, 150, player, sceneItems.camera)
+    Millipede(80, 150, player, sceneItems.camera)
+    Millipede(100,150, player, sceneItems.camera)
 
 end
 
