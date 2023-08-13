@@ -1,3 +1,28 @@
+#
+# Ladies and gentlemen, Project Hyena the playdate game has been abandoned.
+
+## I ran into some un-recoverable performance issues, and thus will be rewriting this entire game.
+
+Turns out the playdate sdk's implementation of sprites and what i'd call 'pseudo-objects' isn't very performant
+for certain use-cases, and unfortunately this game was one of them.  Sprites, in particular, have a lot of overhead
+for things like collision detection, z-indexing, calculating redraws, and garbage collection.  My issue, in particular,
+was the fact that a shoot-em-up requires a ton of moving sprites all at once.
+
+I was running into frame rate drops with around 12 enemy sprites on screen at a time.  I had considered trying to 
+work around this limitation but it would really limit my vision of how I wanted this game to be.
+
+As you can probably see from this code, I went with a whole 'everything is sprites / objects' approach.  Sadly I think
+this was a fundamental enough design choice that it's not worth trying to de-object-ify the entire code base, or even
+use a hybrid OO / non-OO approach.  Therefore, I think i'll have to rewrite it all.
+
+I am keeping this codebase around though, for two reasons.  One, I'm going to still reference some of the code for my 
+own use ;) and also in case anyone is looking for some (objectively) clean OO code for a playdate game.  This approach 
+would be much more ideal for a scenario with less moving sprites.  I think my segmented scene code worked really well,
+and made development super easy.
+
+
+# -----------------------------------------------
+
 # hyena
 PlayDate Game that I'm making
 
