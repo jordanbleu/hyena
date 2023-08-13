@@ -122,7 +122,7 @@ function playdate.update()
     gfx.animation.blinker.updateAll()
     GameObject.updateAll()
     --drawDebugText()
-    --playdate.drawFPS(0,0)
+    playdate.drawFPS(0,0)
 end
 
 

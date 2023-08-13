@@ -31,6 +31,10 @@ function EnemyBase:init(idleImageTablePath, animationTime, x, y, maxHealth, play
     self:setGroups({COLLISION_LAYER.ENEMY})
     self:setCollidesWithGroups({COLLISION_LAYER.PLAYER, COLLISION_LAYER.PLAYER_PROJECTILE})
     
+    self.shooterBehavior = SHOOT_BEHAVIOR.NONE
+    self.shootCycles = 30
+    self.shootCycleCounter = 0
+    
     self.collisionsEnabled = true
 end
 
@@ -38,6 +42,7 @@ function EnemyBase:physicsUpdate()
     EnemyBase.super.physicsUpdate(self)
     self:_checkCollisions()
     self:_checkForEmp()
+    self:_updateShootBehavior()
 end
 
 function EnemyBase:_checkCollisions()
@@ -80,10 +85,41 @@ function EnemyBase:damage(amount)
     end
 end
 
+function EnemyBase:_updateShootBehavior()
+    if (self.shooterBehavior == SHOOT_BEHAVIOR.NONE) then return end
+
+    if (self.shooterBehavior == SHOOT_BEHAVIOR.LINEAR) then
+        self.shootCycleCounter+=1
+        if (self.shootCycleCounter > self.shootCycles) then
+            self:_shoot()
+            self.shootCycleCounter = 0
+        end
+
+    elseif (self.shooterBehavior == SHOOT_BEHAVIOR.RANDOM) then
+        local roll = math.floor(math.random(0, self.shootCycles))
+        local win = math.floor(self.shootCycles/2)
+        if (roll == win) then
+            self:_shoot()
+        end
+    end
+end
+
+---Sets up shooting behavior.  If behavior is linear, shootingDelayCycles is how long to delay between bullets.
+---If behavior is random, shootingDelayCycles is the probability of shooting (higher means less probable)
+---@param behavior any SHOOT_BEHAVIOR enum.
+---@param shootingDelayCycles any delay between shots.  Behavior differs per SHOOT_BEHAVIOR.
+function EnemyBase:withShootingBehavior(behavior, shootingDelayCycles)
+    self.shooterBehavior = behavior
+    self.shootCycles = shootingDelayCycles
+end
 
 -----------------------------------------------------------------
 -- Overridables -------------------------------------------------
 -----------------------------------------------------------------
+
+function EnemyBase:_shoot() 
+    EnemyBullet(self.x, self.y)
+end
 
 ---Called when the enemy was attacked, and is now dead.
 function EnemyBase:_onDead() end
