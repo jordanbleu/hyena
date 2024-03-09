@@ -1,5 +1,5 @@
 #
-# Ladies and gentlemen, Project Hyena the playdate game has been abandoned.
+# This project was abandoned but i'm keeping it around in case I ever need to refernce any of the Lua code :)
 
 ## I ran into some un-recoverable performance issues, and thus will be rewriting this entire game.
 
